@@ -1,0 +1,50 @@
+﻿
+@model IEnumerable<slnQF.SP_CONSULTA_REPORTE_PARAMETROResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridP");
+    }
+    <div class="table-responsive">
+        <div id="gridP">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                    grid.Column("", header: "", canSort:false,
+                                    format: @<text>
+                                    @Html.Raw("<a href='#' onclick='cambioEstado("+ item.ID_REPORTE +","+item.ID_REPORTE_PARAMETRO+")'   title='ID'>"+ item.ESTADO_DESC +" </a>")
+
+                                    </text>),
+                                     grid.Column("ID_REPORTE_PARAMETRO", "ID", null, "text-center", false),
+                                     grid.Column("NOMBRE_PARAMETRO", "NOMBRE", null, "text-center", false),
+                                     
+                                     grid.Column("DESC_PARAMETRO", "DESCRIPCION", null, "text-center", false),
+                                     grid.Column("TIPODATO", "TIPO", null, "text-center", false) 
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridP table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+    function cambioEstado(pid, pid_param) {
+        $.post('/Reporteria/fnCambioEstadoRepParam?Id=' + pid_param,
+            function (data) {
+                $("#DivToAppendPartialViewList").empty();
+                var ph2 = $("#DivToAppendPartialViewList");
+                ph2.load("/Reporteria/ListadoParametro?id=" + pid);
+            }
+            , 'json');
+    }
+</script>

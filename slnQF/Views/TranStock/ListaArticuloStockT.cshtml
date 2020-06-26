@@ -1,0 +1,116 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_SAP_ARTICULO_ITEMResult>
+<div class="row col-lg-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridArticuloSel");
+    }
+    <div>
+        <div id="gridArticuloSel" width = "100%">
+            @grid.GetHtml(
+                            htmlAttributes: null,
+                                     mode: WebGridPagerModes.All,
+                                     tableStyle: "table table-bordered table-hover table-responsive",
+                                     columns: new[] {
+                                     grid.Column(header: "", format: @<text><a href="#" title="Seleccionar" id="@item.ItemCode" onclick="fnSeleccionaItem('@item.ItemCode','@item.ItemName','@item.ENSTOCK','@item.COMPROMETIDO','@item.InvntryUom','@item.AvgPrice','@item.SWLOTE')">Seleccionar</a></text>),
+                                     grid.Column("ItemCode", "ItemCode", null, "text-center", false),
+                                     grid.Column("ItemName", "ItemName", null, "text-center", false),
+                                     grid.Column("ENSTOCK", "En Stock", null, "text-center", false),
+
+                                     grid.Column("COMPROMETIDO", "Comprometido", null, "text-center", false),
+                                     grid.Column("PRODUCCION", "Produccion", null, "text-center", false),
+                                     grid.Column("InvntryUom", "UOM", null, "text-center", false),
+                                     grid.Column("StockValue", "Valor Stock", null, "text-center", false),
+                                     grid.Column("AvgPrice", "Precio", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    initialize()
+    $(function () {
+        $('#gridArticuloSel table').DataTable({
+            "pageLength": 5,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: false,
+            "scrollX":true
+        })
+      
+      
+    });
+
+    function fnSeleccionaItem(idItem,ItemName,ENSTOCK,COMPROMETIDO,InvntryUom,AvgPrice,SwLote){
+        var listAlmacen = [];
+        $.ajax({
+            url: '/Produccion/traeWareHouse',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            cache: false,
+            success: function (json) {
+
+                listAlmacen=json;
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+        var fila = "<tr>";
+        
+        fila = fila + "<td><input type='checkbox' name='record'></td>";
+
+        fila = fila + "<td>"+idItem+"</td>";
+        
+        fila = fila + "<td>"+ItemName+"</td>";
+
+        fila = fila + '<td><select id="selwhs' + idItem + '" class="form-control input-sm" ></select></td>';
+        
+        fila = fila + "<td><div  ><input type='TextBox' class='form-control input-sm' id='txtBox='txtBox" + idItem + "' name='txtBox" + idItem + "'   /></div></td>";
+        
+        fila = fila + "<td>"+InvntryUom+"</td>";
+
+        fila = fila + "<td>" + AvgPrice + "</td>";
+
+        if (SwLote == "Y") {
+            fila = fila + "<td><input type='button' class='btn clickLotea' value='Lotes'/></td>";
+        } else {
+            fila = fila + "<td></td>";
+        }
+        fila = fila + "</tr>";
+
+        $("#tblArticuloStock tbody").append(fila);
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+
+
+            $('#selwhs' + idItem).append($('<option >', {
+                value: item3.id,
+                text: item3.id,
+
+            }));
+
+             
+
+        });
+
+
+        
+    }
+
+    function initialize() {
+       
+    }
+    function roundUsing(func, number, prec) {
+        var tempnumber = number * Math.pow(10, prec);
+        tempnumber = func(tempnumber);
+        return tempnumber / Math.pow(10, prec);
+    }
+</script>
+
+ 

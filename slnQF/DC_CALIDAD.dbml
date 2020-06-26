@@ -1,0 +1,1770 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DB_QUALISAP" Class="DC_CALIDADDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=SRV-SAP;Initial Catalog=DB_QUALISAP;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DB_QUALI_SAP_QConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CAT_UOM" Member="CAT_UOM">
+    <Type Name="CAT_UOM">
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ESTADO" Member="CAT_ESTADOs">
+    <Type Name="CAT_ESTADO">
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ENSAYO" Member="CAT_ENSAYOs">
+    <Type Name="CAT_ENSAYO">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_CONCENTRACION" Member="CAT_CONCENTRACIONs">
+    <Type Name="CAT_CONCENTRACION">
+      <Column Name="ID_CONCENTRACION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_FORMA_FARMACEUTICA" Member="CAT_FORMA_FARMACEUTICAs">
+    <Type Name="CAT_FORMA_FARMACEUTICA">
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRESENTACION" Member="CAT_PRESENTACIONs">
+    <Type Name="CAT_PRESENTACION">
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRUEBA" Member="CAT_PRUEBAs">
+    <Type Name="CAT_PRUEBA">
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="SWSI_NO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_SWSI_NO" Member="CAT_SWSI_NOs">
+    <Type Name="CAT_SWSI_NO">
+      <Column Name="SWSI_NO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ENSAYO_PRUEBA" Member="CAT_ENSAYO_PRUEBAs">
+    <Type Name="CAT_ENSAYO_PRUEBA">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SWSI_NO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRUEBA_ESPECIFICA" Member="CAT_PRUEBA_ESPECIFICAs">
+    <Type Name="CAT_PRUEBA_ESPECIFICA">
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ENSAYO_PRUEBA_PESPECIFICA" Member="CAT_ENSAYO_PRUEBA_PESPECIFICAs">
+    <Type Name="CAT_ENSAYO_PRUEBA_PESPECIFICA">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_NOMBRE_COMERCIAL" Member="CAT_NOMBRE_COMERCIALs">
+    <Type Name="CAT_NOMBRE_COMERCIAL">
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRODUCTO_NOMBRE_COM" Member="CAT_PRODUCTO_NOMBRE_COMs">
+    <Type Name="CAT_PRODUCTO_NOMBRE_COM">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRODUCTO_PRESENTACION" Member="CAT_PRODUCTO_PRESENTACIONs">
+    <Type Name="CAT_PRODUCTO_PRESENTACION">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ESPECIFICACION_PRODUCTO" Member="ESPECIFICACION_PRODUCTOs">
+    <Type Name="ESPECIFICACION_PRODUCTO">
+      <Column Name="ID_ESPECIFICACION_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TIPO_RESPUESTA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ESPECIFICACION" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_FABRICANTE" Member="CAT_FABRICANTEs">
+    <Type Name="CAT_FABRICANTE">
+      <Column Name="ID_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PAIS_FABRICANTE" Member="CAT_PAIS_FABRICANTEs">
+    <Type Name="CAT_PAIS_FABRICANTE">
+      <Column Name="ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_STATUS" Member="CAT_STATUS">
+    <Type Name="CAT_STATUS">
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_CERTIFICADO" Member="CAT_CERTIFICADOs">
+    <Type Name="CAT_CERTIFICADO">
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PRODUCTO_PRES_NOMCOM" Member="CAT_PRODUCTO_PRES_NOMCOMs">
+    <Type Name="CAT_PRODUCTO_PRES_NOMCOM">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CODIGO_SAP" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESULTADO_ENSAYO_PRODUCTO" Member="RESULTADO_ENSAYO_PRODUCTOs">
+    <Type Name="RESULTADO_ENSAYO_PRODUCTO">
+      <Column Name="ID_RESULTADO_ENSAYO_PROD" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_CLIENTE" Member="CAT_CLIENTEs">
+    <Type Name="CAT_CLIENTE">
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO_SAP" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TLOG" Member="TLOG">
+    <Type Name="TLOG">
+      <Column Name="id_log" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TABLA" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="CAMPO" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="VALOR_ANTERIOR" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VALOR_NUEVO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RESULTADO_BITACORA" Member="RESULTADO_BITACORA">
+    <Type Name="RESULTADO_BITACORA">
+      <Column Name="ID_BITACORA_RESULTADO_ENSAYO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_RESULTADO_ENSAYO_PROD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TPRODUCTO" Member="TPRODUCTOs">
+    <Type Name="TPRODUCTO">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_MUESTRAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CONDICION_ALMACENA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PUESTO" Member="CAT_PUESTOs">
+    <Type Name="CAT_PUESTO">
+      <Column Name="ID_PUESTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TPERSONA" Member="TPERSONAs">
+    <Type Name="TPERSONA">
+      <Column Name="ID_PERSONA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_USER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PUESTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOTE_INGRESO" Member="LOTE_INGRESOs">
+    <Type Name="LOTE_INGRESO">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INI_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FIN_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TOMO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PAGINA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OBSERVACIONES" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ASEGURAMIENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="POTENCIA_PROVEEDOR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_REANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CANTIDAD_ENVASES" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_ASEGURAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_CLIENTE_NOMBRE_COM" Member="CAT_CLIENTE_NOMBRE_COMs">
+    <Type Name="CAT_CLIENTE_NOMBRE_COM">
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.INGRESO_CANTIDAD_PRESENTACION" Member="INGRESO_CANTIDAD_PRESENTACIONs">
+    <Type Name="INGRESO_CANTIDAD_PRESENTACION">
+      <Column Name="ID_INGRESO_CANTIDAD_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ETAPA_FABRICACION" Member="CAT_ETAPA_FABRICACIONs">
+    <Type Name="CAT_ETAPA_FABRICACION">
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_TIPO_ETIQUETA" Member="CAT_TIPO_ETIQUETAs">
+    <Type Name="CAT_TIPO_ETIQUETA">
+      <Column Name="ID_TIPO_ETIQUETA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TITEM_EMBALAJE" Member="TITEM_EMBALAJEs">
+    <Type Name="TITEM_EMBALAJE">
+      <Column Name="ID_ITEM_EMBALAJE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="CAPACIDAD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TITEMS" Member="TITEMs">
+    <Type Name="TITEM">
+      <Column Name="ID_ITEM" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TIPO_ETIQUETA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CONTENIDO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="VIA_ADMIN" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="DOSIS" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ADVERTENCIA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="HECHO_POR" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CONDICION_ALMACENAMIENTO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="EMPAQUE" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="INDICACION_VENTA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="INDICACION_ESPECIAL" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="BULTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QUERYGROUP64" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ITEMNAME" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_ELSAL" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_HOND" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_NICA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_CR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_PANA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_ELSAL_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_HOND_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_NICA_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_CR_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_PANA_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DATOS_BULTO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_TIPO_DATO" Member="CAT_TIPO_DATOs">
+    <Type Name="CAT_TIPO_DATO">
+      <Column Name="ID_TIPO_DATO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TREPORTE_BY" Member="TREPORTE_Bies">
+    <Type Name="TREPORTE_BY">
+      <Column Name="ID_REPORTE_BY" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PATH_REL" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="BIN_REP" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TREPORTE" Member="TREPORTEs">
+    <Type Name="TREPORTE">
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSERVER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDNAME" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDUSER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDPASS" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSP" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PERMISO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PERMISO" Member="CAT_PERMISOs">
+    <Type Name="CAT_PERMISO">
+      <Column Name="IDPERMISO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TACCESO_PERMISO" Member="TACCESO_PERMISOs">
+    <Type Name="TACCESO_PERMISO">
+      <Column Name="IDPERMISO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDACCESO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TREPORTE_PARAMETRO" Member="TREPORTE_PARAMETROs">
+    <Type Name="TREPORTE_PARAMETRO">
+      <Column Name="ID_REPORTE_PARAMETRO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_TIPO_PARAMETRO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PARAMETRO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DESC_PARAMETRO" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_PROVEEDOR" Member="CAT_PROVEEDORs">
+    <Type Name="CAT_PROVEEDOR">
+      <Column Name="ID_PROVEEDOR" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CARDCODE" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CARDNAME" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ADDRESS" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="PHONE1" Type="System.String" DbType="NVarChar(160) NOT NULL" CanBeNull="false" />
+      <Column Name="SW_MUESTRACERT" Type="System.Decimal" DbType="Decimal(1,0)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TLOTEINGRESO_TECNICO" Member="TLOTEINGRESO_TECNICOs">
+    <Type Name="TLOTEINGRESO_TECNICO">
+      <Column Name="ID_LOTE_INGRESO_TECNICO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PERSONA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_ESTADO_CERTIFICADO" Member="CAT_ESTADO_CERTIFICADOs">
+    <Type Name="CAT_ESTADO_CERTIFICADO">
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOTE_INGRESO_DATA" Member="LOTE_INGRESO_DATAs">
+    <Type Name="LOTE_INGRESO_DATA">
+      <Column Name="ID_LOTE_DATA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_FISQUI" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RESULT_FISQUI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_MICROBIO" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RESULT_MICROBIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RESULT_FINAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PROVEEDOR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOG_LOTE_INGRESO_DATA" Member="LOG_LOTE_INGRESO_DATAs">
+    <Type Name="LOG_LOTE_INGRESO_DATA">
+      <Column Name="ID_LOG_LOTE_DATA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_LOTE_DATA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_FISQUI" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RESULT_FISQUI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_MICROBIO" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="RESULT_MICROBIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RESULT_FINAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PROVEEDOR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_AREA" Member="CAT_AREAs">
+    <Type Name="CAT_AREA">
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_AREA_PRODUCTO" Member="CAT_AREA_PRODUCTOs">
+    <Type Name="CAT_AREA_PRODUCTO">
+      <Column Name="ID_AREA_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CAT_USUARIO_AREA_CERT" Member="CAT_USUARIO_AREA_CERTs">
+    <Type Name="CAT_USUARIO_AREA_CERT">
+      <Column Name="ID_USUARIO_AREA_CERT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_USER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TITEM_EMBALAJE_ORDEN" Member="TITEM_EMBALAJE_ORDENs">
+    <Type Name="TITEM_EMBALAJE_ORDEN">
+      <Column Name="ID_ITEM_EMBALAJEORDEN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_ORDEN_RECIBO" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ITEM_EMBALAJE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LIMITE" Type="System.Decimal" DbType="Decimal(18,10) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD" Type="System.Decimal" DbType="Decimal(18,10) NOT NULL" CanBeNull="false" />
+      <Column Name="ETIQUETAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TUSUARIOATRIBUTO" Member="TUSUARIOATRIBUTOs">
+    <Type Name="TUSUARIOATRIBUTO">
+      <Column Name="ID_USUARIOATRIBUTO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="VALOR" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.SP_CONSULTA_UOM" Method="SP_CONSULTA_UOM">
+    <ElementType Name="SP_CONSULTA_UOMResult">
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_ENSAYO" Method="SP_CONSULTA_ENSAYO">
+    <ElementType Name="SP_CONSULTA_ENSAYOResult">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_CONCENTRACION" Method="SP_CONSULTA_CONCENTRACION">
+    <ElementType Name="SP_CONSULTA_CONCENTRACIONResult">
+      <Column Name="ID_CONCENTRACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_FORMA_FARMACEUTICA" Method="SP_CONSULTA_FORMA_FARMACEUTICA">
+    <ElementType Name="SP_CONSULTA_FORMA_FARMACEUTICAResult">
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRESENTACION" Method="SP_CONSULTA_PRESENTACION">
+    <ElementType Name="SP_CONSULTA_PRESENTACIONResult">
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRUEBA" Method="SP_CONSULTA_PRUEBA">
+    <ElementType Name="SP_CONSULTA_PRUEBAResult">
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="SW_SINO" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_ENSAYO_PRUEBA" Method="SP_CONSULTA_ENSAYO_PRUEBA">
+    <ElementType Name="SP_CONSULTA_ENSAYO_PRUEBAResult">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ENSAYO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="SWSI_NO" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRUEBA_ESPECIFICA" Method="SP_CONSULTA_PRUEBA_ESPECIFICA">
+    <ElementType Name="SP_CONSULTA_PRUEBA_ESPECIFICAResult">
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_EN_PRUE_PRUE_ESP" Method="SP_CONSULTA_EN_PRUE_PRUE_ESP">
+    <ElementType Name="SP_CONSULTA_EN_PRUE_PRUE_ESPResult">
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ENSAYO_DESC" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_DESC" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_ESPECIFICA_DESC" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_NOMBRE_COMERCIAL" Method="SP_CONSULTA_NOMBRE_COMERCIAL">
+    <ElementType Name="SP_CONSULTA_NOMBRE_COMERCIALResult">
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRODUCTO_NOMBRE_COM" Method="SP_CONSULTA_PRODUCTO_NOMBRE_COM">
+    <ElementType Name="SP_CONSULTA_PRODUCTO_NOMBRE_COMResult">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_COMERCIAL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRODUCTO_PRESENTACION" Method="SP_CONSULTA_PRODUCTO_PRESENTACION">
+    <ElementType Name="SP_CONSULTA_PRODUCTO_PRESENTACIONResult">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRESENTACION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_ESPECIFICACION_PRODUCTO" Method="SP_CONSULTA_ESPECIFICACION_PRODUCTO">
+    <ElementType Name="SP_CONSULTA_ESPECIFICACION_PRODUCTOResult">
+      <Column Name="ID_ESPECIFICACION_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_FORMA_FARMACEUTICA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ENSAYO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA_ESPECIFICA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESPECIFICACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="TIPO_RESPUESTA" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_CERTIFICADO" Method="SP_CONSULTA_CERTIFICADO">
+    <ElementType Name="SP_CONSULTA_CERTIFICADOResult">
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_TECNICO" Method="SP_CONSULTA_TECNICO">
+    <ElementType Name="SP_CONSULTA_TECNICOResult">
+      <Column Name="ID_TECNICO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_TECNICO" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRO_PRE_NOM" Method="SP_CONSULTA_PRO_PRE_NOM">
+    <ElementType Name="SP_CONSULTA_PRO_PRE_NOMResult">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PROUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRESENTACION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_COMERCIAL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO_SAP" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_RESULTADO_ENSAYO_PROD" Method="SP_CONSULTA_RESULTADO_ENSAYO_PROD">
+    <ElementType Name="SP_CONSULTA_RESULTADO_ENSAYO_PRODResult">
+      <Column Name="ID_RESULTADO_ENSAYO_PROD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ENSAYO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA_ESPECIFICA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_TECNICO" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REVISADO_POR" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_CLIENTE" Method="SP_CONSULTA_CLIENTE">
+    <ElementType Name="SP_CONSULTA_CLIENTEResult">
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO_SAP" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_RESULTADO_BITACORA" Method="SP_CONSULTA_RESULTADO_BITACORA">
+    <ElementType Name="SP_CONSULTA_RESULTADO_BITACORAResult">
+      <Column Name="ID_BITACORA_RESULTADO_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_RESULTADO_ENSAYO_PROD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ENSAYO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA_ESPECIFICA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_TECNICO" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REVISADO_POR" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRUEBA_RESULTADO" Method="SP_CONSULTA_PRUEBA_RESULTADO">
+    <ElementType Name="SP_CONSULTA_PRUEBA_RESULTADOResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ENSAYO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ENSAYO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRUEBA_ESPECIFICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRUEBA_ESPECIFICA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESPECIFICACION" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="TIPO_RESPUESTA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_RESULTADO_ENSAYO_PROD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRODUCTO" Method="SP_CONSULTA_PRODUCTO">
+    <ElementType Name="SP_CONSULTA_PRODUCTOResult">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="FORMA_FARMACEUTICA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_MUESTRAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CONDICION_ALMACENA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PERSONA" Method="SP_CONSULTA_PERSONA">
+    <ElementType Name="SP_CONSULTA_PERSONAResult">
+      <Column Name="ID_PERSONA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_USER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PUESTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_USUARIO" Method="SP_CONSULTA_USUARIO">
+    <ElementType Name="SP_CONSULTA_USUARIOResult">
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PUESTO" Method="SP_CONSULTA_PUESTO">
+    <ElementType Name="SP_CONSULTA_PUESTOResult">
+      <Column Name="ID_PUESTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_LOTE_INGRESO" Method="SP_CONSULTA_LOTE_INGRESO">
+    <ElementType Name="SP_CONSULTA_LOTE_INGRESOResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INI_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FIN_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_REANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_INI_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_FIN_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_REANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TOMO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PAGINA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_FABRICANTE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PAIS_FABRICANTE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="OBSERVACIONES" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_TECNICO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_REVISA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ASEGURAMIENTO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_STATUS" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ASEGURAMIENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="CANTIDAD_ENVASES" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="POTENCIA_PROVEEDOR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_INSERT_LOTE_INGRESO" Method="SP_INSERT_LOTE_INGRESO">
+    <Parameter Name="P_IDCERTIFICADO" Parameter="p_IDCERTIFICADO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_IDPRODUCTO" Parameter="p_IDPRODUCTO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_FECHA_ANALISIS" Parameter="p_FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_FECHA_FABRICACION" Parameter="p_FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_FECHA_VENCIMIENTO" Parameter="p_FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_FECHA_INI_ANALISIS" Parameter="p_FECHA_INI_ANALISIS" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_FECHA_FIN_ANALISIS" Parameter="p_FECHA_FIN_ANALISIS" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_TOMO" Parameter="p_TOMO" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="P_PAGINA" Parameter="p_PAGINA" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="P_NO_LOTE" Parameter="p_NO_LOTE" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="P_ID_FABRICANTE" Parameter="p_ID_FABRICANTE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_ID_PAIS_FABRICANTE" Parameter="p_ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_OBSERVACIONES" Parameter="p_OBSERVACIONES" Type="System.String" DbType="VarChar(1000)" />
+    <Parameter Name="P_ID_TECNICO_ANALISTA" Parameter="p_ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_ID_REVISADO_POR" Parameter="p_ID_REVISADO_POR" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_ID_ASEGURAMIENTO" Parameter="p_ID_ASEGURAMIENTO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_ID_STATUS" Parameter="p_ID_STATUS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_ASEGURAMIENTO" Parameter="p_ASEGURAMIENTO" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="P_ID_USUARIO" Parameter="p_ID_USUARIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_POTENCIA_PROVEEDOR" Parameter="p_POTENCIA_PROVEEDOR" Type="System.String" DbType="VarChar(500)" />
+    <Parameter Name="P_FECHA_INGRESO" Parameter="p_FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_FECHA_REANALISIS" Parameter="p_FECHA_REANALISIS" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_CANTIDAD_ENVASES" Parameter="p_CANTIDAD_ENVASES" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_RESPUESTA" Parameter="p_RESPUESTA" Type="System.String" DbType="VarChar(1)" Direction="InOut" />
+    <Parameter Name="P_MSG1" Parameter="p_MSG1" Type="System.String" DbType="VarChar(250)" Direction="InOut" />
+    <Parameter Name="P_MSG2" Parameter="p_MSG2" Type="System.String" DbType="VarChar(250)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_CLIENTE_NOMBRE_COM" Method="SP_CONSULTA_CLIENTE_NOMBRE_COM">
+    <ElementType Name="SP_CONSULTA_CLIENTE_NOMBRE_COMResult">
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CLIENTE" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_COMERCIAL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_CLIENTE_NOMCOM_DISP" Method="SP_CONSULTA_CLIENTE_NOMCOM_DISP">
+    <Parameter Name="P_NOMBRE_COMERCIAL" Parameter="p_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_CLIENTE_NOMCOM_DISPResult">
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CLIENTE" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACION" Method="SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACION">
+    <ElementType Name="SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACIONResult">
+      <Column Name="ID_INGRESO_CANTIDAD_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRESENTACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PRESENTACION_STR" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UOM_STR" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_NOMBRE_COMERCIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_COMERCIAL_STR" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CLIENTE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_CLIENTE" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_LISTAITEMSORDEN" Method="SP_CONSULTA_SAP_LISTAITEMSORDEN">
+    <Parameter Name="P_IDUSER" Parameter="p_IDUSER" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_DOCENTRY" Parameter="p_DOCENTRY" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_LISTAITEMSORDENResult">
+      <Column Name="DOCNUM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ITEMNAME" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PLANNEDQTY" Type="System.Decimal" DbType="Decimal(20,6)" CanBeNull="true" />
+      <Column Name="WAREHOUSE" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LOTE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="WHSNAME" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="BASEQTY" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PLANNEDQTY1" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="invntryUom" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ISCOMMITED" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DISP" Type="System.Decimal" DbType="Decimal(21,6)" CanBeNull="true" />
+      <Column Name="SWLOTE" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_ETAPA_FABRICACION" Method="SP_CONSULTA_ETAPA_FABRICACION">
+    <ElementType Name="SP_CONSULTA_ETAPA_FABRICACIONResult">
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_ITEM_EMBALAJE" Method="SP_CONSULTA_ITEM_EMBALAJE">
+    <ElementType Name="SP_CONSULTA_ITEM_EMBALAJEResult">
+      <Column Name="ID_ITEM_EMBALAJE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="CAPACIDAD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ARTICULO_EMBALAJE_DATA" Method="SP_CONSULTA_SAP_ARTICULO_EMBALAJE_DATA">
+    <Parameter Name="P_PROD" Parameter="p_PROD" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_CONSULTA_SAP_ARTICULO_EMBALAJE_DATAResult">
+      <Column Name="ID_ITEM_EMBALAJE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CODIGO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="LIMITE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_ETIQUETAS" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="DATO_INGRESADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_USER_PER" Method="SP_CONSULTA_USER_PER">
+    <ElementType Name="SP_CONSULTA_USER_PERResult">
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_RECIBO_DOCENTRY" Method="SP_CONSULTA_SAP_RECIBO_DOCENTRY">
+    <Parameter Name="P_DOCENTRY" Parameter="p_DOCENTRY" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_RECIBO_DOCENTRYResult">
+      <Column Name="DocNum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.F_TRAE_RECIBO_DOCNUM" Method="F_TRAE_RECIBO_DOCNUM" IsComposable="true">
+    <Parameter Name="P_DOCENTRY" Parameter="p_DOCENTRY" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_REPORTE" Method="SP_CONSULTA_REPORTE">
+    <ElementType Name="SP_CONSULTA_REPORTEResult">
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSERVER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDUSER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDPASS" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSP" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PERMISO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO_DESC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_REPORTE_USUARIO" Method="SP_CONSULTA_REPORTE_USUARIO">
+    <ElementType Name="SP_CONSULTA_REPORTE_USUARIOResult">
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_REPORTE_DATA" Method="SP_CONSULTA_REPORTE_DATA">
+    <ElementType Name="SP_CONSULTA_REPORTE_DATAResult">
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSERVER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDNAME" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDUSER" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDPASS" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BDSP" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="BIN_REP" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" />
+      <Column Name="ID_PERMISO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_REPORTE_PARAMETRO" Method="SP_CONSULTA_REPORTE_PARAMETRO">
+    <ElementType Name="SP_CONSULTA_REPORTE_PARAMETROResult">
+      <Column Name="ID_REPORTE_PARAMETRO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REPORTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_TIPO_DATO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TIPODATO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PARAMETRO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESC_PARAMETRO" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO_DESC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="VALOR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_MIGRA_PROVEEDOR" Method="SP_MIGRA_PROVEEDOR">
+    <Parameter Name="P_IDRESPONSABLE" Parameter="p_IDRESPONSABLE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_RESPUESTA" Parameter="p_RESPUESTA" Type="System.String" DbType="VarChar(1)" Direction="InOut" />
+    <Parameter Name="P_MSG1" Parameter="p_MSG1" Type="System.String" DbType="VarChar(250)" Direction="InOut" />
+    <Parameter Name="P_MSG2" Parameter="p_MSG2" Type="System.String" DbType="VarChar(250)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PROVEEDOR" Method="SP_CONSULTA_PROVEEDOR">
+    <ElementType Name="SP_CONSULTA_PROVEEDORResult">
+      <Column Name="ID_PROVEEDOR" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="CARDCODE" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CARDNAME" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ADDRESS" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="PHONE1" Type="System.String" DbType="NVarChar(160) NOT NULL" CanBeNull="false" />
+      <Column Name="SW_MUESTRACERT" Type="System.Decimal" DbType="Decimal(1,0)" CanBeNull="true" />
+      <Column Name="MUESTRACERT" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_TECNICO_CERTIFICADO" Method="SP_CONSULTA_TECNICO_CERTIFICADO">
+    <ElementType Name="SP_CONSULTA_TECNICO_CERTIFICADOResult">
+      <Column Name="ID_LOTE_INGRESO_TECNICO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_PERSONA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PERSONA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(301)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PERSONA_LOTE_EXP" Method="SP_CONSULTA_PERSONA_LOTE_EXP">
+    <Parameter Name="P_ID_LOTE_INGRESO" Parameter="p_ID_LOTE_INGRESO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_PERSONA_LOTE_EXPResult">
+      <Column Name="ID_PERSONA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_USER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PUESTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_AREA" Method="SP_CONSULTA_AREA">
+    <ElementType Name="SP_CONSULTA_AREAResult">
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_AREA_X_PRODUCTO" Method="SP_CONSULTA_AREA_X_PRODUCTO">
+    <Parameter Name="P_ID_PRODUCTO" Parameter="p_ID_PRODUCTO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_AREA_X_PRODUCTOResult">
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_AREA_PRODUCTO" Method="SP_CONSULTA_AREA_PRODUCTO">
+    <ElementType Name="SP_CONSULTA_AREA_PRODUCTOResult">
+      <Column Name="ID_AREA_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_AREA" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_AREA_X_USUARIO" Method="SP_CONSULTA_AREA_X_USUARIO">
+    <Parameter Name="P_ID_USUARIO" Parameter="p_ID_USUARIO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_AREA_X_USUARIOResult">
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_USUARIO_AREA_CERT" Method="SP_CONSULTA_USUARIO_AREA_CERT">
+    <ElementType Name="SP_CONSULTA_USUARIO_AREA_CERTResult">
+      <Column Name="ID_USUARIO_AREA_CERT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_USER" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_AREA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_AREA" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_FABRICANTE" Method="SP_CONSULTA_FABRICANTE">
+    <ElementType Name="SP_CONSULTA_FABRICANTEResult">
+      <Column Name="ID_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PAIS_FABRICANTE" Method="SP_CONSULTA_PAIS_FABRICANTE">
+    <ElementType Name="SP_CONSULTA_PAIS_FABRICANTEResult">
+      <Column Name="ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_REPORTE_CERTIFICADO" Method="SP_REPORTE_CERTIFICADO">
+    <ElementType Name="SP_REPORTE_CERTIFICADOResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TOMO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PAGINA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_ENVASES" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CONDICION_ALMACENA" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="PROVEEDOR" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OBSERVACIONES" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PRODUCTO_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="TAMANO_LOTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_FIN_ANALISIS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CANTIDAD_MUESTRAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UOMPROD" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="FORMA_FARMACEUTICA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="FABRICANTE_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PAIS_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TECNICO_ANALISTA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_ANALISTA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REVISADO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_REVISADO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ASEGURAMIENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ASEGURAMIENTO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_ASEGURAMIENTO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="APROBADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="REPROBADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NOMBRE_COMERCIAL" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ENSAYO_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_ESPECIFICA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESPECIFICACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="TECNICOS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_PRODUCTO_X_AREA" Method="SP_CONSULTA_PRODUCTO_X_AREA">
+    <Parameter Name="P_ID_AREA" Parameter="p_ID_AREA" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_PRODUCTO_X_AREAResult">
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DESCRIPCION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_MUESTRAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ID_USUARIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CONDICION_ALMACENA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ARTICULO_DATA" Method="SP_CONSULTA_SAP_ARTICULO_DATA">
+    <Parameter Name="P_PROD" Parameter="p_PROD" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_CONSULTA_SAP_ARTICULO_DATAResult">
+      <Column Name="ItemCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_ELSAL" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_HOND" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_NICA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_CR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_PANA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_ELSAL_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_HOND_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_NICA_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_CR_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_PANA_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DATOS_BULTO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SAP_QRYGROUP64" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="ITEM_QRYGROUP64" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="TIPO_ETIQUETA" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="CONTENIDO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="VIA_ADMIN" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="DOSIS" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ADVERTENCIA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="HECHO_POR" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CONDICION_ALMACENAMIENTO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="EMPAQUE" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FORMA_FARMACEUTICA" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ETAPA_FABRICACION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="INDICACION_VENTA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="INDICACION_ESPECIAL" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="BULTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_ITEM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ARTICULO_DATA_USER" Method="SP_CONSULTA_SAP_ARTICULO_DATA_USER">
+    <Parameter Name="P_PROD" Parameter="p_PROD" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="P_USUARIOID" Parameter="p_USUARIOID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_ARTICULO_DATA_USERResult">
+      <Column Name="ItemCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_ELSAL" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_HOND" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_NICA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_CR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_PANA" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="U_NORE_GUATE_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_ELSAL_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_HOND_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_NICA_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_CR_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="U_NORE_PANA_BOOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DATOS_BULTO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SAP_QRYGROUP64" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="ITEM_QRYGROUP64" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="TIPO_ETIQUETA" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="CONTENIDO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="VIA_ADMIN" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="DOSIS" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ADVERTENCIA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="HECHO_POR" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CONDICION_ALMACENAMIENTO" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="EMPAQUE" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FORMA_FARMACEUTICA" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ETAPA_FABRICACION" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="INDICACION_VENTA" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="INDICACION_ESPECIAL" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="BULTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID_ITEM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ITEM_DATA" Method="SP_CONSULTA_SAP_ITEM_DATA">
+    <Parameter Name="P_IDITEM" Parameter="p_IDITEM" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="P_WHSCODE" Parameter="p_WHSCODE" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="SP_CONSULTA_SAP_ITEM_DATAResult">
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="WHSCODE" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="ONORDER" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ONHAND" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ISCOMMITED" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_REPORTE_CERTIFICADO_2" Method="SP_REPORTE_CERTIFICADO_2">
+    <Parameter Name="P_IDCERTIFICADO" Parameter="p_IDCERTIFICADO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_REPORTE_CERTIFICADO_2Result">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TOMO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PAGINA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_ENVASES" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CONDICION_ALMACENA" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="PROVEEDOR" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OBSERVACIONES" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PRODUCTO_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="TAMANO_LOTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_FIN_ANALISIS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CANTIDAD_MUESTRAS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UOMPROD" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="FORMA_FARMACEUTICA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CONCENTRACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="FABRICANTE_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PAIS_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TECNICO_ANALISTA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_ANALISTA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REVISADO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_REVISADO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ASEGURAMIENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ASEGURAMIENTO_POR" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PUESTO_ASEGURAMIENTO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="APROBADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="REPROBADO" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NOMBRE_COMERCIAL" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ENSAYO_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PRUEBA_ESPECIFICA_NOMBRE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ESPECIFICACION" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULTADO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="TECNICOS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ITEM_OPELOTE_DETA" Method="SP_CONSULTA_SAP_ITEM_OPELOTE_DETA">
+    <Parameter Name="P_ITEMCODE" Parameter="p_ITEMCODE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="P_IDUSER" Parameter="p_IDUSER" Type="System.Int32" DbType="Int" />
+    <Parameter Name="P_BATCHNUM" Parameter="p_BATCHNUM" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="P_WHSCODE" Parameter="p_WHSCODE" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="SP_CONSULTA_SAP_ITEM_OPELOTE_DETAResult">
+      <Column Name="Documento" Type="System.String" DbType="NVarChar(22)" CanBeNull="true" />
+      <Column Name="BaseNum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BaseLinNum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="WhsCode" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(38,6)" CanBeNull="true" />
+      <Column Name="Direction" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ITEM_OPELOTE" Method="SP_CONSULTA_SAP_ITEM_OPELOTE">
+    <Parameter Name="P_ITEMCODE" Parameter="p_ITEMCODE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="P_IDUSER" Parameter="p_IDUSER" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_ITEM_OPELOTEResult">
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="BatchNum" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="WhsCode" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="MnfSerial" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="LotNumber" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="STATUS" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="FE_VENCIMIENTO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FE_FABRICACION" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FE_ADMISION" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="U_CERTICA" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ITEM_CONTA" Method="SP_CONSULTA_SAP_ITEM_CONTA">
+    <Parameter Name="P_ITEMCODE" Parameter="p_ITEMCODE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="P_IDUSER" Parameter="p_IDUSER" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_ITEM_CONTAResult">
+      <Column Name="numero" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DOCUMENTO" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
+      <Column Name="Warehouse" Type="System.String" DbType="NVarChar(8)" CanBeNull="true" />
+      <Column Name="Account" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="AcctName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InvntryUom" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Currency" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_SOCIOS_NEGOCIOS" Method="SP_CONSULTA_SAP_SOCIOS_NEGOCIOS">
+    <Parameter Name="P_CRITERIO" Parameter="p_CRITERIO" Type="System.String" DbType="VarChar(200)" />
+    <ElementType Name="SP_CONSULTA_SAP_SOCIOS_NEGOCIOSResult">
+      <Column Name="CARDCODE" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CntctPrsn" Type="System.String" DbType="NVarChar(90)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ARTICULO_DATA_EMB" Method="SP_CONSULTA_SAP_ARTICULO_DATA_EMB">
+    <Parameter Name="P_USUARIOID" Parameter="p_USUARIOID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_CONSULTA_SAP_ARTICULO_DATA_EMBResult">
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_LOTE_INFO" Method="SP_CONSULTA_SAP_LOTE_INFO">
+    <Parameter Name="P_LOTE" Parameter="p_LOTE" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="SP_CONSULTA_SAP_LOTE_INFOResult">
+      <Column Name="DistNumber" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="MnfSerial" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="LotNumber" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+      <Column Name="FECHA_ADMIN" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FECHA_FABRI" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FECHA_VENCIM" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="NOTAS" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="U_CERTICA" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="SysNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="U_NombreOP1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_SAP_ARTICULO_ITEM" Method="SP_CONSULTA_SAP_ARTICULO_ITEM">
+    <Parameter Name="P_ITEMCODE" Parameter="p_ITEMCODE" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="SP_CONSULTA_SAP_ARTICULO_ITEMResult">
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ENSTOCK" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="COMPROMETIDO" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PRODUCCION" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InvntryUom" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StockValue" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="AvgPrice" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="SWLOTE" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetConteoCertificadoT1" Method="GetConteoCertificadoT1">
+    <Parameter Name="value" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RPT_ETIQUETA_EMBALAJE" Method="RPT_ETIQUETA_EMBALAJE">
+    <Parameter Name="DOCNUMSAP" Parameter="dOCNUMSAP" Type="System.Int32" DbType="Int" />
+    <ElementType Name="RPT_ETIQUETA_EMBALAJEResult">
+      <Column Name="ID_ORDEN_RECIBO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ITEM_EMBALAJE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_ETIQUETA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TOT_ETIQUETA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD" Type="System.Decimal" DbType="Decimal(18,10) NOT NULL" CanBeNull="false" />
+      <Column Name="ITEMCODE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_TIPO_ETIQUETA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TIPO_ETIQUETA" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="CONTENIDO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="VIA_ADMIN" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="DOSIS" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ADVERTENCIA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="HECHO_POR" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CONDICION_ALMACENAMIENTO" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="EMPAQUE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_FORMA_FARMACEUTICA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FORMA_FARMACEUTICA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ETAPA_FABRICACION" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ETAPA_FABRICACION" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="INDICACION_VENTA" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="INDICACION_ESPECIAL" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="QUERYGROUP64" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ID_RESPONSABLE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ITEMCODE1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ITEMNAME" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_GUATE" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_ELSAL" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_HOND" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_NICA" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_CR" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_PANA" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_GUATE_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_ELSAL_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_HOND_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_NICA_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_CR_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="U_NORE_PANA_BOOL" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DATOS_BULTO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LOTE" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_LOTE" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="CLIENTE_OBS" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_BULTOS" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="NO_BULTOS_SEMI_ELAB" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="U_U_FABRICAR" Type="System.Decimal" DbType="Decimal(19,6) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_DOCUMENTO" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="U_SysUser" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_VERIFICADOR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NOMBRE_VERIFICADOR" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="PRODUCTO_SEMI_ELAB" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.RPT_RESUMEN_EMBALAJE" Method="RPT_RESUMEN_EMBALAJE">
+    <Parameter Name="DOCNUMSAP" Parameter="dOCNUMSAP" Type="System.Int32" DbType="Int" />
+    <ElementType Name="RPT_RESUMEN_EMBALAJEResult">
+      <Column Name="DOCNUM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TITULO" Type="System.String" DbType="VarChar(44)" CanBeNull="true" />
+      <Column Name="FECHA_DOCUMENTO" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="PARCIAL" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FINAL" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="PRODUCTO_COD" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PRODUCTO_DES" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LOTE" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ANALISIS" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_LOTE" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="CANTIDAD_REPORTADA" Type="System.Decimal" DbType="Decimal(19,6) NOT NULL" CanBeNull="false" />
+      <Column Name="NO_BULTOS_GENERAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="U_SysUser" Type="System.String" DbType="VarChar(301) NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_VERIFICADOR" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(254) NOT NULL" CanBeNull="false" />
+      <Column Name="REF2" Type="System.String" DbType="NVarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="DATOS_BULTOS" Type="System.String" DbType="VarChar(204)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_INSERT_LOG" Method="SP_INSERT_LOG">
+    <Parameter Name="P_TABLA" Parameter="p_TABLA" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="P_CAMPO" Parameter="p_CAMPO" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="P_DESCRIPCION" Parameter="p_DESCRIPCION" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="P_VALOR_ANTERIOR" Parameter="p_VALOR_ANTERIOR" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="P_VALOR_NUEVO" Parameter="p_VALOR_NUEVO" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="P_ID_USUARIO" Parameter="p_ID_USUARIO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_INSERT_LOG_ERROR" Method="SP_INSERT_LOG_ERROR">
+    <Parameter Name="P_DESCRIPCION" Parameter="p_DESCRIPCION" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_USUARIO" Parameter="p_USUARIO" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_FECHA" Parameter="p_FECHA" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="P_CAMPO1" Parameter="p_CAMPO1" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO2" Parameter="p_CAMPO2" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO3" Parameter="p_CAMPO3" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO4" Parameter="p_CAMPO4" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO5" Parameter="p_CAMPO5" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO6" Parameter="p_CAMPO6" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO7" Parameter="p_CAMPO7" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO8" Parameter="p_CAMPO8" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO9" Parameter="p_CAMPO9" Type="System.String" DbType="VarChar(2000)" />
+    <Parameter Name="P_CAMPO10" Parameter="p_CAMPO10" Type="System.String" DbType="VarChar(2000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_LIB_MAT_PRIM" Method="SP_CONSULTA_LIB_MAT_PRIM">
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FILAS" Parameter="fILAS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PAGINA" Parameter="pAGINA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="filtro" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="SORT" Parameter="sORT" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="SORTDIR" Parameter="sORTDIR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="SP_CONSULTA_LIB_MAT_PRIMResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PROVEEDOR" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD_INGRESADA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CANTIDAD_BULTOS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_ANALISIS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FECHA_FISQUI" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULT_FISQUI" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_MICROBIO" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULT_MICROBIO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RESULT_FINAL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REGSTOTAL" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_LIB_PROD_TERM" Method="SP_CONSULTA_LIB_PROD_TERM">
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FILAS" Parameter="fILAS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PAGINA" Parameter="pAGINA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="filtro" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="SORT" Parameter="sORT" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="SORTDIR" Parameter="sORTDIR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="SP_CONSULTA_LIB_PROD_TERMResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PRESENTACION" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_FABRICACION" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FECHA_FISQUI" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULT_FISQUI" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_MICROBIO" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULT_MICROBIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RESULT_FINAL" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REGSTOTAL" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_CONSULTA_LOTE_INGRESO_PAG" Method="SP_CONSULTA_LOTE_INGRESO_PAG">
+    <Parameter Name="FILAS" Parameter="fILAS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PAGINA" Parameter="pAGINA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="filtro" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="SORT" Parameter="sORT" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="SORTDIR" Parameter="sORTDIR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="SP_CONSULTA_LOTE_INGRESO_PAGResult">
+      <Column Name="ID_LOTE_INGRESO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NO_INGRESO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRODUCTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PRODUCTO" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CERTIFICADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_CERTIFICADO" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INI_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_FIN_ANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_REANALISIS" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FECHA_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_FABRICACION_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_VENCIMIENTO_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_INI_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_FIN_ANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_INGRESO_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_REANALISIS_STR" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TOMO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PAGINA" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="NO_LOTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_FABRICANTE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PAIS_FABRICANTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_PAIS_FABRICANTE" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="OBSERVACIONES" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="ID_TECNICO_ANALISTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_TECNICO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_REVISADO_POR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_REVISA" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ASEGURAMIENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE_ASEGURAMIENTO" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_STATUS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_STATUS" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ASEGURAMIENTO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="CANTIDAD_ENVASES" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="POTENCIA_PROVEEDOR" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="REGSTOTAL" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

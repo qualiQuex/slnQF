@@ -1,0 +1,72 @@
+﻿@model CAT_USUARIO_AREA_CERT
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Asignacion de Area a Usuario: <label>"@(ViewBag.ID_USER ?? String.Empty)"</label></h4>
+        <hr />
+
+        <input type="text" style="visibility: hidden;" id="ID_USER" value="@(ViewBag.ID_USER ?? String.Empty)">
+
+        <br />
+        <label for="ID_AREA">AREA</label>
+        @Html.DropDownListFor(model => model.ID_AREA, ViewBag.AreasDLL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+
+        <div class="modal-footer">
+            <div id="DivGuardarAreaUsuario">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveAreaUsuario()" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+     
+
+    }
+    function SaveAreaUsuario() {
+        var ID_USER = $("#ID_USER").val();
+        var ID_AREA = $("#ID_AREA").val();
+
+        var product = {
+            "ID_USER": ID_USER, "ID_AREA": ID_AREA, "ID_ESTADO": 1
+        };
+        if (ID_AREA == null) {
+            swal("Informacion", "No hay area a asociar", "warning");
+        } else {
+            $.post('/UsuarioArea/createAreaUsuario', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $("#DivToAppendPartialVoew").empty();
+                                var ph = $("#DivToAppendPartialVoew");
+                                ph.load("/UsuarioArea/CreateAreaUsuario?id_Usuario=" + ID_USER);
+                                $("#DivToAppendPartialViewList").empty();
+                                var ph2 = $("#DivToAppendPartialViewList");
+                                ph2.load("/UsuarioArea/Listado?id=" + ID_USER);
+                            }
+                        });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+        }
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

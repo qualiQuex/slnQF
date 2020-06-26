@@ -1,0 +1,152 @@
+﻿@model slnQF.Models.IngresoCantidadPresentacionModels
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Asignacion de Cantidades a Presentaciones  <label id="d">@(ViewBag.TITULO?? String.Empty)</label></h4>
+        
+        <hr />
+
+        
+        <label for="ID_PRESENTACION">Presentacion</label>
+        @Html.DropDownListFor(model => model.ID_PRESENTACION, ViewBag.PresentacionlDDL as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangePresentacion(this.value)" })
+
+        <br />
+
+        <label for="ID_NOMBRE_COMERCIAL">Nombre Comercial</label>
+        @Html.DropDownListFor(model => model.ID_NOMBRE_COMERCIAL, ViewBag.NombreComercial as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangeNombreComercial(this.value)" })
+
+        <br />
+
+        <label for="ID_CLIENTE">Cliente</label>
+        @Html.DropDownListFor(model => model.ID_CLIENTE, ViewBag.Cliente as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+        <br />
+
+        <label for="ID_UOM">UOM</label>
+        @Html.DropDownListFor(model => model.ID_UOM, ViewBag.UomDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+        <br />
+        @Html.LabelFor(model => model.CANTIDAD)
+        @Html.EditorFor(model => model.CANTIDAD, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        <br />
+        @Html.LabelFor(model => model.LOTE)
+        @Html.EditorFor(model => model.LOTE, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
+        <div class="modal-footer">
+            <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProduct()" />
+            <input type="text" style="visibility: hidden;" id="ID_LOTE_INGRESO" value="@(ViewBag.ID_LOTE_INGRESO  ?? String.Empty)">
+            <input type="text" style="visibility: hidden;" id="ID_PRODUCTO" value="@(ViewBag.ID_PRODUCTO  ?? String.Empty)">
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    function SaveProduct() {
+        var ID_LOTE_INGRESO = $("#ID_LOTE_INGRESO").val();
+        var ID_UOM = $("#ID_UOM").val();
+        var ID_PRESENTACION = $("#ID_PRESENTACION").val();
+        var CANTIDAD = $("#CANTIDAD").val();
+        var ID_NOMBRE_COMERCIAL = $("#ID_NOMBRE_COMERCIAL").val();
+        var ID_CLIENTE = $("#ID_CLIENTE").val();
+        var LOTE = $("#LOTE").val();
+        
+        if (CANTIDAD > 0) {
+
+        
+        var product = {
+            "ID_LOTE_INGRESO": ID_LOTE_INGRESO, "ID_UOM": ID_UOM, "ID_PRESENTACION": ID_PRESENTACION,
+            "CANTIDAD": CANTIDAD, "ID_NOMBRE_COMERCIAL": ID_NOMBRE_COMERCIAL
+            , "ID_CLIENTE": ID_CLIENTE, "LOTE": LOTE,"ESTADO":1
+        };
+
+        $.post('/IngresoCantidadPresentacion/Crear', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+        } else {
+            swal({ title: "Informacion", text: "El valor de la cantidad debe ser mayor a 0", type: "error", showConfirmButton: true });
+        }
+   
+    }
+    function CallChangePresentacion(id) {
+
+        $('#ID_NOMBRE_COMERCIAL').empty();
+        var V_ID_PRODUCTO = $("#ID_PRODUCTO").val();
+
+        var listAlmacen = [];
+        $.ajax({
+            url: '/IngresoCantidadPresentacion/traeNombreComercial',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_presentacion: id, id_producto: V_ID_PRODUCTO },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_NOMBRE_COMERCIAL').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+
+        var ID_NOMBRE_COMERCIAL = $("#ID_NOMBRE_COMERCIAL").val();
+        CallChangeNombreComercial(ID_NOMBRE_COMERCIAL);
+    }
+
+    function CallChangeNombreComercial(id) {
+
+        $('#ID_CLIENTE').empty();
+        
+        var listAlmacen = [];
+        $.ajax({
+            url: '/IngresoCantidadPresentacion/traeClienteJson',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_nombre_comercial: id },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_CLIENTE').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+
+
+    }
+
+
+    
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+

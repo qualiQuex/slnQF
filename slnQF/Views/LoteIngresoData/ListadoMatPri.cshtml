@@ -1,0 +1,57 @@
+﻿
+
+@model IEnumerable<slnQF.SP_CONSULTA_LIB_MAT_PRIMResult>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        @{
+            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridMatPri");
+        }
+        <div class="table-responsive">
+            <div id="gridMatPri">
+
+                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+                                     grid.Column("NO_INGRESO", "No. Control", null, "text-center", false),
+                                     grid.Column("NOMBRE", "Producto", null, "text-center", false),
+                                     grid.Column("PROVEEDOR", "Proveedor", null, "text-center", false),
+                                     grid.Column("CANTIDAD_BULTOS", "Cantidad de Bultos", null, "text-center", false),
+                                     grid.Column("CANTIDAD_INGRESADA", "Cantidad Ingresada", null, "text-center", false),
+                                     grid.Column("UOM", "Unidad de Medida", null, "text-center", false),
+                                     grid.Column("FECHA_ANALISIS", "Fecha de Muestra", null, "text-center", false),
+                                     grid.Column("NO_LOTE", "Lote", null, "text-center", false),
+                                     grid.Column("FECHA_FABRICACION", "Fecha Fabricacion", null, "text-center", false),
+                                     grid.Column("FECHA_VENCIMIENTO", "Vence", null, "text-center", false),
+                                     grid.Column("FECHA_FISQUI", "Fecha Fis-Qui", null, "text-center", false),
+                                     grid.Column("RESULT_FISQUI", "Resultado Fis-Qui", null, "text-center", false),
+                                     grid.Column("FECHA_MICROBIO", "Fecha MicroB.", null, "text-center", false),
+                                     grid.Column("RESULT_MICROBIO", "Resultado Microbiologico", null, "text-center", false),
+                                     grid.Column("RESULT_FINAL", "Dictamen Final", null, "text-center", false)
+
+                                 })
+            </div>
+        </div>
+    </div>
+            }
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridMatPri table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "ordering": false,
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+
+</script>

@@ -1,0 +1,45 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<slnQF.SP_CONSULTA_LIB_PROD_TERMResult>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+ 
+        <div class="table-responsive">
+            <div id="gridPRODTERM">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No. Ingreso</th>
+                           
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+            }
+@Html.PagedListPager(Model, i=>Url.Action("ListadoProdTerm","LoteIngresoData",new { page, }))
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridPRODTERM table').DataTable({
+            
+            "proccessing" :true,
+            "serverSide": true,
+            "filter": false,
+            "orderMulti": false,
+            "ajax":{
+                "url":"/loteingresodata/loaddata",
+                "type":"POST",
+                "datatype":"json"
+            },
+            "columns":[
+                {"data": "NO_INGRESO","name":"NO_INGRESO","autoWidth":true}
+            ]
+            
+        });
+    });
+  
+</script>

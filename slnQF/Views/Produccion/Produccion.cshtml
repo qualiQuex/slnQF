@@ -1,0 +1,4212 @@
+﻿@{
+    ViewBag.Title = "Produccion";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+
+<div class="content-wrapper">
+    @if (Session["LogedUser"] != null)
+    {
+        <!-- Content Header (Page header) -->
+
+        <section class="content-header">
+
+            <h1>
+
+                <label id="lbl_titulo"> </label>
+                <label id="lbltipo" class="hidden"> </label>
+                <small>Version 1.0</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+            </ol>
+            <style>
+                .loader {
+                    position: fixed;
+                    left: 0px;
+                    top: 0px;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 9999;
+                    background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+                }
+            </style>
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+             <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+            <script type="text/javascript">
+                        $(window).load(function() {
+                            $(".loader").fadeOut("slow");
+                        })
+            </script>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+
+            <div class="row" id="divRegresa">
+
+                <a id="linkRegresa" href="javascript:regresar();"><span class="fa fa-reply "></span>  Regresar </a>
+            </div>
+
+            <div class="row" id="divRegresa_Orden">
+                <a id="linkRegresa" href="javascript:regresarOrden();"><span class="fa fa-reply "></span>  Regresar </a>
+
+            </div>
+
+            <label id="g_lbl_docentry" class="hidden"></label>
+            <div class="row" id="divEncabezado">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools pull-right">
+                            <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="form-horizontal col-md-12">
+
+                                <div id="divMesSerie">
+                                    <label class="text-danger" id="lblMessageSerie">Seleccione serie</label>
+                                </div>
+                                <div class="col-md-4" id="divSeries">
+                                    <label class="control-label" for="CmbSerie">Series Documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+
+                                            @Html.DropDownList("cmbSeries", null, "---", new { @class = "btn btn-default", @onchange = "CallChangeSerie(this.value)" })
+
+                                        </div>
+                                        <input type="text" class="form-control" id="txtNumDocto" name="txtNumDocto" disabled>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-2" id="divFechaFin">
+                                    <label class="control-label" for="txt_fecha_finaliza">Fecha Contabilizacion:</label>
+                                    <div>
+                                        <input type="date" class="form-control" id="txt_fecha_contabiliza" disabled>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2" id="divReferencia">
+                                    <label class="control-label" for="txt_ref2">Referencia 2</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_ref2">
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2" id="divNoOrden">
+                                    <label class="control-label" for="txt_no_orden">No Orden:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_no_orden" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" id="divRenglon">
+                                    <label class="control-label" for="txt_no_orden">Renglon:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_Renglon" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="divJournal">
+                                    <label class="control-label" for="txt_jrnal_remark">Asiento Contable</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_jrnal_remark" disabled value="Receipt from Production" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-horizontal col-md-12">
+                                <div class="col-md-2 hidden">
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_docentry">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" id="divTipo">
+                                    <label class="control-label" for="txt_tipo">Tipo:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_tipo" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" id="divCantidad">
+                                    <label class="control-label" for="txt_cantidad">Cantidad:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_cantidad">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" id="divPrecio">
+                                    <label class="control-label" for="txt_Precio">Precio:</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_Precio" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" id="divWareHouse">
+                                    <label class="control-label" for="txt_WareHouse">Almacen:</label>
+                                    <div>
+                                        @Html.DropDownList("cmbWareHouse", null, "---", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2" id="divDispensadores">
+                                    <label class="control-label" for="cmbDispensacores">Dispensador:</label>
+                                    <div>
+                                        @Html.DropDownList("cmbDispensadores", null, "---", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" id="divVerificadores">
+                                    <label class="control-label" for="cmbDispensacores">Verificador:</label>
+                                    <div>
+                                        @Html.DropDownList("cmbVerificadores", null, "---", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div id="divProducto">
+                                    <div class="col-md-2" id="divProducto1">
+                                        <label class="control-label" for="cmbDispensacores">No.Producto:</label>
+                                        <div>
+                                            <input type="text" class="form-control " id="txt_itemNo" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" id="divProducto2">
+                                        <label class="control-label" for="CmbSerie">Producto</label>
+                                        <div>
+
+
+
+
+                                            <input type="text" class="form-control" id="txt_itemName" disabled>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" id="divUMedida">
+                                    <label class="control-label" for="txt_umedida">U. Medida</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_umedida" disabled>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" id="divComentario">
+                                    <label class="control-label" for="txt_ref2">Comentario</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="txt_comentario">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" id="divLotesNuevo">
+                                    <label class="control-label" for="txt_ref2">Lotes</label>
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modalNuevoLote" class="btn btn_grid display-mode click-lote-recibo">..</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="divEtiquetConfig">
+                                    <label class="control-label" for="txt_ref2">Etiquetas</label>
+                                    <div>
+                                        <button data-toggle="modal" data-target="#modalEtiqueta" class="btn btn_grid display-mode click-etiquetaConfig">..</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" id="divBotonRecibo">
+                                    <label class="control-label" for="CmbSerie">_</label>
+                                    <div>
+                                        <button type="button" class="btn btn-primary add-Receipt" id="btnAgregaRecibo"> RECIBO</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="divBotonDevolucion">
+                                    <label class="control-label" for="CmbSerie">_</label>
+                                    <div>
+                                        <button type="button" class="btn btn-primary clickDevuelve" id="btnAgregaDevolucion"> DEVOLUCION</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" id="divAgregaFabricacion">
+                                    <label class="control-label" for="btnAgregaFabricacion">_</label>
+                                    <div>
+                                        <button type="button" class="btn btn-primary clickFabrica" id="btnAgregaFabricacion"> EMISION</button>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="row" id="divOrdenProduccion">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                        <div class="box-tools pull-right">
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div id="divBusquedaAvanzada">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" Font-Size="8" Font-Bold=false>
+                                <SPAN class="fa fa-search"></SPAN> Busqueda
+                            </a>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="box-body">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="txtBusUsuario">Documento:</label>
+                                            <input class="changeUsuario form-control" type="text" id="txtBusUsuario">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtBusSupervisor">Supervisor:</label>
+                                            <input class="changeUsuario form-control" type="text" id="txtBusSupervisor">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+
+                            <div class="col-md-12">
+
+                                @{
+
+
+                                    WebGrid grid = new WebGrid(Model.Items, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+
+                                }
+                                <div class="table-responsive">
+                                    <div id="gridContent">
+                                        @grid.GetHtml(
+                                       htmlAttributes: new { width = "100%" },
+    mode: WebGridPagerModes.All,
+    columns: grid.Columns(
+    grid.Column(header: "", format: @<text><a href="#" class="fa fa-shield select-recibo" title="Creacion recibo" id="@item.DocNum"> </a></text>),
+    grid.Column(header: "", format: @<text><a href="#" class="glyphicon glyphicon-list select-emision" title="Creacion emision" id="@item.DocNum"> </a></text>),
+    grid.Column(header: "", format: @<text><a href="#" class="glyphicon glyphicon-refresh select-devolucion" title="Creacion devolucion" id="@item.DocNum"> </a></text>),
+    grid.Column(header: "", format: @<text><a href="#" class="fa fa-search select-detalle" title="Ver detalle" id="@item.DocNum"> </a></text>),
+    grid.Column("DOCENTRY", "DOCENTRY", null, "text-left", false),
+    grid.Column("DocNum", "No. Documento", null, "text-left", false),
+    grid.Column("Tipo", " Tipo", null, "text-left", false),
+    grid.Column("Estado", "Estado", null, "text-left", false),
+    grid.Column("DescripcionProd", "DescripcionProd", null, "text-left", false),
+    grid.Column("CantidadPlani", "Cantidad Planificada", null, "text-left", false),
+    grid.Column("Almacen", "WHS", null, "text-left", false),
+    grid.Column("Serie", "Serie", null, "text-left", false),
+    grid.Column("FechaFabricacion", "FechaFabricacion", null, "text-left", false),
+    grid.Column("FechaFinalizacion", "FechaFinalizacion", null, "text-left", false),
+    grid.Column("Usuario", "Usuario", null, "text-left", false),
+    grid.Column("ItemCode", "No. Producto", null, "text-left", false),
+    grid.Column("ItemName", "Producto", null, "text-left", false),
+    grid.Column("Precio", "Precio", null, "text-left", false),
+    grid.Column("Supervisor", "Supervisor", null, "text-left", false),
+    grid.Column("Observaciones", "Observaciones", null, "text-left", false),
+    grid.Column(header: "", format: @<text><a href="#"  data-toggle="modal" data-target="#modalEditaComentario" class="fa fa-edit EventoEditarComentario" title="Editar Observacion" id="@item.DOCENTRY"> </a></text>),
+    grid.Column("PedidoCliente", "Pedido", null, "text-left", false),
+    grid.Column("Cliente", "Cliente", null, "text-left", false),
+    grid.Column("NormaReparto", "Norma Reparto", null, "text-left", false),
+    grid.Column("Proyecto", "Proyecto", null, "text-left", false),
+    grid.Column("TipoFabricacion", "Tipo Fab.", null, "text-left", false),
+    grid.Column("FormulaMaestra", "F. Maestra", null, "text-left", false),
+    grid.Column("FormaFarmaceutica", "F. Farmaceutica", null, "text-left", false),
+    grid.Column("UnidadesFabrica", "Unidades a Fabricar", null, "text-left", false),
+    grid.Column("Lote", "Lote", null, "text-left", false),
+    grid.Column("Vence", "Vence", null, "text-left", false),
+    grid.Column("Almacen_Desc", "Almacen", null, "text-left", false),
+    grid.Column("Comentario", "Comentario", null, "text-left", false),
+    grid.Column("Origen", "origen", null, "text-left", false),
+    grid.Column("Dispensador", "dispensador", null, "text-left", false),
+    grid.Column("FechaFabricacion", "Fecha Fabricacion", null, "text-left", false),
+    grid.Column("Verificador", "verificador", null, "text-left", false),
+    grid.Column("FechaEntrega", "FechaEntrega", null, "text-left", false),
+    grid.Column("Cantidad", "Cantidad", null, "text-left", false),
+    grid.Column("UnidadMedida", "Unidad de medida", null, "text-left", false),
+    grid.Column("FechaFinalizacion", "Fecha Finalizacion", null, "text-left", false),
+    grid.Column(header: "", format: @<text><a href="#" class="fa fa-times label label-danger clickCierraOrden" title="Cerrar orden" id="@item.DOCENTRY"> </a></text>)
+    )
+    )
+    
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divListaProduccion">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Articulos</h3>
+                        <label id="lblNoOrden" class="hidden"> </label>
+                        <label id="lbldocentry" class="hidden"> </label>
+                        <div class="box-tools pull-right">
+                            <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            @{
+
+
+                                WebGrid grid2 = new WebGrid(Model.ItemsOrdenProduccion, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContentItems");
+
+                            }
+                            <div class="table-responsive">
+                                <div id="gridContentItems">
+                                    @grid2.GetHtml(null,
+    mode: WebGridPagerModes.All,
+
+    columns: grid2.Columns(
+    grid2.Column("linenum", "#", null, "text-center", false),
+    grid2.Column(header: " ", format: @<text><input type="checkbox" name="selectedrows" value="item.linenum" /></text>),
+    grid2.Column("noOrden", "Orden", null, "text-center ", false),
+    grid2.Column("itemCode", "Cod. Articulo", null, "text-center", false),
+    grid2.Column("itemName", " Articulo", null, "text-center", false),
+    grid2.Column(header: "Cantidad", format: @<text><input type="text" name="txtCantidadT" value="item.quantity" /></text>),
+
+    grid2.Column("warehouse", "Almacen", null, "text-center", false),
+    grid2.Column("linenum", "Linea", null, "text-center", false),
+    grid2.Column("lote", "Lote", null, "text-center", false),
+    grid2.Column(header: "Cant. Etiquetas", format: @<text><input type="text" name="txtRenglon" />...</text>),
+    grid2.Column(header: "Lotes", format: @<text><input type="button" name="button" />...</text>),
+
+    grid2.Column(header: "Tara", format: @<text><input type="text" name="txtTara" />...</text>),
+    grid2.Column("UniMedida", "UOM", null, "text-center", false),
+    grid2.Column("CantComprometida", "Comprometido", null, "text-center", false),
+    grid2.Column("CantDisponible", "Disponible", null, "text-center", false),
+    grid2.Column("linenum", "Taras", null, "text-center", false),
+    grid2.Column("SwLote", "SWLOTE", null, "text-center", false)
+,
+
+    grid2.Column("Comprometido", "Comprometido", null, "text-left", false),
+
+    grid2.Column("Stock", "Stock", null, "text-left", false),
+
+    grid2.Column("Solicitado", "Solicitado", null, "text-left", false)
+
+
+    )
+    )
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divDetalleOrdenProduccion">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Detalle Orden de Produccion: <label id="lblOProdDetalle"></label></h3>
+                        <div class="box-tools pull-right">
+                            <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <div>
+                            <div class="col-sm-6">
+                                <!-- FIRST COLUMN -->
+                                <div class="form-group">
+                                    <label for="txtDserie" class="col-sm-4 control-label">Serie</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDserie"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDtipo" class="col-sm-4 control-label">Tipo</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDtipo"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDestado" class="col-sm-4 control-label">Estado</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDestado"></label>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtDusuario" class="col-sm-4 control-label">Usuario</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDusuario"></label>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtDsupervisor" class="col-sm-4 control-label">Supervisor</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDsupervisor"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDfechafabrica" class="col-sm-4 control-label">Fecha Fabricacion</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDfechafabrica"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDfecfinaliza" class="col-sm-4 control-label">Fecha Finalizacion</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDfecfinaliza"></label>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtDformulamaestra" class="col-sm-4 control-label">F. Maestra</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDformulamaestra"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDunidadesfabrica" class="col-sm-4 control-label">UnidadesFabrica</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDunidadesfabrica"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="txtDcomentario" class="col-sm-4 control-label">Relaciones</label>
+                                    <div class="col-sm-8">
+                                        <a href="#" data-toggle="modal" data-target="#modalDiagrama" class="glyphicon glyphicon-th-large select-diagrama" title="Relaciones"> </a>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- SECOND COLUMN -->
+                                <div class="form-group">
+                                    <label for="txtDcantidad" class="col-sm-4 control-label">Cantidad</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDcantidad"></label>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtDNoProducto" class="col-sm-4 control-label">No. Producto</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDNoProducto"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDdescripcion" class="col-sm-4 control-label">Descripcion</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDdescripcion"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDalmacen_desc" class="col-sm-4 control-label">Almacen</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDalmacen_desc"></label>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="txtDvence" class="col-sm-4 control-label">Vence</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDvence"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDtipofabrica" class="col-sm-4 control-label">Tipo Fab.</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDtipofabrica"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDformafarmaceutica" class="col-sm-4 control-label">F. Farmaceutica</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDformafarmaceutica"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDlote" class="col-sm-4 control-label">Lote</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDlote"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDcomentario" class="col-sm-4 control-label">Comentario</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control" id="txtDcomentario"></label>
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+
+                        <br />
+                        <div>
+
+                            <div class="col-md-12">
+                                @{
+
+
+                                    WebGrid grid4 = new WebGrid(Model.ItemsOrdenProduccion, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridDetalle");
+
+                                }
+                                <div class="table-responsive">
+                                    <div id="gridDetalle">
+                                        @grid4.GetHtml(null,
+                                                        mode: WebGridPagerModes.All,
+
+                                                            columns: grid4.Columns(
+                                                            grid4.Column("itemCode", "Cod. Articulo", null, "text-left", false),
+                                                            grid4.Column("itemName", "Articulo", null, "text-left", false),
+                                                            grid4.Column("quantity", "Can. Pend", null, "text-left", false),
+                                                            grid4.Column("cantidadbase", "Cant. Base", null, "text-left", false),
+                                                            grid4.Column("cantidadrequerida", "Cant. Req.", null, "text-left", false),
+                                                            grid4.Column("warehouse", "Almacen", null, "text-left", false),
+                                                            grid4.Column("linenum", "Linea", null, "text-left", false)
+                                                            )
+
+                                                            )
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
+
+
+            <div class="modal fade" id="modalCofigLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                <div class="modal-dialog modal-lg" role="document" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close CofigLoteClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Cantidad necesitada: <label id="lbl_quantity"></label><br />
+                                Cantidad restante: <label id="lblCantidadRestanteConfigLote">0</label>
+                                <label class="hidden" id="lbl_tableSelected"></label>
+                                <label id="lbl_quantity2" class="hidden"></label>
+                            </h4>
+                            <h4><label id="lbl_itemName"></label></h4>
+                        </div>
+
+
+                        <div id="divLotes" class="modal-body table-responsive">
+
+                        </div>
+
+                        <label class="text-danger" id="lbl_MensajeConfigLote"></label>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnConfLote" class="btn btn-primary okConfigLote" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+                    <div class="modal fade" id="modalEditaComentario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                        <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="TitulomodalEditaComentario">Editar comentario:</h4>
+                                </div>
+                                <label id="lbl_docentryEdita" class="hidden"></label> 
+                               
+                                    <div class="modal-body form-horizontal">
+
+                                    <textarea class="form-control" id="txtComentario" name="Comentario"  rows="5">hi</textarea>
+                                    <div class="modal-footer">
+                                        <div id="DivEditar">
+                                            <input type="button" value="Guardar" class="btn btn-primary clickEditaComentario"  />
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <!-- Modal -->
+
+            <div class="modal fade" id="modalConfigTara" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Configuracion Cant. Etiquetas - Tara
+
+                                <label id="lbl_quantity2tara"></label>
+                            </h4>
+                            <h4><label id="lbl_itemNameTara"></label></h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <label class="hidden" id="lbl_tableSelectedTara"></label>
+
+                            <div class="table-responsive">
+                                <div id="divRenTara">
+
+                                </div>
+                            </div>
+                            <label class="text-danger" id="lbl_MensajeConfigTara"></label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary okConfigTara" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalNuevoLote" tabindex="-1" role="document"  >
+                
+                <div class="modal-dialog modal-lg" role="document" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close ConfigLoteNuevoClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Lotes producto: <label id="lblITemNamenL"></label></h4>
+                            <label id="lblCantidadRestante"></label>
+
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row" id="divRegresa">
+                                <a id="linkNuevoLote" href="javascript:nuevaFila();"><span class="fa fa-plus "></span>  Nuevo </a>
+                            </div>
+                            <div class="table-responsive">
+                                <div id="divnlotes">
+                                <table id="tblNLotes" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="5%"> </th>
+                                        <th width="15%">Lote</th>
+                                        <th  >Cantidad</th>
+                                        <th  >Fecha Exp.</th>
+                                        <th width="10%">Estado</th>
+                                        <th width="10%">Potencia</th>
+                                        <th width="25%">Analisis No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr></tr>
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+
+                                </tr>
+
+                                </tfoot>
+                            </table>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="modal-footer">
+                            <label class="text-danger" id="lbl_MensajeNuevoLote"></label>
+
+                            <button type="button" id="btnNuevoLote"class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalEtiqueta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+
+                        <div id="DivToAppendPartialViewEmbalaje" class="box box-primary">
+
+
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <div id="DivGuardar">
+                                <input type="button" value="Verificar" class="btn btn-primary" onclick="muestraEtiqueta()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="overflow-x: scroll;width:600px;">
+                        <div class="modal-header">
+                            <label id="lblPantallaReg" class="hidden">x</label>
+                            <button type="button" class="close btnCloseModFile"  data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div id="divEmbed">
+                                    <iframe src="blank:" type="application/pdf" id="iFrameFile" height="100%" width="550px"></iframe>'
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalDiagrama" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" id="btnCloseDiagrama" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalDiagramTitulo">Mapa de relacion Orden: <label id="lbl_modalDiagramTitulo"></label></h4>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id="chart-container"></div>
+                            <div>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <ul id="ul-data" class="list-unstyled"></ul>
+                            </div>
+                            <div class="table-responsive">
+                                <h2><label id="lblTblDiagrama"></label></h2>
+                                <table class="table table-responsive" id="divtblMapa">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Almacen</th>
+                                            <th>Linea</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+
+                                </table>
+                                <table class="table table-hover" id="divAnexos">
+                                    <thead>
+                                        <tr>
+                                            <td><div id="divLinkA">@Html.ActionLink("Anexo A", "DownloadReport", new { docnum = "10041", format = "PDF" }, new { id = "mylinkA" })</div></td>
+                                            <td><div id="divLinkB">@Html.ActionLink("Anexo B", "DownloadReportAnexoB", new { docnum = "10041", format = "PDF" }, new { id = "mylinkB" })</div></td>
+                                            <td><div id="divLinkC">@Html.ActionLink("Anexo C", "DownloadReportAnexoC", new { docnum = "10041", format = "PDF" }, new { id = "mylinkC" })</div></td>
+                                            <td><div id="divLinkD">@Html.ActionLink("Anexo D", "DownloadReportAnexoD", new { docnum = "10041", format = "PDF" }, new { id = "mylinkD" })</div></td>
+                                            <td><div id="divLinkE">@Html.ActionLink("Anexo E", "DownloadReportAnexoE", new { docnum = "10041", format = "PDF" }, new { id = "mylinkE" })</div></td>
+                                            <td><div id="divLinkEmba">@Html.ActionLink("Embalaje", "DownloadEtiqueta", new { docnum = "10041" }, new { id = "mylinkEmba" })</div></td>
+                                            <td><div id="divLinkRes">@Html.ActionLink("Resumen", "DownloadResumen", new { docnum = "10041" }, new { id = "mylinkRes" })</div></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalFondo" aria-labelledby="myModalLabel">
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalDetalle" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalDetalleLabel">Detalle Orden No.: <label id="lbl_no_orden_MD"></label></h4>
+                        </div>
+                        <div class="modal-body">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+                                    }
+                                    else
+                                    {
+
+                                        Response.Redirect("~/Usuario/Login2");
+                                    }
+    
+    @section Scripts{
+
+    <script type="text/javascript">
+
+    initialize();
+
+
+    $(function () {
+
+        var columnas = [4, 6, 7, 8, 9, 11, 12, 13, 14, 17, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40];
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaVerOrdenProd = 0;
+                var v_cuentaVerRecibo = 0;
+                var v_cuentaVerEmision = 0;
+                var v_cuentaVerDevoluciones = 0;
+                var v_cuentaVerDetalle = 0;
+                $.each(json, function (j, item2) {
+                    if (item2.IDPERMISO == 1 && item2.IDACCESO == 2)
+                        v_cuentaVerOrdenProd = 1;
+
+                    if (item2.IDPERMISO == 2 && item2.IDACCESO == 2)
+                        v_cuentaVerRecibo = 1;
+
+                    if (item2.IDPERMISO == 3 && item2.IDACCESO == 2)
+                        v_cuentaVerEmision = 1;
+
+
+                    if (item2.IDPERMISO == 4 && item2.IDACCESO == 2)
+                        v_cuentaVerDevoluciones = 1;
+
+
+                    if (item2.IDPERMISO == 5 && item2.IDACCESO == 2)
+                        v_cuentaVerDetalle = 1;
+
+
+                });
+
+                if (v_cuentaVerOrdenProd == 0) {
+                    $('#gridContent').hide();
+                }
+                if (v_cuentaVerRecibo == 0) {
+                    columnas.push(0);
+                }
+                if (v_cuentaVerEmision == 0) {
+                    columnas.push(1);
+                }
+                if (v_cuentaVerDevoluciones == 0) {
+                    columnas.push(2);
+                }
+
+                if (v_cuentaVerDetalle == 0) {
+                    columnas.push(3);
+
+                }
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        var get_params = function (search_string) {
+
+            var parse = function (params, pairs) {
+                var pair = pairs[0];
+                var parts = pair.split('=');
+                var key = decodeURIComponent(parts[0]);
+                var value = decodeURIComponent(parts.slice(1).join('='));
+
+                // Handle multiple parameters of the same name
+                if (typeof params[key] === "undefined") {
+                    params[key] = value;
+                } else {
+                    params[key] = [].concat(params[key], value);
+                }
+
+                return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+            }
+
+            // Get rid of leading ?
+            return search_string.length == 0 ? {} : parse({}, search_string.substr(1).split('&'));
+        }
+
+        var params = get_params(location.search);
+        var gEstado;
+        if (params['estado'] == "Can") {
+            gEstado = "Can";
+            $("#lb_estadtitulo").text("Ordenes de produccion canceladas");
+        } else if (params['estado'] == "Cer") {
+            gEstado = "Cer";
+            $("#lb_estadtitulo").text("Ordenes de produccion cerradas");
+        } else if (params['estado'] == "Pla") {
+            gEstado = "Pla";
+            $("#lb_estadtitulo").text("Ordenes de produccion planificadas");
+        } else if (params['estado'] == "Lib") {
+            gEstado = "Lib";
+            $("#lb_estadtitulo").text("Ordenes de produccion liberadas");
+        } else {
+            gEstado = "Lib";
+            $("#lb_estadtitulo").text("Ordenes de produccion liberadas");
+        }
+
+        $("#lbl_quantity2").text("0");
+
+        $("#modalFondo").modal({
+            show: false,
+            backdrop: 'static'
+        });
+        $("#modalCofigLote").modal({
+            show: false,
+            backdrop: 'static'
+        });
+        $("#modalConfigTara").modal({
+            show: false,
+            backdrop: 'static'
+        });
+        /*
+        $('#gridContent table tfoot th').each(function () {
+        $(this).html('<input type="text" placeholder="Buscar ' +  '" />');
+        });
+        */
+        $('#gridContent table').append("<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td><input type='text' id='txtBDoc' placeholder='Documento' class='hidden' /></td><td></td><td><input type='text' id='txtBEstado' placeholder='Estado'  class='hidden' /></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><input type='text' id='txtBSupervisor' placeholder='Supervisor'   class='hidden' /></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>")
+
+        if (gEstado == "Lib") {
+
+
+
+            $('#gridContent table').DataTable({
+                "pageLength": 10,
+                //"searching": true,
+                "paging": true,
+
+                "searching": true,
+
+                "columnDefs": [
+                    { "class": "hidden", "targets": columnas },
+                    { "class": "text-left", "targets": [5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20] },
+                    { "class": "text-center", "targets": [0, 1, 2, 3] },
+                    { "type": "date-uk", "targets": 35 },
+                    { "width": "10%", "targets": [19] },
+                    { "width": "15%", "targets": [16] },
+                    { "width": "5%", "targets": [35] }
+                ],
+                fixedColumns: true
+            });
+        } else {
+            $('#gridContent table').DataTable({
+                "pageLength": 10,
+                //"searching": true,
+                "paging": true,
+
+                "searching": true,
+
+                "columnDefs": [
+                    { "class": "hidden", "targets": [0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 40, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39,41] },
+                    { "class": "text-left", "targets": [5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20] },
+                    { "class": "text-center", "targets": [0, 1, 2, 3] },
+                    { "type": "date-uk", "targets": 35 }
+                ]
+
+
+            }
+            );
+        }
+
+        var table = $('#gridContent table').DataTable();
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('click', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+
+
+
+
+
+        $('#gridContentItems table').append("<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
+        $('#gridContentItems table').DataTable({
+            "searching": true,
+            "paging": false,
+            "info": false,
+            fixedColumns: true,
+            "searching": false,
+            "ordering": false,
+            "columnDefs": [
+                { "class": "hidden", "targets": [2, 7, 8, 16, 13] }
+
+            ]
+        }
+        );
+
+        $('#gridDetalle table').append("<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td> </tr></tfoot>");
+        $('#gridDetalle table').DataTable({
+
+            "paging": false,
+            "lengthChange": true,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "columnDefs": [
+
+                { "class": "text-left", "targets": [0, 1, 2, 3, 4, 5] }
+            ]
+        }
+        );
+
+
+        $.ajax({
+            url: '/Produccion/traeSeriesUser/',
+            type: "POST",
+            dataType: "JSON",
+            data: {},
+            success: function (json) {
+                var str_MSG = "";
+                if (json.serieEmision.length <= 0) {
+                    str_MSG = "No tiene serie de emision configurada. ";
+                }
+                if (json.serieRecibo.length <= 0) {
+                    str_MSG = str_MSG + "No tiene serie de recibo y devolucion configurada";
+                }
+                if (str_MSG.length > 0) {
+                    swal("Informacion", str_MSG, "error")
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+    function initialize() {
+        var spinner;
+
+        var opts = {
+            lines: 17 // The number of lines to draw
+            , length: 56 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '50%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: true // Whether to render a shadow
+            , hwaccel: false // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+        };
+        startSpin();
+        $("#divEncabezado").hide();
+        $("#divListaProduccion").hide();
+        $("#divRegresa").hide();
+        $("#divRegresa_Orden").hide();
+        $('#divDetalleOrdenProduccion').hide();
+        $("#divOrdenProduccion").show();
+        var tipo = $('#lbltipo').val();
+
+        $("#lbl_titulo").text("Produccion");
+        $("#lbl_breadcumb").text("Orden de Produccion");
+        stopSpin();
+
+        function startSpin() {
+            $("#modalFondo").modal("show");
+            var target = document.getElementById('preview');
+            spinner = new Spinner(opts).spin(target);
+
+
+        }
+        function stopSpin() {
+            var target = document.getElementById('preview');
+
+            //setTimeout(function () {
+            spinner.stop();
+            //}, 3000);
+
+            $("#modalFondo").modal('hide');
+        }
+
+        $(document).on('change', '.changeUsuario', function () {
+
+            if (this.id == 'txtBusUsuario') {
+                $("#txtBDoc").val($("#txtBusUsuario").val());
+                $("#txtBDoc").click();
+
+            } else if (this.id == 'txtBusEstado') {
+                $("#txtBEstado").val($("#txtBusEstado").val());
+                $("#txtBEstado").click();
+
+            } else if (this.id == 'txtBusSupervisor') {
+                $("#txtBSupervisor").val($("#txtBusSupervisor").val());
+                $("#txtBSupervisor").click();
+
+            }
+
+
+            $('#gridContent table').DataTable().draw();
+
+
+        });
+
+
+        $(document).on('click', '.btnCloseModFile', function () {
+            if ($("#lblPantallaReg").text() == "Y") {
+                $('#modalDiagrama').modal();
+            }
+
+        });
+        $(document).on('click', '.select-diagrama', function () {
+            startSpin();
+            $('#ul-data').empty();
+            var $cuenta = 0;
+            var $vNum = "";
+            var $vNum2 = "";
+            $("#divLinkA").hide();
+            $("#divLinkB").hide();
+            $("#divLinkC").hide();
+            $("#divLinkD").hide();
+            $("#divLinkE").hide();
+            $("#divLinkEmba").hide();
+            $("#divLinkRes").hide();
+
+            var $v_docnum = $('#lblOProdDetalle').text();
+
+            $('#lbl_modalDiagramTitulo').val($v_docnum);
+
+            $('#ul-data').append("<li> Orden Produccion: " + $v_docnum + "</li>");
+            $.ajax({
+                url: '/Produccion/traeListadoPorOrden/',
+                type: "POST",
+                async: false,
+                dataType: "JSON",
+                data: { docto: "EMISION", numDoc: $v_docnum },
+                success: function (json) {
+                    $.each(json, function (i, item) {
+                        $cuenta = $cuenta + 1;
+                        $vNum = $vNum + "<li><a  href='javascript:clickMapaEmision(" + item.value + ");'>" + item.value + "</a></li>";
+
+                    });
+
+
+                },
+                error: function (error) { }
+            });
+
+            $.ajax({
+                url: '/Produccion/traeListadoPorOrden/',
+                type: "POST",
+                async: false,
+                dataType: "JSON",
+                data: { docto: "ORDEN", numDoc: $v_docnum },
+                success: function (json) {
+                    $.each(json, function (i, item) {
+                        $cuenta = $cuenta + 1;
+                        $vNum2 = $vNum2 + "<li><a  href='javascript:clickMapaRecibo(" + item.value + ");'>" + item.value + "</a></li>";
+
+                    });
+
+                    stopSpin();
+                },
+                error: function (error) { stopSpin(); }
+            });
+
+            if ($cuenta > 0) {
+                $('#ul-data li').append("<ul><li>Emision<ul>" + $vNum + "</ul></li></ul>" + "<ul><li>Recibo<ul>" + $vNum2 + "</ul></li></ul>");
+
+            }
+            $('#chart-container').empty();
+            $('#chart-container').orgchart({
+                'data': $('#ul-data'),
+                'pan': false,
+                'zoom': false,
+                'depth': 3,
+                'verticalDepth': 3
+            });
+            $("#divtblMapa tbody").empty();
+            $("#lblTblDiagrama").text("");
+        });
+        $(document).on('click', '.EventoEditarComentario', function () {
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_docnum = $item.children("td:eq(5)").html();
+            var $v_docentry = $item.children("td:eq(4)").html();
+
+            $('#TitulomodalEditaComentario').text("Editar comentario de Orden " + $v_docnum);
+            $("#txtComentario").text($item.children("td:eq(19)").html());
+            $("#lbl_docentryEdita").val($v_docentry);
+
+        });
+        $(document).on('click', '.select-detalle', function () {
+            startSpin();
+            $('#divDetalleOrdenProduccion').show();
+            $('#divOrdenProduccion').hide();
+            $("#divRegresa_Orden").show();
+
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_docnum = $item.children("td:eq(5)").html();
+
+            $("#txtDtipo").text($item.children("td:eq(6)").html());
+            $("#txtDestado").text($item.children("td:eq(7)").html());
+            $("#txtDdescripcion").text($item.children("td:eq(16)").html());
+            $("#txtDNoProducto").text($item.children("td:eq(15)").html());
+
+            $("#txtDserie").text($item.children("td:eq(11)").html());
+            $("#txtDusuario").text($item.children("td:eq(14)").html());
+            $("#txtDsupervisor").text($item.children("td:eq(18)").html());
+            $("#txtDfechafabrica").text($item.children("td:eq(19)").html());
+            $("#txtDfecfinaliza").text($item.children("td:eq(40)").html());
+            $("#divLinkA").hide();
+            $("#divLinkB").hide();
+            $("#divLinkC").hide();
+            $("#divLinkD").hide();
+            $("#divLinkE").hide();
+            $("#divLinkEmba").hide();
+            $("#divLinkRes").hide();
+            $("#txtDtipofabrica").text($item.children("td:eq(25)").html());
+
+            $("#txtDformulamaestra").text($item.children("td:eq(26)").html());
+            $("#txtDformafarmaceutica").text($item.children("td:eq(27)").html());
+            $("#txtDunidadesfabrica").text($item.children("td:eq(28)").html());
+            $("#txtDlote").text($item.children("td:eq(29)").html());
+            $("#txtDvence").text($item.children("td:eq(30)").html());
+            $("#txtDalmacen_desc").text($item.children("td:eq(31)").html());
+            $("#txtDcomentario").text($item.children("td:eq(32)").html());
+            $("#txtDcantidad").text($item.children("td:eq(38)").html());
+            /*
+            $("#txtDmedida").text($item.children("td:eq(39)").html());
+
+
+            $("#txtDispensador").text($item.children("td:eq(34)").html());
+            $("#txtDobservacion").text($item.children("td:eq(35)").html());
+            */
+
+            $('#lblOProdDetalle').text($v_docnum);
+            $('#lbl_no_orden_MD').text($v_docnum);
+            var $v_docentry = $item.children("td:eq(4)").html();
+
+            $("#gridDetalle table tbody").empty();
+            $.ajax({
+                url: '/Produccion/SeleccionItemsOrdenProd/',
+                type: "POST",
+                dataType: "JSON",
+                data: { docentry: $v_docentry },
+                success: function (json) {
+                    $.each(json, function (i, item) {
+
+                        $.each(item, function (j, item2) {
+
+                            var $v_whs = item2.warehouse;
+                            var newrow = '<tr>' +
+
+                                '<td class="text-left">' + item2.itemCode + '</td>' +
+                                '<td class="text-left">' + item2.itemName + '</td>' +
+                                '<td class="text-left">' + item2.quantity + '</td>' +
+                                '<td class="text-left">' + item2.cantidadbase + '</td>' +
+                                '<td class="text-left">' + item2.cantidadrequerida + '</td>' +
+
+                                '<td class="text-left">' + item2.warehouse + '</td>' +
+                                '<td class="text-left">' + item2.linenum + '</td>' +
+                                '</tr>';
+
+                            $("#gridDetalle table tbody").append(newrow);
+
+
+
+                        });
+                    });
+
+
+                    stopSpin();
+                },
+                error: function (error) {
+                    stopSpin();
+                }
+            });
+
+        });
+        $(document).on('click', '.select-devolucion', function () {
+            startSpin();
+            try {
+
+                $("#txt_jrnal_remark").val("Devolución de producción");
+                $('#lbltipo').val("DEVOLUCION");
+
+
+                $("#lbl_titulo").text("Produccion");
+                $("#lbl_breadcumb").text("Devolucion de Produccion");
+
+                $("#divOrdenProduccion").hide();
+                $("#divEncabezado").show();
+                $("#divListaProduccion").show();
+                $("#divAgregaFabricacion").hide();
+
+                $("#divLotesNuevo").hide();
+                $("#divEtiquetConfig").hide();
+
+                $("#divRegresa").show();
+                $("#divSeries").show();
+                $("#divFechaFin").show();
+                $("#divReferencia").show();
+                $("#divNoOrden").show();
+                $("#divRenglon").hide();
+                $("#divJournal").show();
+                $("#divComentario").show();
+                $("#divTipo").hide();
+                $("#divCantidad").hide();
+                $("#divPrecio").hide();
+                $("#divWareHouse").hide();
+                $("#divProducto").hide();
+                $("#divDispensadores").hide();
+                //$("#divVerificadores").hide();
+                $("#divBotonRecibo").hide();
+                $("#divBotonDevolucion").show();
+
+                $("#divUMedida").hide();
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_docentry = $item.children("td:eq(4)").html();
+                var $v_tipo = $item.children("td:eq(6)").html();
+                var $v_cantidadPlani = $item.children("td:eq(9)").html();
+                var $v_Almacen = $item.children("td:eq(10)").html();
+                var $v_itemcode = $item.children("td:eq(15)").html();
+                var $v_itemname = $item.children("td:eq(16)").html();
+                var $v_Precio = $item.children("td:eq(17)").html();
+
+                var pd = $(this).prop('id');
+                var now = new Date();
+
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+                $('#txt_fecha_contabiliza').val(today);
+                $('#txt_docentry').val($v_docentry);
+                $("#lbldocentry").text($v_docentry);
+                $('#txt_no_orden').val(pd);
+                $("#lblNoOrden").text(pd);
+                $('#txt_tipo').val($v_tipo);
+                $('#txt_cantidad').val($v_cantidadPlani);
+                $("#cmbWareHouse").val($v_Almacen);
+                $('#txt_itemNo').val($v_itemcode);
+                $('#txt_itemName').val($v_itemname);
+                $('#txt_Precio').val($v_Precio);
+
+                var $v_baseentry = $v_docentry;
+                $("#g_lbl_docentry").text($v_baseentry);
+
+                var v_banc = 0;
+
+                $("#gridContentItems table tbody").empty();
+                var listAlmacen = [];
+                $.ajax({
+                    url: '/Produccion/traeWareHouse',
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {},
+                    async: false,
+                    cache: false,
+                    success: function (json) {
+
+
+                        listAlmacen = json;
+
+                    },
+                    error: function (error) { console.log(error); }
+                });
+                actualizaSerie("ORDEN");
+
+                $.ajax({
+                    url: '/Produccion/SeleccionItemsOrdenProd/',
+                    type: "POST",
+                    dataType: "JSON",
+
+                    data: { docentry: $v_docentry },
+                    success: function (json) {
+                        $.each(json, function (i, item) {
+                            var $vcuenta = 0;
+                            $.each(item, function (j, item2) {
+                                $vcuenta++;
+                                var nombreSel = 'selwhs' + item2.linenum;
+                                var $v_whs = item2.warehouse;
+                                var newrow = '<tr>' +
+                                    '<td class="text-left">' + $vcuenta + '</td>' +
+                                    '<td class="text-center">' + ' <input type="checkbox" class="checkItem" name="selectedrows" value="' + item2.linenum + '"  />' + '</td>' +
+                                    '<td class="hidden">' + item2.noOrden + '</td>' +
+                                    '<td class="text-left">' + item2.itemCode + '</td>' +
+                                    '<td class="text-left">' + item2.itemName + '</td>' +
+                                    '<td class="text-left">' + '<input type="text" style="width: 50px !important;" name="txtCantidadT" value="0"   />' + '</td>' +
+                                    '<td class="text-left">' + '<select id="selwhs' + item2.linenum + '" class="SelectWHS"></select>' + '</td>' +
+                                    //'<td class="text-center">SelectWHS' + item2.warehouse + '</td>' +
+                                    '<td class="hidden">' + item2.linenum + '</td>' +
+                                    '<td class="hidden">' + item2.lote + '</td>' +
+                                    '<td class="text-left">' + '<input type="text"  style="width: 50px !important;"  name="txtRenglon" value="" class="chgRenglon"  disabled/>' + '</td>' +
+                                    '<td class="text-center">' + '<button data-toggle="modal" data-target="#modalCofigLote" class="btn btn_grid display-mode clickLote" id="' + item2.itemCode + '" disabled>...</button>' + '</td>' +
+
+                                    '<td class="text-left">' + ' <input type="text"  style="width: 40px !important;" name="txtTara" value="" disabled/>' + '</td>' +
+                                    '<td class="text-left">' + item2.UniMedida + '</td>' +
+                                    '<td class="hidden">' + item2.CantComprometida + '</td>' +
+                                    '<td class="text-left">' + item2.CantDisponible + '</td>' +
+                                    '<td class="text-center">' + '<button data-toggle="modal" data-target="#modalConfigTara" class="btn btn_grid display-mode clickTara" id="ctara' + item2.itemCode + '" disabled>...</button>' + '</td>' +
+                                    '<td class="hidden">' + item2.SwLote + '</td>' +
+                                    '<td class="text-center">' + item2.Comprometido + '</td>' +
+                                    '<td class="text-center">' + item2.Stock + '</td>' +
+                                    '<td class="text-center">' + item2.Solicitado + '</td>' +
+                                    '</tr>';
+
+
+                                $("#gridContentItems table tbody").append(newrow);
+
+                                $.each(listAlmacen, function (i, item3) {
+                                    var $sel = "";
+
+
+                                    $('#' + nombreSel).append($('<option >', {
+                                        value: item3.id,
+                                        text: item3.id,
+
+                                    }));
+
+                                    if (item3.id == $v_whs) {
+                                        $('#' + nombreSel + ' option[value = "' + $v_whs + '"]').attr('selected', true);
+                                    }
+                                });
+
+
+                            });
+                        });
+
+                        stopSpin();
+                    },
+                    error: function (error) { stopSpin(); }
+
+                });
+
+
+
+            }
+            catch (err) {
+                console.log("Input is " + err);
+            }
+
+        });
+
+        $(document).on('click', '.select-recibo', function () {
+            startSpin();
+            //$("#modalFondo").modal("show");
+            $('#gridNlotes table').DataTable({
+
+                //"searching": true,
+                "paging": false,
+
+                "searching": false,
+
+                "columnDefs": [
+                    { "class": "hidden", "targets": [0] },
+                    { "width": "10%", "targets": [1] },
+                    { "width": "15%", "targets": [2] }
+                ],
+                fixedColumns: true
+            });
+            $('#lbltipo').val("ORDEN");
+            $("#txt_jrnal_remark").val("Recibo de producción");
+            $("#lbl_titulo").text("Produccion");
+            $("#lbl_breadcumb").text("Recibo de Produccion");
+
+
+
+            $("#divOrdenProduccion").hide();
+            $("#divEncabezado").show();
+            $("#divListaProduccion").hide();
+
+            $("#divAgregaFabricacion").hide();
+            $("#divBotonRecibo").show();
+            $("#divBotonDevolucion").hide();
+
+            $("#divLotesNuevo").show();
+            $("#divEtiquetConfig").show();
+            $("#divRegresa").show();
+            $("#divSeries").show();
+            $("#divFechaFin").show();
+            $("#divReferencia").show();
+            $("#divNoOrden").show();
+            $("#divRenglon").hide();
+            $("#divJournal").show();
+            $("#divComentario").show();
+            $("#divTipo").hide();
+            $("#divCantidad").show();
+            $("#divPrecio").hide();
+            $("#divWareHouse").show();
+            $("#divProducto").show();
+            $("#divDispensadores").hide();
+            //$("#divVerificadores").hide();
+            $("#divUMedida").show();
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            $("#tblNlotes tbody").empty();
+            $("#tblNlotes tbody").append("<tr>  <td><a href='#' class='fa fa-times eliminaFila' title='Elimina Fila's> </a></td><td><input class='form-control' type='text' id='txtNewNolote'></td><td><input class='form-control changeLoteNuevo' type='text' id='txtNewCantidad'></td><td><input class='form-control' type='date' id='txtNewFechaExpira'></td><td><input class='form-control' type='text' id='txtNewMnfSerial'></td><td><input class='form-control' type='text' id='txtNewLotNumber'></td><td><input class='form-control' type='text' id='txtNewLotNotes'  Width='15%'></td></tr>");
+
+            var $v_docentry = $item.children("td:eq(4)").html();
+            var $v_tipo = $item.children("td:eq(6)").html();
+            var $v_cantidadPlani = $item.children("td:eq(9)").html();
+            if ($v_cantidadPlani == 0)
+                $v_cantidadPlani = 1;
+            var $v_Almacen = $item.children("td:eq(10)").html();
+            var $v_itemcode = $item.children("td:eq(15)").html();
+            var $v_itemname = $item.children("td:eq(16)").html();
+            var $v_Precio = $item.children("td:eq(17)").html();
+            var $v_lote = $item.children("td:eq(29)").html();
+            var $v_vence = $item.children("td:eq(30)").html();
+            $("#txtNewCantidad").val($v_cantidadPlani);
+            $("#txtNewNolote").val($v_lote);
+            $("#lblITemNamenL").text($v_itemname);
+            $('#txt_umedida').val($item.children("td:eq(39)").html());
+            if ($v_vence.length > 0) {
+                var parts = $v_vence.split('/');
+
+                var d = new Date(parts[2] + "-" + parts[1] + "-" + parts[0]);
+
+                var day1 = ("0" + d.getUTCDate()).slice(-2);
+                var month1 = ("0" + (d.getUTCMonth() + 1)).slice(-2);
+                var year1 = d.getUTCFullYear();
+
+                var newdate = year1 + "-" + month1 + "-" + day1;
+                $("#txtNewFechaExpira").val(newdate);
+            }
+            var pd = $(this).prop('id');
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+            $('#txt_fecha_contabiliza').val(today);
+            $("#lbldocentry").text($v_docentry);
+            $("#lblNoOrden").text(pd);
+            $('#txt_docentry').val($v_docentry);
+            $('#txt_no_orden').val(pd);
+            $('#txt_tipo').val($v_tipo);
+            $('#txt_cantidad').val($v_cantidadPlani);
+            $("#cmbWareHouse").val($v_Almacen);
+            $('#txt_itemNo').val($v_itemcode);
+            $('#txt_itemName').val($v_itemname);
+            $('#txt_Precio').val($v_Precio);
+            actualizaSerie("ORDEN");
+            /*
+            $("#gridContentItems tbody").empty();
+            $.ajax({
+            url: '/Produccion/SeleccionItemsOrdenProd/',
+            type: "POST",
+            dataType: "JSON",
+            async: "false",
+            data: { docentry: $v_docentry },
+            success: function (json) {
+            $.each(json, function (i, item) {
+
+            $.each(item, function (j, item2) {
+            var nombreSel = 'selwhs' + item2.linenum;
+            var $v_whs = item2.warehouse;
+            var newrow = '<tr>' +
+            '<td class="text-center">' + '<input type="checkbox" class="checkItem" name="selectedrows" value="' + item2.linenum + '"  />' + '</td>' +
+            '<td class="text-left">' + item2.noOrden + '</td>' +
+            '<td class="text-center">' + item2.itemCode + '</td>' +
+            '<td class="text-center">' + item2.itemName + '</td>' +
+            '<td class="text-center">' + '<input type="text" name="txtCantidadT" value="' + item2.quantity + '" disabled />' + '</td>' +
+            '<td class="text-center">' + '<select id="selwhs' + item2.linenum + '" disabled></select>' + '</td>' +
+            //'<td class="text-center">' + item2.warehouse + '</td>' +
+            '<td class="text-center">' + item2.linenum + '</td>' +
+            '<td class="text-center">' + item2.lote + '</td>' +
+            '<td class="text-center">' + '<input type="text" name="txtRenglon" value="" disabled/>' + '</td>' +
+            '<td class="text-center">' + '<button data-toggle="modal" data-target="#modalCofigLote" class="btn btn_grid display-mode clickLote" id="' + item2.itemCode + '" >...</button>' + '</td>' +
+            '</tr>';
+
+            $("#gridContentItems tbody").append(newrow);
+
+
+
+
+            $.ajax({
+            url: '/Produccion/traeWareHouse',
+            type: "POST",
+            async: "false",
+            dataType: "JSON",
+            data: {},
+            success: function (json) {
+            $.each(json, function (i, item3) {
+            var $sel = "";
+
+
+            $('#' + nombreSel).append($('<option >', {
+            value: item3.id,
+            text: item3.value,
+
+            }));
+
+            if (item3.id == $v_whs) {
+            $('#' + nombreSel + ' option[value = "' + $v_whs + '"]').attr('selected', true);
+            }
+            })
+            //$("#modalFondo").modal('hide');
+            },
+            error: function (error) { console.log(error); }
+            })
+
+
+            })
+            })
+            stopSpin();
+            },
+            error: function (error) { stopSpin(); }
+            });*/
+            //$("#cmbVerificadores").val($("#target option:first").val());
+            document.getElementById("cmbVerificadores").selectedIndex = 0;
+            stopSpin();
+        });
+
+        $(document).on('click', '.select-emision', function () {
+            startSpin();
+            $("#divAgregaFabricacion").show();
+
+            $('#lbltipo').val("EMISION");
+
+
+            $("#txt_jrnal_remark").val("Emisión para producción");
+            $("#lbl_titulo").text("Produccion");
+            $("#lbl_breadcumb").text("Emision de Produccion");
+            $("#divOrdenProduccion").hide();
+            $("#divEncabezado").show();
+            $("#divListaProduccion").show();
+
+            $("#divSeries").show();
+            $("#divFechaFin").show();
+            $("#divReferencia").show();
+            $("#divNoOrden").show();
+            $("#divRenglon").hide();
+            $("#divJournal").show();
+            $("#divLotesNuevo").hide();
+            $("#divEtiquetConfig").hide();
+            $("#divComentario").show();
+            $("#divTipo").hide();
+            $("#divCantidad").hide();
+            $("#divPrecio").hide();
+            $("#divWareHouse").hide();
+            $("#divDispensadores").show();
+            $("#divVerificadores").show();
+            $("#divProducto").hide();
+            $("#divBotonRecibo").hide();
+            $("#divBotonDevolucion").hide();
+
+            $("#divUMedida").hide();
+            var pd2 = $(this).prop('id');
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_docentry = $item.children("td:eq(4)").html();
+            var pd = $(this).prop('id');
+
+            $("#lblNoOrden").text(pd2);
+            $('#txt_no_orden').val(pd2);
+            $("#lbldocentry").text($v_docentry);
+            $("#divAgregaMontaje").hide();
+            $("#divRegresa").show();
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            var $v_almacen2;
+
+
+            document.getElementById("cmbDispensadores").selectedIndex = 0;
+            document.getElementById("cmbVerificadores").selectedIndex = 0;
+            $('#txt_fecha_contabiliza').val(today);
+
+            var listAlmacen = [];
+
+            $("#gridContentItems table tbody").empty();
+            $.ajax({
+                url: '/Produccion/traeWareHouse',
+                type: "GET",
+                dataType: "JSON",
+                data: {},
+                async: false,
+                cache: false,
+
+                success: function (json) {
+                    listAlmacen = json;
+
+                },
+                error: function (error) { console.log(error); }
+            });
+            actualizaSerie("EMISION");
+            $.ajax({
+                url: '/Produccion/SeleccionItemsOrdenProd/',
+                type: "POST",
+                dataType: "JSON",
+
+                data: { docentry: $v_docentry },
+                success: function (json) {
+                    $.each(json, function (i, item) {
+                        var $vcuenta = 0;
+                        $.each(item, function (j, item2) {
+                            if (item2.quantity > 0) {
+                                var nombreSel = 'selwhs' + item2.linenum;
+                                var $v_whs = item2.warehouse;
+                                $vcuenta++;
+                                var $v_disabled = '';
+                                var $v_taraval = '';
+                                if (item2.UniMedida != 'KG') {
+                                    $v_disabled = ' disabled ';
+                                    $v_taraval = '0';
+                                }
+                                var v_itemcode = "'" + item2.itemCode + "'";
+                                var newrow = '<tr>' +
+                                    '<td class="text-left">' + $vcuenta + '</td>' +
+                                    '<td class="text-center">' + '<input type="checkbox" class="checkItem" name="selectedrows" value="' + item2.linenum + '" />' + '</td>' +
+                                    '<td class="hidden">' + item2.noOrden + '</td>' +
+                                    '<td class="text-left">' + item2.itemCode + '</td>' +
+                                    '<td class="text-left">' + item2.itemName + '</td>' +
+                                    '<td class="text-left">' + '<input type="text" name="txtCantidadT" style="width: 50px !important;"  value="' + item2.quantity + '" class="SelectWHS"/>' + '</td>' +
+                                    '<td class="text-left">' + '<select id="selwhs' + item2.linenum + '" class="SelectWHS" onchange="OnChangeAlmacen(this,' + v_itemcode + ')"></select>' + '</td>' +
+                                    //'<td class="text-center">' + item2.warehouse + '</td>' +
+                                    '<td class="hidden">' + item2.linenum + '</td>' +
+                                    '<td class="hidden">' + item2.lote + '</td>' +
+                                    '<td class="text-left">' + '<input type="text" name="txtRenglon" style="width: 50px !important;"  value=""  class="chgRenglon" />' + '</td>' +
+                                    '<td class="text-center">' + '<button data-toggle="modal" data-target="#modalCofigLote" class="btn btn_grid display-mode clickLote" id="' + item2.itemCode + '" disabled>...</button>' + '</td>' +
+
+                                    '<td class="text-left">' + '<input type="text" name="txtTara" style="width: 40px !important;"  value="' + $v_taraval + '" ' + $v_disabled + '/>' + '</td>' +
+
+                                    '<td class="text-left">' + item2.UniMedida + '</td>' +
+
+                                    '<td class="hidden">' + item2.CantComprometida + '</td>' +
+                                    '<td class="text-left">' + item2.CantDisponible + '</td>' +
+                                    '<td class="text-center">' + '<button data-toggle="modal" data-target="#modalConfigTara" class="btn btn_grid display-mode clickTara" id="ctara' + item2.itemCode + '" disabled>...</button>' + '</td>' +
+                                    '<td class="hidden">' + item2.SwLote + '</td>' +
+                                    '<td class="text-center">' + item2.Comprometido + '</td>' +
+                                    '<td class="text-center">' + item2.Stock + '</td>' +
+                                    '<td class="text-center">' + item2.Solicitado + '</td>' +
+                                    '</tr>';
+
+                                $("#gridContentItems table tbody").append(newrow);
+
+
+                                $.each(listAlmacen, function (i, item3) {
+                                    var $sel = "";
+
+
+                                    $('#' + nombreSel).append($('<option >', {
+                                        value: item3.id,
+                                        text: item3.id,
+
+                                    }));
+
+                                    if (item3.id == $v_whs) {
+                                        $('#' + nombreSel + ' option[value = "' + $v_whs + '"]').attr('selected', true);
+                                    }
+                                })
+
+                            }
+
+                        })
+                    })
+                    stopSpin();
+
+                },
+                error: function (error) { stopSpin(); }
+            });
+
+        });
+
+        $(document).on('click', '.click-lote-recibo', function () {
+            $("#txtNewCantidad").val($('#txt_cantidad').val());
+            $("#btnNuevoLote").show();
+        });
+
+        $(document).on('click', '.click-etiquetaConfig', function () {
+
+            $("#DivToAppendPartialViewEmbalaje").empty();
+            var ph = $("#DivToAppendPartialViewEmbalaje");
+            var $v_itemid = $('#txt_itemNo').val();
+            var $v_cantidad = $('#txt_cantidad').val();
+            ph.load("/ItemEmbalaje/ListadoListadoItemEmbalaje?Id=" + $v_itemid + "&cantidad=" + $v_cantidad);
+        });
+
+        $(document).on('click', '.checkItem', function () {
+
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_id = $item.children("td:eq(3)").html();
+            var $v_swlote = $item.children("td:eq(16)").html();
+
+            var tipo = $('#lbltipo').val();
+
+            if ($(this).is(':checked')) {
+                if ($v_swlote == "Y") {
+                    $('#' + $v_id).removeAttr('disabled');
+                }
+                if (tipo != "DEVOLUCION") {
+                    $('#ctara' + $v_id).removeAttr('disabled');
+                }
+            } else {
+                $('#' + $v_id).attr('disabled', 'disabled');
+
+
+                if (tipo != "DEVOLUCION") {
+                    $('#ctara' + $v_id).attr('disabled', 'disabled');
+                }
+            }
+        });
+        $(document).on('click', '.clickLote', function () {
+            startSpin();
+
+            $("#lbl_MensajeConfigLote").text('');
+
+            
+            $("#lblCantidadRestanteConfigLote").text('');
+            $("#divLotes").find("table").hide();
+            $("#btnConfLote").show();
+
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var v_campot;
+            var $v_contador = 0;
+            $($item).find("input").each(function () {
+                $v_contador = $v_contador + 1;
+                if ($v_contador == 2) {
+                    v_campot = this.value;
+                }
+            });
+            var tipo = $('#lbltipo').val();
+            //var $v_totLote = $item.children("td:eq(4)").html();
+            var $v_totLote = v_campot;
+            var $v_restTotal = 0;
+
+            var $v_baseEntry = $("#g_lbl_docentry").text();
+
+            var pd2 = $(this).prop('id');
+            var v_tableid = 'tblLotes' + pd2;
+            $("#lbl_quantity").text($v_totLote);
+            $("#lbl_quantity2").text("0");
+            
+            $("#lbl_tableSelected").text(v_tableid);
+            $("#lbl_itemName").text(pd2 + ":" + $item.children("td:eq(4)").html());
+            var $selname = "#selwhs" + $item.children("td:eq(7)").html();
+            var $whs = $($selname + " option:selected").val();
+
+            $('#divLotes').show();
+
+            if (document.getElementById(v_tableid)) {
+
+                $('#' + v_tableid).show();
+            } else {
+                if (tipo == 'EMISION') {
+                    $.ajax({
+                        url: '/Produccion/traeLotesItem/',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: { docentry: pd2 },
+                        success: function (json) {
+
+                            var table = '<table id="' + v_tableid + '" class="table table-hover"> ' +
+                                '<tr>' +
+                                '<th class="hidden">Codigo articulo</th> ' +
+                                '<th>Lote</th>' +
+                                '<th>Cantidad</th>' +
+                                '<th></th>' +
+                                '<th>Almacen</th>' +
+                                '<th>F Vencim</th>' +
+                                '<th>Estatus</th>' +
+                                '<th>Potencia</th>' +
+                                '<th>Notas</th>' +
+                                '</tr>' +
+                                '</table>';
+                            $('#divLotes').append(table);
+
+
+                            var $enabled = "";
+                            /*
+                            if (tipo == "ORDEN") {
+                            $enabled = "disabled";
+                            } else {
+                            $enabled = "";
+                            }
+                            */
+                            var v_class = 'class="';
+                            if (tipo != 'DEVOLUCION') {
+                                v_class = v_class + ' changeLote validaCantidadLote" ';
+                            } else {
+                                v_class = v_class + 'changeLote"';
+                            }
+
+                            $v_restTotal = $v_totLote;
+                            $.each(json.ListaItems, function (i, item) {
+                                if (item.WHSCODE == $whs) {
+                                    if (tipo != 'DEVOLUCION') {
+                                        //parseFloat(x);
+                                        var $valCampoCant = 0;
+                                        if ($v_restTotal > 0) {
+
+                                            if (parseFloat(item.QUANTITY) >= parseFloat($v_restTotal)) {
+                                                var decimals = $v_restTotal - Math.floor($v_restTotal);
+                                                if (decimals <= 0) {
+                                                    $v_restTotal = $v_restTotal + ".0";
+                                                }
+                                                var decPart = ($v_restTotal + "").split(".")[1];
+                                                var cuenta = 0;
+                                                if (decPart.length > 0) {
+                                                    cuenta = decPart.length;
+                                                } else {
+                                                    cuenta = 1;
+                                                }
+
+                                                var $cantTmp = roundUsing(Math.ceil, parseFloat($v_restTotal), cuenta); //Math.round(parseFloat($v_restTotal) * 10) / 10;
+                                                $valCampoCant = $cantTmp;
+                                                $v_restTotal = 0;
+
+                                            } else if (parseFloat(item.QUANTITY) < parseFloat($v_restTotal)) {
+
+                                                var tmpTotal = parseFloat($v_restTotal) - parseFloat(item.QUANTITY);
+                                                var decimals = tmpTotal - Math.floor(tmpTotal);
+                                                if (decimals <= 0) {
+                                                    tmpTotal = tmpTotal + ".0";
+                                                }
+
+
+                                                var decPart1 = (tmpTotal + "").split(".")[1];
+                                                var cuenta1 = 0;
+                                                if (decPart1.length > 0) {
+                                                    cuenta1 = decPart1.length;
+                                                } else {
+                                                    cuenta1 = 1;
+                                                }
+
+                                                $valCampoCant = item.QUANTITY;
+
+                                                $v_restTotal = roundUsing(Math.ceil, tmpTotal, cuenta1);//Math.round((parseFloat($v_restTotal) - parseFloat(item.QUANTITY)) * 10) / 10;;
+
+                                            }
+
+                                        }
+
+                                        var newrow = '<tr>' +
+                                            '<td class="hidden">' + item.ITEMCODE + '</td>' +
+                                            '<td class="text-center">' + item.BATCHNUM + '</td>' +
+                                            '<td class="text-center">' + item.QUANTITY + '</td>' +
+                                            '<td class="text-center" ><input type="text"  ' + v_class + $enabled + ' value="' + $valCampoCant + '"/></td>' +
+                                            '<td class="text-center">' + item.WHSCODE + '</td>' +
+                                            '<td class="text-center">' + item.FECHA_VENCIM + '</td>' +
+                                            '<td class="text-center">' + item.MNF_SERIAL + '</td>' +
+                                            '<td class="text-center">' + item.LOT_NUMBER + '</td>' +
+                                            '<td class="text-center">' + item.NOTES + '</td>' +
+                                            '</tr>';
+
+                                        $("#" + v_tableid + " tbody").append(newrow);
+                                    } else {
+                                        var newrow = '<tr>' +
+                                            '<td class="hidden">' + item.ITEMCODE + '</td>' +
+                                            '<td class="text-center">' + item.BATCHNUM + '</td>' +
+                                            '<td class="text-center">' + item.QUANTITY + '</td>' +
+                                            '<td class="text-center" ><input type="text"  ' + v_class + $enabled + ' value="' + 0 + '"/></td>' +
+                                            '<td class="text-center">' + item.WHSCODE + '</td>' +
+                                            '<td class="text-center">' + item.FECHA_VENCIM + '</td>' +
+                                            '<td class="text-center">' + item.MNF_SERIAL + '</td>' +
+                                            '<td class="text-center">' + item.LOT_NUMBER + '</td>' +
+                                            '<td class="text-center">' + item.NOTES + '</td>' +
+                                            '</tr>';
+
+                                        $("#" + v_tableid + " tbody").append(newrow);
+                                    }
+                                }
+                            })
+
+                        },
+                        error: function (error) { stopSpin(); }
+                    });
+                } else if (tipo == 'DEVOLUCION') {
+                    var v_class = 'class="changeLote"';
+                    $.ajax({
+                        url: '/Produccion/traeLotesItemDevolucion/',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: { docentry: pd2, baseentry: $v_baseEntry, whscode: $whs },
+                        success: function (json) {
+
+                            var table = '<table id="' + v_tableid + '" class="table table-hover"> ' +
+                                '<tr>' +
+                                '<th class="hidden">Codigo articulo</th> ' +
+                                '<th>Lote</th>' +
+                                '<th class="hidden">-</th>' +
+                                '<th></th>' +
+                                '<th>Almacen</th>' +
+                                '<th>F Vencim</th>' +
+                                '<th>Estatus</th>' +
+                                '<th>Potencia</th>' +
+                                '<th>Notas</th>' +
+                                '</tr>' +
+                                '</table>';
+                            $('#divLotes').append(table);
+
+
+                            $("#btnConfLote").hide();
+
+                            $("#lbl_MensajeConfigLote").text('Corregir las cantidades, no coincide con la cantidad solicitada.');
+
+                            $.each(json.ListaItems, function (i, item) {
+
+                                var newrow = '<tr>' +
+                                    '<td class="hidden">' + item.ITEMCODE + '</td>' +
+                                    '<td class="text-center">' + item.BATCHNUM + '</td>' +
+                                    '<td class="text-center hidden"  >' + '0' + '</td>' +
+                                    '<td class="text-center" ><input type="text"  ' + v_class + ' value="' + item.QUANTITY + '"/></td>' +
+                                    '<td class="text-center">' + item.WHSCODE + '</td>' +
+                                    '<td class="text-center">' + item.FECHA_VENCIM + '</td>' +
+                                    '<td class="text-center">' + item.MNF_SERIAL + '</td>' +
+                                    '<td class="text-center">' + item.LOT_NUMBER + '</td>' +
+                                    '<td class="text-center">' + item.NOTES + '</td>' +
+                                    '</tr>';
+
+                                $("#" + v_tableid + " tbody").append(newrow);
+
+
+                            })
+
+                        },
+                        error: function (error) { stopSpin(); }
+                    });
+                }
+            }
+            stopSpin();
+        });
+
+        $(document).on('click', '.clickTara', function () {
+            startSpin();
+            $("#divRenTara").find("table").hide();
+
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var v_campot;
+            var $v_contador = 0;
+            var $v_totalTara = 0;
+            var $v_totalCantidad = 0;
+            var $v_linenum = $item.children("td:eq(7)").html();
+            var $v_uom = $item.children("td:eq(12)").html();
+            var $v_item = $item.children("td:eq(3)").html();
+            var $v_nom = $item.children("td:eq(4)").html();
+            $($item).find("input").each(function () {
+                $v_contador = $v_contador + 1;
+
+                if ($v_contador == 2) {
+                    $v_totalCantidad = this.value;
+
+                }
+
+                if ($v_contador == 4) {
+                    $v_totalTara = this.value;
+
+                }
+                if ($v_contador == 3) {
+                    v_campot = this.value;
+
+                }
+            });
+            if (v_campot.length == 0) {
+                v_campot = 1;
+            } else if (v_campot == "0") {
+                v_campot = 1;
+            }
+            var $v_renglon = parseInt(v_campot) + 1;
+            var pd2 = $(this).prop('id');
+            var v_tableid = 'tblTaras' + pd2;
+
+            var $vtaradividio = parseFloat($v_totalTara) / parseFloat($v_renglon - 1);
+            var $vpesodividio = parseFloat($v_totalCantidad) / parseFloat($v_renglon - 1);
+            /*
+            if ($v_uom != 'KG') {
+            $vtaradividio = 0;
+            $vpesodividio = 0;
+            }
+            */
+            $("#lbl_quantity2tara").text($v_totalTara);
+            $("#lbl_itemNameTara").text($v_item + " " + $v_nom);
+
+            if (document.getElementById(v_tableid)) {
+
+                $('#' + v_tableid).show();
+            } else {
+
+                var table = '<table id="' + v_tableid + '" class="table table-hover"> ' +
+                    '<tr>' +
+                    '<th class="hidden">linenum</th> ' +
+                    '<th class="hidden">docnumemi</th>' +
+                    '<th>Tara</th>' +
+                    '<th>Peso Neto</th>' +
+                    '</tr>' +
+                    '</table>';
+                $('#divRenTara').append(table);
+
+                for (i = 1; i < $v_renglon; i++) {
+                    var newrow = '<tr>' +
+                        '<td class="hidden">' + $v_linenum + '</td>' +
+                        '<td class="hidden">' + pd2 + '</td>' +
+                        '<td class="text-center" ><input type="text"   value="' + $vtaradividio + '"/></td>' +
+                        '<td class="text-center" ><input type="text"    value="' + $vpesodividio + '"/></td>' +
+
+                        '</tr>';
+
+                    $("#" + v_tableid + " tbody").append(newrow);
+                }
+            }
+            $('#divRenTara').show();
+
+
+            stopSpin();
+        });
+
+        $(document).on('click', '.clickFabrica', function () {
+
+            try {
+                var $v_docnum = $('#txtNumDocto').val();
+
+
+                if ($v_docnum <= 0) {
+
+                    swal("Error", "Debe de tener numero de documento, no tiene serie asociada.", "error");
+
+                } else {
+                    var listOfObjectsTara = [];
+                    var divtara = document.getElementById('divRenTara');
+                    var tablasTara = [];
+                    var v_CuentatARA = 0;
+                    for (i22 = j22 = 0; i22 < divtara.childNodes.length; i22++)
+                        if (divtara.childNodes[i22].nodeName == 'TABLE') {
+                            j22++;
+                            var input = divtara.childNodes[i22].id;
+                            tablasTara.push(input);
+
+                        }
+                    for (var rr = 0, n = tablasTara.length; rr < n; rr++) {
+                        var contadorTara = 0;
+                        $("#" + tablasTara[rr] + " tbody tr").each(function (index) {
+                            var campo1Tara, campo2Tara, campo3Tara, campo4Tara;
+
+                            var $v_contador = 0;
+                            $(this).children("td").each(function (index2) {
+
+                                var v_campo1Tara;
+                                var v_campo2Tara;
+
+
+                                $(this).find("input").each(function () {
+
+                                    $v_contador = parseInt($v_contador) + 1;
+
+                                    if ($v_contador == 1) {
+
+
+                                        v_campo1Tara = this.value;
+
+                                    }
+                                    if ($v_contador == 2) {
+
+                                        v_campo2Tara = this.value;
+
+                                    }
+
+                                });
+
+                                switch (index2) {
+                                    case 0: campo1Tara = $(this).text();
+                                        break;
+                                    case 1: campo2Tara = $(this).text();
+                                        break;
+                                    case 2: campo3Tara = v_campo1Tara;
+                                        break;
+                                    case 3: campo4Tara = v_campo2Tara;
+                                        break;
+                                }
+                                //$(this).css("background-color", "#ECF8E0");
+                            })
+
+                            if (contadorTara > 0) {
+                                var objTara = new Object();
+                                objTara.LINENUM = campo1Tara;
+                                objTara.ITEMCODE = campo2Tara;
+                                objTara.TARA = campo3Tara;
+                                objTara.PESONETO = campo4Tara;
+
+                                listOfObjectsTara.push(objTara);
+                                v_CuentatARA = v_CuentatARA + 1;
+                                //alert(campo1 + ' - ' + campo2 + ' - ' + campo3 + ' - ' + campo4);
+                            }
+                            contadorTara = contadorTara + 1;
+
+                        });
+                    }
+                    var jsonStringTara = JSON.stringify(listOfObjectsTara);
+
+                    //LOTES
+
+                    var listOfObjects = [];
+                    var div2 = document.getElementById('divLotes');
+                    var tablas = [];
+                    for (i = j = 0; i < div2.childNodes.length; i++)
+                        if (div2.childNodes[i].nodeName == 'TABLE') {
+                            j++;
+                            var input = div2.childNodes[i].id;
+                            tablas.push(input);
+
+                        }
+
+
+                    for (var r = 0, n = tablas.length; r < n; r++) {
+                        var contador = 0;
+                        $("#" + tablas[r] + " tbody tr").each(function (index) {
+                            var campo1, campo2, campo3, campo4;
+
+
+                            $(this).children("td").each(function (index2) {
+
+                                var v_campo4;
+                                var v_campoRenglon;
+                                var $v_contador = 0;
+                                $(this).find("input").each(function () {
+
+                                    $v_contador = $v_contador + 1;
+                                    if ($v_contador == 1) {
+                                        v_campo4 = this.value;
+
+                                    }
+
+                                })
+
+                                switch (index2) {
+                                    case 0: campo1 = $(this).text();
+                                        break;
+                                    case 1: campo2 = $(this).text();
+                                        break;
+                                    case 2: campo3 = $(this).text();
+                                        break;
+                                    case 3: campo4 = v_campo4;
+                                        break;
+                                }
+
+
+                                //$(this).css("background-color", "#ECF8E0");
+                            })
+
+                            if (contador > 0) {
+                                var obj = new Object();
+                                obj.ITEMCODE = campo1;
+                                obj.BATCHNUM = campo2;
+                                obj.QUANTITY = campo3;
+                                obj.TTOTAL = campo4;
+                                obj.FECHA_EXP = "";
+                                obj.NUEVO = "0";
+                                listOfObjects.push(obj);
+                            }
+                            contador = contador + 1;
+
+                        });
+                    }
+
+
+
+                    var jsonString = JSON.stringify(listOfObjects);
+                    var checkedValues = $("input:checkbox:checked", "#gridContentItems table tbody").map(function () {
+                        return $(this).val();
+                    }).get();
+                    var $VcUENTAtaraMalo = 0;
+                    if (checkedValues.length == 0) {
+                        swal("Error", "Debe de seleccionar items a agregar a documento.", "error");
+                    } else {
+                        var values = new Array();
+
+                        var listOfObjects2 = [];
+
+                        var listOfObjects3 = [];
+
+                        var listOfObjectsSwLote = [];
+
+
+                        var $v_taraBadLinea = "";
+                        var $v_taraBadLineaRenglon = "";
+                        var $v_botonTara = 0;
+                        var $v_taraBadLineaBton = "";
+                        $.each($("input:checkbox:checked"), function () {
+
+                            $v_botonTara = 0;
+
+                            var data = $(this).parents('tr:eq(0)');
+                            var v_campot;
+                            var v_cuenta = 0;
+                            var v_campoRenglon;
+
+                            var v_campoTara;
+                            var $vtoTARA = 0;
+                            var $vtoPESONETO = 0;
+                            var $v_taraBandera = 0;
+
+                            $(data).find("input").each(function () {
+                                $vtoTARA = 0;
+                                $vtoPESONETO = 0
+                                v_cuenta = v_cuenta + 1;
+                                if (v_cuenta == 2) {
+                                    v_campot = this.value;
+
+                                }
+                                if (v_cuenta == 3) {
+                                    v_campoRenglon = this.value;
+                                }
+                                if (v_cuenta == 4) {
+                                    v_campoTara = this.value;
+                                }
+                            });
+                            var nomsel = "selwhs" + $(data).find('td:eq(7)').text();
+                            var obj2 = new Object();
+                            obj2.linenum = $(data).find('td:eq(7)').text();
+                            obj2.QUANTITY = v_campot;
+                            obj2.WHSHOUSE = $("#" + nomsel + " option:selected").val();
+                            obj2.RENGLON = v_campoRenglon;
+                            obj2.TARA = v_campoTara;
+                            if (v_campoTara == "0") {
+                                v_CuentatARA = v_CuentatARA + 1
+                            }
+                            if (v_campoTara.length <= 0) {
+                                $VcUENTAtaraMalo = $VcUENTAtaraMalo + 1;
+
+                            }
+                            console.log(listOfObjectsTara);
+                            listOfObjectsTara.forEach(function (entry) {
+                                if (entry.LINENUM == obj2.linenum) {
+
+                                    $vtoTARA = parseFloat(entry.TARA) + parseFloat($vtoTARA);
+                                    $vtoPESONETO = parseFloat(entry.PESONETO) + parseFloat($vtoPESONETO);
+                                    $v_botonTara = $v_botonTara + 1;
+                                }
+                            });
+                            var $vcantPeso = 0.0;
+                            /*
+                            PROVISIONAL
+                            if ($(data).find('td:eq(12)').text() != 'KG') {
+                            $vcantPeso = 0.0;
+                            } else {
+                            $vcantPeso = obj2.QUANTITY;
+                            }*/
+                            $vcantPeso = obj2.QUANTITY;
+
+                            if (parseFloat($vtoTARA) != parseFloat(obj2.TARA)) {
+
+                                $v_taraBandera = $v_taraBandera + 1;
+                                if ($v_taraBadLinea.length == 0) {
+                                    $v_taraBadLinea = $(data).find('td:eq(0)').text() + '(tara)';
+                                } else {
+                                    $v_taraBadLinea = $v_taraBadLinea + "," + $(data).find('td:eq(0)').text() + '(tara)';
+                                }
+                            } else if (parseFloat($vtoPESONETO) != parseFloat($vcantPeso)) {
+                                //alert(parseFloat($vtoPESONETO));
+                                //alert(parseFloat($vcantPeso));
+                                $v_taraBandera = $v_taraBandera + 1;
+                                if ($v_taraBadLinea.length == 0) {
+                                    $v_taraBadLinea = $(data).find('td:eq(0)').text() + '(peso)';
+                                } else {
+                                    $v_taraBadLinea = $v_taraBadLinea + "," + $(data).find('td:eq(0)').text() + '(peso)';
+                                }
+                            }
+                            if (obj2.RENGLON.length <= 0) {
+                                if ($v_taraBadLineaRenglon.length == 0) {
+                                    $v_taraBadLineaRenglon = $(data).find('td:eq(0)').text();
+                                } else {
+                                    $v_taraBadLineaRenglon = $v_taraBadLineaRenglon + "," + $(data).find('td:eq(0)').text();
+                                }
+                            }
+
+                            if ($v_botonTara == 0) {
+                                if ($v_taraBadLineaBton.length == 0) {
+                                    $v_taraBadLineaBton = $(data).find('td:eq(0)').text();
+                                } else {
+                                    $v_taraBadLineaBton = $v_taraBadLineaBton + "," + $(data).find('td:eq(0)').text();
+                                }
+                            }
+                            listOfObjects2.push(obj2);
+                            /* $(data).find('td:eq(4)')*/
+                            var obj3 = new Object();
+                            obj3.itemCode = $(data).find('td:eq(3)').text();
+                            obj3.linenum = $(data).find('td:eq(7)').text();
+                            obj3.total = v_campot;
+
+                            var objSWLot = new Object();
+                            objSWLot.itemCode = $(data).find('td:eq(3)').text();
+                            objSWLot.swLote = $(data).find('td:eq(16)').text();
+                            objSWLot.linenum = $(data).find('td:eq(7)').text();
+                            objSWLot.total = v_campot;
+                            listOfObjectsSwLote.push(objSWLot);
+                            listOfObjects3.push(obj3);
+                        });
+
+                        console.log(listOfObjectsSwLote);
+                        console.log($v_taraBadLinea);
+                        console.log($v_taraBadLineaRenglon);
+                        console.log($v_taraBadLineaBton);
+                        if ($v_taraBadLinea.length > 0) {
+                            throw "Revisar la configuracion de la tara de las lineas: " + $v_taraBadLinea;
+                        }
+                        if ($v_taraBadLineaRenglon.length > 0) {
+                            throw "Revisar la cantidad de etiquetas de las lineas: " + $v_taraBadLineaRenglon;
+                        }
+                        if ($v_taraBadLineaBton.length > 0) {
+                            throw "Revisar la configuracion de taras de las lineas: " + $v_taraBadLineaBton;
+                        }
+
+                        var strRevisa = "";
+                        var $vcuenta_da = 0;
+                        //$item.children("td:eq(16)").html()
+
+                        listOfObjectsSwLote.forEach(function (entry) {
+                            var vStotal = 0;
+
+                            listOfObjects.forEach(function (lote) {
+                                if (entry.itemCode == lote.ITEMCODE) {
+                                    var x = lote.TTOTAL;
+                                    if (lote.TTOTAL.length == 0) {
+                                        x = 0;
+                                    } else {
+                                        x = lote.TTOTAL;
+                                    }
+                                    vStotal = vStotal + parseFloat(x);
+
+                                }
+
+
+                            });
+                            if (parseFloat(entry.total) != parseFloat(vStotal)) {
+                                if (entry.swLote != "N") {
+                                    if (strRevisa.length == 0) {
+                                        strRevisa = entry.itemCode;
+                                    } else {
+                                        strRevisa = strRevisa + ", " + entry.itemCode;
+                                    }
+                                }
+                            }
+
+                        });
+                        var jsonString2 = JSON.stringify(listOfObjects2);
+
+                        var $v_checked = checkedValues.join(',');
+
+                        var $v_docnum = $('#txtNumDocto').val();
+                        var $v_serie = $("#cmbSeries option:selected").val();
+                        var $v_dispensador = $("#cmbDispensadores option:selected").val();
+
+
+                        if ($v_serie.length <= 0) {
+                            throw "Seleccione serie.";
+                        }
+                        var $v_referencia = $('#txt_ref2').val();
+                        var $v_comentarios = $('#txt_comentario').val();
+                        var $v_jrnal_remark = $('#txt_jrnal_remark').val();
+                        var $v_fecha_contabiliza = $('#txt_fecha_contabiliza').val();
+                        var $v_texto = "Luego de crearlo no podra ser eliminado.";
+
+                        if ($v_dispensador.length <= 0) {
+                            throw "Seleccione dispensador.";
+                        }
+                        var $v_verificador = $("#cmbVerificadores option:selected").val();
+                        if ($v_verificador.length <= 0) {
+                            throw "Seleccione verificador.";
+                        }
+
+                        if (strRevisa.length > 0) {
+                            $v_texto = " Revisar la configuracion de lotes de los items: " + strRevisa;
+                            swal("Error", $v_texto, "error");
+                        } else
+
+                            if (v_CuentatARA <= 0) {
+                                $v_texto = " Revisar la configuracion de tara de los items";
+                                swal("Error", $v_texto, "error");
+                            } else if ($VcUENTAtaraMalo > 0) {
+                                $v_texto = " Debe de ingresar valor en tara";
+                                swal("Error", $v_texto, "error");
+                            } else {
+                                startSpin();
+                                var v_cuentaVerA = 0;
+                                var v_cuentaVerB = 0;
+                                var v_cuentaVerC = 0;
+                                $.ajax({
+                                    url: '/Usuario/jsTraeAccesosUser/',
+                                    type: "GET",
+                                    dataType: "JSON",
+                                    data: {},
+                                    async: false,
+                                    success: function (json) {
+
+                                        $.each(json, function (j, item2) {
+                                            if (item2.IDPERMISO == 10 && item2.IDACCESO == 2)
+                                                v_cuentaVerA = 1;
+
+                                            if (item2.IDPERMISO == 11 && item2.IDACCESO == 2)
+                                                v_cuentaVerB = 1;
+
+                                            if (item2.IDPERMISO == 12 && item2.IDACCESO == 2)
+                                                v_cuentaVerC = 1;
+                                        });
+
+                                    },
+                                    error: function (error) { console.log(error); }
+                                });
+
+                                $.ajax({
+                                    url: '/Produccion/creaEmision/',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: { linenums: $v_checked, no_orden: $("#lblNoOrden").text(), docentry: $("#lbldocentry").text(), jsonclsLoteSeleccionado: jsonString, jsonclsDatosMod: jsonString2, docnum: $v_docnum, serie: $v_serie, referencia: $v_referencia, fecha: $v_fecha_contabiliza, comentarios: $v_comentarios, journal: $v_jrnal_remark, dispensador: $v_dispensador, verificador: $v_verificador, vjsonstringTara: jsonStringTara },
+                                    success: function (json) {
+                                        stopSpin();
+                                        if (json.P_OK == "NOK") {
+                                            swal("Error", json.MENSAJE, "error");
+                                        } else if (json.P_OK == "OK") {
+                                            var v_anexoa = "";
+                                            var v_anexob = "";
+                                            var v_anexoc = "";
+                                            $("#lblPantallaReg").text("X");
+                                            if (v_cuentaVerA == 1)
+                                                v_anexoa = "<a href='#' onclick ='DownloadReport(" + $v_docnum + ")' id='mylink1A'>Anexo A</a><br>";
+
+                                            if (v_cuentaVerB == 1)
+                                                v_anexob = "<a href='#' onclick ='DownloadReportAnexoB(" + $v_docnum + ")' id='mylink1B'>Anexo B</a><br>";
+                                            if (v_cuentaVerC == 1)
+                                                v_anexoc = "<a href='#' onclick ='DownloadReportAnexoC(" + $v_docnum + ")' id='mylink1C'>Anexo C</a>";
+                                            swal({
+                                                title: "Éxito",
+                                                text: "Documento creado correctamente." + "<br>" + v_anexoa + v_anexob + v_anexoc,
+                                                html: true
+                                            });
+                                            regresar();
+                                        }
+
+                                    },
+                                    error: function (error) { stopSpin(); }
+                                });
+
+                            }
+                    }
+                }
+            }
+            catch (e) {
+                swal("Error", e, "error")
+            }
+        });
+
+        $(document).on('click', '.clickCierraOrden', function () {
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_docnum = $item.children("td:eq(5)").html();
+            var $v_docentry = $item.children("td:eq(4)").html();
+            var v_cuentaAccesoCerrar = 0;
+            
+            $.ajax({
+                url: '/Usuario/jsTraeAccesosUser/',
+                type: "GET",
+                dataType: "JSON",
+                data: {},
+                async: false,
+                success: function (json) {
+                    
+                    $.each(json, function (j, item2) {
+                        //menu operativo
+                        if (item2.IDPERMISO == 1 && item2.IDACCESO == 6)
+                            v_cuentaAccesoCerrar = v_cuentaAccesoCerrar + 1;
+
+                    });
+                },
+                error: function (error) { console.log(error); }
+            });
+            if (v_cuentaAccesoCerrar <= 0) {
+
+                swal("Error", "No tiene permisos para cerrar la orden", "error");
+            } else {
+                swal({
+                    title: "Esta seguro?",
+                    text: "La orden no podra cambiar de estado una vez cerrada",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Si, cerrar orden",
+                    closeOnConfirm: false
+                },
+          function () {
+                  try {
+                    
+                    startSpin();
+                    $.ajax({
+                        url: '/Produccion/cierraOrden/',
+                        type: "POST",
+                        dataType: "json",
+                        data: { vDocEntry: $v_docentry},
+                        success: function (json) {
+                            stopSpin();
+                            if (json.P_OK == "NOK") {
+                                swal("Error", json.MENSAJE, "error");
+                            } else if (json.P_OK == "OK") {
+
+
+                                swal("Cambio exitoso", "La orden ha sido cerrada con exito.", "success");
+
+                                regresar();
+                                location.reload();
+                            }
+
+                        },
+                        error: function (error) { stopSpin(); }
+                    });
+
+                }
+                catch (e) {
+                    swal("Error", e, "error")
+                }
+          });
+            }
+
+            
+            
+            /*
+            
+            */
+
+        });
+
+        $(document).on('click', '.clickEditaComentario', function () {
+            try {
+                var $v_docentry = $('#lbl_docentryEdita').val();
+                var $v_comentario = $('#txtComentario').val();
+                startSpin();
+                $.ajax({
+                    url: '/Produccion/actualizaOrden/',
+                    type: "POST",
+                    dataType: "json",
+                    data: { vDocEntry: $v_docentry, vComentario: $v_comentario },
+                    success: function (json) {
+                        stopSpin();
+                        if (json.P_OK == "NOK") {
+                            swal("Error", json.MENSAJE, "error");
+                        } else if (json.P_OK == "OK") {
+
+                            swal({
+                                title: "Éxito",
+                                text: "Documento modificado correctamente.",
+                                html: true
+                            });
+                            regresar();
+                            location.reload();
+                        }
+
+                    },
+                    error: function (error) { stopSpin(); }
+                });
+
+            }
+            catch (e) {
+                swal("Error", e, "error")
+            }
+
+        });
+
+        $(document).on('click', '.clickDevuelve', function () {
+            try {
+                var $v_docnum = $('#txtNumDocto').val();
+                if ($v_docnum.length == 0) {
+                    $('#txtNumDocto').val("0");
+                }
+
+                if ($v_docnum <= 0) {
+
+                    swal("Error", "Debe de tener numero de documento, no tiene serie asociada.", "error");
+
+                } else {
+
+                    var codigoItem = "";
+                    var listOfObjects = [];
+                    var div2 = document.getElementById('divLotes');
+                    var tablas = [];
+                    for (i = j = 0; i < div2.childNodes.length; i++)
+                        if (div2.childNodes[i].nodeName == 'TABLE') {
+                            j++;
+                            var input = div2.childNodes[i].id;
+                            tablas.push(input);
+
+                        }
+
+
+                    for (var r = 0, n = tablas.length; r < n; r++) {
+                        var contador = 0;
+                        $("#" + tablas[r] + " tbody tr").each(function (index) {
+                            var campo1, campo2, campo3, campo4;
+
+
+                            $(this).children("td").each(function (index2) {
+
+                                var v_campo4;
+                                var v_cuenta = 0;
+                                $(this).find("input").each(function () {
+
+                                    v_campo4 = this.value;
+
+
+                                })
+
+                                switch (index2) {
+                                    case 0: campo1 = $(this).text();
+                                        break;
+                                    case 1: campo2 = $(this).text();
+                                        break;
+                                    case 2: campo3 = $(this).text();
+                                        break;
+                                    case 3: campo4 = v_campo4;
+                                        break;
+                                }
+
+
+
+
+                                //$(this).css("background-color", "#ECF8E0");
+                            })
+
+
+
+                            if (contador > 0) {
+                                var obj = new Object();
+                                obj.ITEMCODE = campo1;
+                                obj.BATCHNUM = campo2;
+                                obj.QUANTITY = campo3;
+                                obj.TTOTAL = campo4;
+                                obj.FECHA_EXP = "";
+                                obj.NUEVO = "0";
+                                listOfObjects.push(obj);
+                                //alert(campo1 + ' - ' + campo2 + ' - ' + campo3 + ' - ' + campo4);
+                            }
+                            contador = contador + 1;
+
+                        })
+                    }
+
+
+                    var jsonString = JSON.stringify(listOfObjects);
+                    //console.log(jsonString);
+
+                    var checkedValues = $("input:checkbox:checked", "#gridContentItems table tbody").map(function () {
+                        return $(this).val();
+                    }).get();
+
+                    if (checkedValues.length == 0) {
+                        swal("Error", "Debe de seleccionar items a agregar a documento.", "error");
+                    } else {
+
+                        var values = new Array();
+
+                        var listOfObjects2 = [];
+
+                        var listOfObjects3 = [];
+
+
+                        $.each($("input:checkbox:checked"), function () {
+                            var data = $(this).parents('tr:eq(0)');
+                            var v_campot;
+                            var v_conteo = 0;
+                            $(data).find("input").each(function () {
+                                v_conteo = v_conteo + 1;
+                                if (v_conteo == 2) {
+                                    v_campot = this.value;
+
+                                }
+
+
+                            });
+                            var nomsel = "selwhs" + $(data).find('td:eq(7)').text();
+                            var obj2 = new Object();
+                            obj2.linenum = $(data).find('td:eq(7)').text();
+                            obj2.QUANTITY = v_campot;
+                            obj2.WHSHOUSE = $("#" + nomsel + " option:selected").val();
+                            listOfObjects2.push(obj2);
+
+                            var obj3 = new Object();
+                            obj3.itemCode = $(data).find('td:eq(3)').text();
+                            obj3.linenum = $(data).find('td:eq(7)').text();
+                            obj3.total = v_campot;
+                            listOfObjects3.push(obj3);
+                        });
+                        var strRevisa = "";
+
+                        listOfObjects3.forEach(function (entry) {
+                            var vStotal = 0;
+
+                            listOfObjects.forEach(function (lote) {
+                                if (parseFloat(entry.itemCode) == parseFloat(lote.ITEMCODE)) {
+                                    var x = lote.TTOTAL;
+                                    if (lote.TTOTAL.length == 0) {
+                                        x = 0;
+                                    } else {
+                                        x = lote.TTOTAL;
+                                    }
+                                    vStotal = vStotal + parseFloat(x);
+                                }
+
+
+                            });
+                            if (entry.total != vStotal) {
+                                if (strRevisa.length == 0) {
+                                    strRevisa = entry.itemCode;
+                                } else {
+                                    strRevisa = strRevisa + ", " + entry.itemCode;
+                                }
+                            }
+
+                        });
+
+                        var jsonString2 = JSON.stringify(listOfObjects2);
+
+                        var $v_checked = checkedValues.join(',');
+
+                        var $v_docnum = $('#txtNumDocto').val();
+                        var $v_serie = $("#cmbSeries option:selected").val();
+                        var $v_referencia = $('#txt_ref2').val();
+                        var $v_fecha_contabiliza = $('#txt_fecha_contabiliza').val();
+                        var $v_comentarios = $('#txt_comentario').val();
+                        var $v_jrnal_remark = $('#txt_jrnal_remark').val();
+                        var $v_texto = "Luego de crearlo no podra ser eliminado.";
+                        var $v_verificador = $("#cmbVerificadores option:selected").val();
+                        if ($v_verificador.length <= 0) {
+                            throw "Seleccione verificador.";
+                        }
+
+                        //if (strRevisa.length > 0) {
+                        if (1 == 0) {
+                            $v_texto = " Revisar los totales de los items: " + strRevisa;
+                            swal("Error", $v_texto, "error");
+                        } else {
+                            startSpin();
+                            var v_cuentaVerD = 0;
+                            var v_cuentaVerE = 0;
+                            $.ajax({
+                                url: '/Usuario/jsTraeAccesosUser/',
+                                type: "GET",
+                                dataType: "JSON",
+                                data: {},
+                                async: false,
+                                success: function (json) {
+
+                                    $.each(json, function (j, item2) {
+                                        if (item2.IDPERMISO == 13 && item2.IDACCESO == 2)
+                                            v_cuentaVerD = 1;
+
+                                        if (item2.IDPERMISO == 14 && item2.IDACCESO == 2)
+                                            v_cuentaVerE = 1;
+
+                                    });
+
+                                },
+                                error: function (error) { console.log(error); }
+                            });
+
+                            $.ajax({
+                                url: '/Produccion/creaDevuelve/',
+                                type: "POST",
+                                dataType: "json",
+                                data: { linenums: $v_checked, no_orden: $("#lblNoOrden").text(), docentry: $("#lbldocentry").text(), jsonclsLoteSeleccionado: jsonString, jsonclsDatosMod: jsonString2, docnum: $v_docnum, serie: $v_serie, referencia: $v_referencia, comentarios: $v_comentarios, journal: $v_jrnal_remark, fecha: $v_fecha_contabiliza, verificador: $v_verificador },
+                                success: function (json) {
+                                    stopSpin();
+                                    if (json.P_OK == "NOK") {
+                                        swal("Error", json.MENSAJE, "error")
+                                    } else if (json.P_OK == "OK") {
+                                        var v_anexoD = "";
+                                        var v_anexoE = "";
+
+                                        $("#lblPantallaReg").text("X");
+                                        if (v_cuentaVerE == 1)
+                                            v_anexoE = "<a href='#' onclick='DownloadReportAnexoE(" + $v_docnum + ")' id='mylink1E'>Anexo E</a>";
+
+                                        swal({
+                                            title: "Éxito",
+                                            text: "Documento creado correctamente." + "<br>" + v_anexoD + v_anexoE,
+                                            html: true
+                                        });
+                                        regresar();
+                                    }
+
+                                },
+                                error: function (error) { stopSpin(); }
+                            });
+                        }
+                    }
+                }
+                /*
+                $.ajax({
+                url: '/Produccion/creaDevuelve/',
+                type: "POST",
+                dataType: "json",
+                data: { linenums: $v_checked, no_orden: $("#lblNoOrden").text(), docentry: $("#lbldocentry").text(), jsonclsLoteSeleccionado: jsonString, jsonclsDatosMod: jsonString2, docnum: $v_docnum, serie: $v_serie, referencia: $v_referencia, comentarios: $v_comentarios, journal: $v_jrnal_remark, fecha: $v_fecha_contabiliza },
+                success: function (json) {
+                stopSpin();
+                if (json.P_OK == "NOK") {
+                swal("Error", json.MENSAJE, "error")
+                } else if (json.P_OK == "OK") {
+                swal("Éxito", "Documento creado correctamente.", "success")
+                }
+
+                },
+                error: function (error) { stopSpin(); }
+                });*/
+            }
+            catch (e) {
+                swal("Error", e, "error")
+            }
+        });
+        $(document).on('change', '.SelectWHS', function () {
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_itemcode = $item.children("td:eq(3)").html();
+            var v_tableid = '#tblLotes' + $v_itemcode;
+            $(v_tableid).remove();
+
+            $.ajax({
+                url: '/Produccion/traeJSItemWhsData',
+                type: "POST",
+                dataType: "JSON",
+                async: "false",
+                data: { vitemcode: $v_itemcode, vwhscode: this.value },
+                success: function (json) {
+                    if (json.DATA == "1") {
+                        $.each(json.ListaItems, function (i, item) {
+                            $item.children("td:eq(17)").html(item.IsCommited);
+                            $item.children("td:eq(18)").html(item.OnHand);
+                            $item.children("td:eq(19)").html(item.OnOrder);
+                        });
+                    } else {
+                        $item.children("td:eq(17)").html("0.000000");
+                        $item.children("td:eq(18)").html("0.000000");
+                        $item.children("td:eq(19)").html("0.000000");
+                    }
+                },
+                error: function (error) { console.log(error); }
+            });
+
+        });
+        $(document).on('change', '.chgRenglon', function () {
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_itemcode = $item.children("td:eq(3)").html();
+
+
+            var v_tableid = '#tblTarasctara' + $v_itemcode;
+            $(v_tableid).remove();
+
+        });
+
+        $(document).on('click', '.clickRegresar', function () {
+            var tipo = $('#lbltipo').val();
+
+            if (tipo == "ORDEN") {
+                $("#divOrdenProduccion").show();
+                $("#divEncabezado").hide();
+                $("#divListaProduccion").hide();
+            } else if (tipo == "EMISION") {
+                $("#divOrdenProduccion").show();
+                $("#divEncabezado").hide();
+                $("#divListaProduccion").hide();
+                $('#divLotes').hide();
+
+            } else if (tipo == "DEVOLUCION") {
+                $("#divOrdenProduccion").show();
+                $("#divEncabezado").hide();
+                $("#divListaProduccion").hide();
+            }
+            $("#divLotes").empty();
+            $("#divRegresa").hide();
+            $("#divRenTara").empty();
+        });
+
+        $(document).on('click', '.clickRegresarOrden', function () {
+            $('#divOrdenProduccion').show();
+            $('#divDetalleOrdenProduccion').hide();
+            $("#divRegresa_Orden").hide();
+
+        });
+
+        $(document).on('click', '.eliminaFila', function () {
+            var tr = $(this).parents('tr');
+            $(tr).remove();
+        });
+        $(document).on('change', '.validaCantidadLote', function () {
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var $v_totLote = $item.children("td:eq(2)").html();
+            var $v_quantity = $("#lbl_quantity").text();
+            var $v_tableSelected = $("#lbl_tableSelected").text();
+
+            var x = 0;
+            if ($(this).val().length > 0) {
+                x = parseFloat($(this).val());
+            } else {
+                x = 0;
+            }
+            if (parseFloat($v_totLote) < x) {
+                $(this).val("");
+                swal("Error", "El valor ingresado es mayor a la cantidad que el lote posee.", "error");
+            }
+
+            /*
+            var tabel = document.getElementById($v_tableSelected);
+            var rijen = tabel.rows.length;
+            var total = 0;
+            for (i = 0; i < rijen; i++) {
+            var inputs = tabel.rows.item(i).getElementsByTagName("input");
+            var inputslengte = inputs.length;
+
+            for (var j = 0; j < inputslengte; j++) {
+            var inputval = inputs[j].value;
+
+            if (inputval.length > 0) {
+
+            if (isNaN(inputval)) {
+            total = total;
+            } else {
+            var v1 = parseFloat(inputval);
+
+            var v2 = parseFloat($v_totLote)
+
+            if (v1 > v2) {
+            //inputval = 0;
+            console.log("");
+            //console.log(v2);
+            //$(this).val("");
+            //swal("Error", "El valor ingresado es mayor a la cantidad que el lote posee.", "error");
+            }
+            total = total + parseFloat(inputval);
+            }
+
+
+            }
+
+            }
+            }
+
+            var falta =$v_quantity - total ;
+            $("#lbl_quantity2").text(falta);
+            */
+            /*
+            alert('entro'); $("#tblLotes tbody tr").each(function (index) {
+            var campo1, campo2, campo3;
+            $(this).children("td").each(function (index2) {
+            switch (index2) {
+            case 0: campo1 = $(this).text();
+            break;
+            case 1: campo2 = $(this).text();
+            break;
+            case 3: campo3 = $(this).text();
+            break;
+            }
+            $(this).css("background-color", "#ECF8E0");
+            })
+            alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
+            });*/
+        }); // trigger input to set initial value in column
+
+        $(document).on('click', '.okConfigLote', function () {
+
+            var $v_quantity = $("#lbl_quantity").text();
+            var $v_quantityFaltante = $("#lbl_quantity2").text();
+
+            $("#lbl_MensajeConfigLote").text();
+        }
+        );
+        $(document).on('click', '.add-Receipt', function () {
+
+
+            startSpin();
+            var $ListEtiqueta = []
+            var v_cuentaVerD = 0;
+            var v_cuentaVerE = 0;
+            $.ajax({
+                url: '/Usuario/jsTraeAccesosUser/',
+                type: "GET",
+                dataType: "JSON",
+                data: {},
+                async: false,
+                success: function (json) {
+
+                    $.each(json, function (j, item2) {
+                        if (item2.IDPERMISO == 13 && item2.IDACCESO == 2)
+                            v_cuentaVerD = 1;
+
+                        if (item2.IDPERMISO == 14 && item2.IDACCESO == 2)
+                            v_cuentaVerE = 1;
+                    });
+
+                },
+                error: function (error) { console.log(error); }
+            });
+            var cantidadLotesTot = 0;
+            try {
+
+                var $v_cantidadPlani2 = $('#txt_cantidad').val();
+
+
+
+                if (parseFloat($v_cantidadPlani2) != traeTotalConfEtiquetaEmbalaje()) {
+                    stopSpin();
+                    throw "Las cantidades de etiquetas configuradas no coinciden revisar!";
+                } else {
+                    var table = $('#gridConfItemEm table').DataTable();
+
+                    var data = table
+                        .rows()
+                        .data();
+                    for (i = 0; i <= data.length - 1; i++) {
+
+                        var rows = table.rows(i).data();
+                        var tname = "txtUni_" + rows[0][0];
+
+                        var $v_num1 = document.getElementById(tname).value;
+                        var $v_num2 = rows[0][3];
+
+                        var $v_tot = parseFloat($v_num1) / parseFloat($v_num2);
+                        var $v_tot_int = parseInt($v_tot);
+
+                        var $v_resto = $v_tot - $v_tot_int
+                        if ($v_resto > 0) {
+                            $v_tot_int = $v_tot_int + 1;
+                        }
+
+                        var objEtiqueta = new Object();
+                        objEtiqueta.IDITEMEMBALAJE = rows[0][0];
+                        objEtiqueta.LIMITE = $v_num2;
+                        objEtiqueta.CANTIDAD = $v_num1;
+                        objEtiqueta.NOETIQUETAS = $v_tot_int;
+                        if ($v_num1 > 0)
+                            $ListEtiqueta.push(objEtiqueta);
+
+                    }
+                }
+
+                var $v_docnum = $('#txtNumDocto').val();
+                if ($v_docnum.length == 0) {
+                    $('#txtNumDocto').val("0");
+                }
+
+                if ($v_docnum <= 0) {
+
+                    stopSpin();
+                    swal("Error", "Debe de tener numero de documento, no tiene serie asociada.", "error");
+
+                } else {
+                    var list1 = [];
+                    var contador = 1;
+                    $("#tblNLotes tbody tr").each(function (index) {
+                        var campo1, campo2, campo3, campo4, campo5, campo6;
+                        var $v_contador = 0;
+                        $(this).children("td").each(function (index2) {
+                            var v_campo1;
+                            var v_campo2;
+                            var v_campo3;
+                            var v_campo4;
+                            var v_campo5;
+                            var v_campo6;
+                            var v_campoRenglon;
+
+                            $(this).find("input").each(function () {
+                                $v_contador = $v_contador + 1;
+                                if ($v_contador == 1) {
+                                    v_campo1 = this.value;
+                                }
+                                if ($v_contador == 2) {
+                                    v_campo2 = this.value;
+                                }
+                                if ($v_contador == 3) {
+                                    v_campo3 = this.value;
+
+                                }
+                                if ($v_contador == 4) {
+                                    v_campo4 = this.value;
+
+                                }
+                                if ($v_contador == 5) {
+                                    v_campo5 = this.value;
+
+                                }
+                                if ($v_contador == 6) {
+                                    v_campo6 = this.value;
+
+                                }
+
+                            });
+
+                            switch (index2) {
+                                case 1: campo1 = v_campo1;
+                                    break;
+                                case 2: campo2 = v_campo2;
+                                    break;
+                                case 3: campo3 = v_campo3;
+                                    break;
+                                case 4: campo4 = v_campo4;
+                                    break;
+                                case 5: campo5 = v_campo5;
+                                    break;
+                                case 6: campo6 = v_campo6;
+                                    break;
+                            }
+                            //$(this).css("background-color", "#ECF8E0");
+                        });
+
+
+                        var obj = new Object();
+                        obj.ITEMCODE = 0;
+                        obj.BATCHNUM = campo1;
+                        obj.QUANTITY = 0;
+                        obj.TTOTAL = campo2;
+                        obj.FECHA_EXP = campo3;
+                        obj.NUEVO = 1;
+                        obj.MNFSERIAL = campo4;
+                        obj.LOTNUMBER = campo5;
+                        obj.LOTNOTES = campo6;
+
+                        cantidadLotesTot = cantidadLotesTot + parseFloat(campo2);
+
+                        if (campo1.length == 0) {
+
+                            stopSpin();
+                            throw "Revise los numero de lotes configurados";
+
+                        }
+                        if (campo2.length == 0) {
+                            stopSpin();
+                            throw "Revise la cantidad seleccionada para los lotes.";
+
+                        }
+
+                        if (campo3.length == 0) {
+                            throw "Revise las fechas de los lotes configurados.";
+
+                        }
+
+                        list1.push(obj);
+                        //alert(campo1 + ' - ' + campo2 + ' - ' + campo3 + ' - ' + campo4);
+
+
+                    });
+                    var $v_cantidadPlani = $('#txt_cantidad').val();
+
+                    if (cantidadLotesTot != $v_cantidadPlani) {
+                        stopSpin();
+                        throw "Revise las cantidades de los lotes configurados, no coinciden con la cantidad del recibo.";
+                    }
+                    var $v_verificador = $("#cmbVerificadores option:selected").val();
+                    if ($v_verificador.length <= 0) {
+                        throw "Seleccione verificador.";
+                    }
+                    var $v_docnum = $('#txtNumDocto').val();
+                    var $v_serie = $("#cmbSeries option:selected").val();
+
+                    var $v_docentry = $('#txt_docentry').val();
+                    var $v_itemcode = $('#txt_itemNo').val();
+                    var $v_itemname = $('#txt_itemName').val();
+                    var $v_tipo = $('#txt_tipo').val();
+                    var $v_cantidadPlani = $('#txt_cantidad').val();
+
+                    var $v_Almacen = $("#cmbWareHouse option:selected").val();
+                    var $v_Precio = $('#txt_Precio').val();
+
+                    var $v_fecha_contabiliza = $('#txt_fecha_contabiliza').val();
+                    var $v_no_orden = $('#txt_no_orden').val();
+
+                    var $v_comentarios = $('#txt_comentario').val();
+                    var $v_jrnal_remark = $('#txt_jrnal_remark').val();
+                    var $v_ref2 = $('#txt_ref2').val();
+
+                    var jsonString = JSON.stringify(list1);
+                    $.ajax({
+                        url: '/Produccion/AgregaReciboSap/',
+                        type: "POST",
+                        dataType: "json",
+                        data: { docentry: $v_docentry, cantidad: $v_cantidadPlani, docnum: $v_docnum, serie: $v_serie, almacen: $v_Almacen, comentarios: $v_comentarios, journal: $v_jrnal_remark, referencia2: $v_ref2, fecha: $v_fecha_contabiliza, jsonclsLoteSeleccionado: jsonString, verificador: $v_verificador, configEtiqueta: JSON.stringify($ListEtiqueta) },
+                        success: function (json) {
+                            stopSpin();
+
+                            if (json.P_OK == "NOK") {
+                                swal("Error", json.MENSAJE, "error")
+                            } else if (json.P_OK == "OK") {
+                                var v_anexoD = "";
+                                var v_anexoE = "";
+                                var v_embalaje = "<a href='#' onclick ='DownloadEtiqueta(" + json.ID + ")' id='mylinkETiqueta'>Etiqueta Embalaje</a>";
+                                $("#lblPantallaReg").text("X");
+                                var v_resumen = "<a href='#' onclick ='DownloadResumen(" + json.ID + ")'  id='mylinkResumen'>Resumen Embalaje</a>";
+
+                                if (v_cuentaVerD == 1)
+
+                                    v_anexoD = "<a href='#' onclick ='DownloadReportAnexoD(" + json.ID + ")' id='mylink1D'>Anexo D</a><br>";
+
+                                swal({
+                                    title: "Éxito",
+                                    text: "Documento creado correctamente." + "<br>" + v_anexoD + "<br>" + v_embalaje + "<br>" + v_resumen,
+                                    html: true
+                                });
+                                regresar();
+                            }
+                        },
+                        error: function (error) { stopSpin(); }
+                    });
+                }
+            } catch (e) {
+                stopSpin();
+                swal("Error", e, "error")
+            }
+
+        });
+
+    }
+    function clickMapaRecibo(valor) {
+        $("#divLinkA").hide();
+        $("#divLinkB").hide();
+        $("#divLinkC").hide();
+        $("#divLinkD").hide();
+        $("#divLinkE").hide();
+
+        $("#divLinkEmba").hide();
+        $("#divLinkRes").hide();
+        var v_cuentaVerD = 0;
+        var v_cuentaVerE = 0;
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+
+                $.each(json, function (j, item2) {
+                    if (item2.IDPERMISO == 13 && item2.IDACCESO == 2)
+                        v_cuentaVerD = 1;
+
+                    if (item2.IDPERMISO == 14 && item2.IDACCESO == 2)
+                        v_cuentaVerE = 1;
+
+
+                });
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $("#lblTblDiagrama").text("Recibo: " + valor);
+
+        var $v_cuenta = 0;
+        $("#divtblMapa tbody").empty();
+        $.ajax({
+            url: '/Produccion/traeListaItemsREciboDocnum/',
+            type: "POST",
+            dataType: "JSON",
+            data: { Docnum: valor },
+            success: function (json) {
+                $.each(json, function (i, item) {
+
+                    $.each(item, function (j, item2) {
+
+                        var $v_whs = item2.warehouse;
+                        var newrow = '<tr>' +
+
+                            '<td class="text-center">' + item2.itemCode + '</td>' +
+                            '<td class="text-center">' + item2.itemName + '</td>' +
+                            '<td class="text-center">' + item2.quantity + '</td>' +
+                            '<td class="text-center">' + item2.warehouse + '</td>' +
+                            '<td class="text-center">' + item2.linenum + '</td>' +
+                            //'<td class="text-center">' + item2.lote + '</td>' +
+                            '</tr>';
+                        $v_cuenta = $v_cuenta + 1;
+                        $("#divtblMapa tbody").append(newrow);
+                    });
+
+                });
+
+                if ($v_cuenta > 0) {
+                    if (v_cuentaVerD == 1)
+                        $("#divLinkD").show();
+
+                    if (v_cuentaVerE == 1)
+                        $("#divLinkE").show();
+
+
+                    $("#divLinkEmba").show();
+                    $("#divLinkRes").show();
+                    $("#divLinkA").hide();
+                    $("#divLinkB").hide();
+                    $("#divLinkC").hide();
+                    $("#lblPantallaReg").text("Y");
+                    //$('#mylinkEmba').attr('href', "/Produccion/DownloadEtiqueta?docnum=" + valor);
+                    $('#mylinkEmba').attr('href', "#");
+                    $("#mylinkEmba").attr("onclick", 'DownloadEtiqueta("' + valor + '");');
+                    //$('#mylinkRes').attr('href', "/Produccion/DownloadResumen?docnum=" + valor);
+                    $('#mylinkRes').attr('href', "#");
+                    $("#mylinkRes").attr("onclick", 'DownloadResumen("' + valor + '");');
+                    //$('#mylinkD').attr('href', "/Produccion/DownloadReportAnexoD?docnum=" + valor + "&format=PDF");
+                    $('#mylinkD').attr('href', "#");
+                    $("#mylinkD").attr("onclick", 'DownloadReportAnexoD("' + valor + '");');
+                    //$('#mylinkE').attr('href', "/Produccion/DownloadReportAnexoE?docnum=" + valor + "&format=PDF");
+                    $('#mylinkE').attr('href', "#");
+                    $("#mylinkE").attr("onclick", 'DownloadReportAnexoE("' + valor + '");');
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    };
+
+    function clickMapaEmision(valor) {
+        $("#divLinkA").hide();
+        $("#divLinkB").hide();
+        $("#divLinkC").hide();
+        $("#divLinkD").hide();
+        $("#divLinkE").hide();
+
+        var v_cuentaVerA = 0;
+        var v_cuentaVerB = 0;
+        var v_cuentaVerC = 0;
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+
+                $.each(json, function (j, item2) {
+                    if (item2.IDPERMISO == 10 && item2.IDACCESO == 2)
+                        v_cuentaVerA = 1;
+
+                    if (item2.IDPERMISO == 11 && item2.IDACCESO == 2)
+                        v_cuentaVerB = 1;
+                    if (item2.IDPERMISO == 12 && item2.IDACCESO == 2)
+                        v_cuentaVerC = 1;
+
+                });
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+        $("#lblTblDiagrama").text("Emision: " + valor);
+
+        var $v_cuenta = 0;
+
+        $("#divtblMapa tbody").empty();
+        $.ajax({
+            url: '/Produccion/traeListaItemsEmisionDocnum/',
+            type: "POST",
+            dataType: "JSON",
+            data: { Docnum: valor },
+            success: function (json) {
+
+                $.each(json, function (i, item) {
+
+                    $.each(item, function (j, item2) {
+
+                        var $v_whs = item2.warehouse;
+                        var newrow = '<tr>' +
+
+                            '<td class="text-center">' + item2.itemCode + '</td>' +
+                            '<td class="text-center">' + item2.itemName + '</td>' +
+                            '<td class="text-center">' + item2.quantity + '</td>' +
+                            '<td class="text-center">' + item2.warehouse + '</td>' +
+                            '<td class="text-center">' + item2.linenum + '</td>' +
+                            //'<td class="text-center">' + item2.lote + '</td>' +
+                            '</tr>';
+                        $v_cuenta = $v_cuenta + 1;
+                        $("#divtblMapa tbody").append(newrow);
+                    });
+                });
+                if ($v_cuenta > 0) {
+                    if (v_cuentaVerA == 1)
+                        $("#divLinkA").show();
+
+                    if (v_cuentaVerB == 1)
+                        $("#divLinkB").show();
+                    if (v_cuentaVerC == 1)
+                        $("#divLinkC").show();
+                    $("#lblPantallaReg").text("Y");
+                    $("#mylinkA").attr("onclick", 'DownloadReport("' + valor + '");');
+                    //$('#mylinkA').attr('href', "/Produccion/DownloadReport?docnum=" + valor + "&format=PDF");
+                    //$('#mylinkB').attr('href', "/Produccion/DownloadReportAnexoB?docnum=" + valor + "&format=PDF");
+                    $('#mylinkA').attr('href', "#");
+                    $('#mylinkB').attr('href', "#");
+                    $("#mylinkB").attr("onclick", 'DownloadReportAnexoB("' + valor + '");');
+                    //$('#mylinkC').attr('href', "/Produccion/DownloadReportAnexoC?docnum=" + valor + "&format=PDF");
+                    $('#mylinkC').attr('href', "#");
+                    $("#mylinkC").attr("onclick", 'DownloadReportAnexoC("' + valor + '");');
+                }
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+
+
+    };
+    function DownloadReport(docnum) {
+
+        var v_metodo = "";
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaVer = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 45 && item2.IDACCESO == 2)
+                        v_cuentaVer = v_cuentaVer + 1;
+                });
+
+                if (v_cuentaVer > 0) {
+                    v_metodo = "DownloadReport2";
+                } else {
+                    v_metodo = "DownloadReport2Carta";
+                }
+            },
+            error: function (error) { v_metodo = "DownloadReport2Carta"; }
+        });
+
+        $.ajax({
+            url: '/Produccion/' + v_metodo,
+            async: true,
+            data: { Docnum: docnum, format: "PDF" },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data +'"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'AnexoA_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+
+    function DownloadReportAnexoB(docnum) {
+        var v_Carta = 1;
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaVer = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 45 && item2.IDACCESO == 2)
+                        v_cuentaVer = v_cuentaVer + 1;
+                });
+
+                if (v_cuentaVer > 0) {
+                    v_Carta = 0;
+                } else {
+                    v_Carta = 1;
+                }
+            },
+            error: function (error) { v_metodo = 1; }
+        });
+        $.ajax({
+            url: '/Produccion/DownloadReportAnexoB2',
+            async: true,
+            data: { Docnum: docnum, format: "PDF", AnexoACarta: v_Carta },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'AnexoB_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+    function DownloadReportAnexoC(docnum) {
+
+        $.ajax({
+            url: '/Produccion/DownloadReportAnexoC2',
+            async: true,
+            data: { Docnum: docnum, format: "PDF" },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'AnexoC_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+    function DownloadReportAnexoD(docnum) {
+
+        $.ajax({
+            url: '/Produccion/DownloadReportAnexoD2',
+            async: true,
+            data: { Docnum: docnum, format: "PDF" },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'AnexoD_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+    function DownloadReportAnexoE(docnum) {
+
+        $.ajax({
+            url: '/Produccion/DownloadReportAnexoE2',
+            async: true,
+            data: { Docnum: docnum, format: "PDF" },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'AnexoE_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+    function DownloadEtiqueta(docnum) {
+        var v_metodo = "";
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaVer = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 45 && item2.IDACCESO == 2)
+                        v_cuentaVer = v_cuentaVer + 1;
+                });
+
+                if (v_cuentaVer > 0) {
+                    v_metodo = "DownloadEtiqueta2";
+                } else {
+                    v_metodo = "DownloadEtiqueta2Carta";
+                }
+            },
+            error: function (error) { v_metodo = "DownloadEtiqueta2Carta"; }
+        });
+        $.ajax({
+            url: '/Produccion/' + v_metodo,
+            async: true,
+            data: { docnum: docnum },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'RepEtiqueta_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+
+    function DownloadResumen(docnum) {
+
+        $.ajax({
+            url: '/Produccion/DownloadResumen2',
+            async: true,
+            data: { docnum: docnum },
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes, resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Etiquetas</title></head><embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + data + '"></embed>';
+                var printWindow = window.open('', 'detailPDF', winparams);
+                printWindow.document.write(htmlPop);
+                */
+
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                    $('#modalDiagrama').modal('hide');
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'RptResumen_' + docnum);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    };
+    function regresar() {
+        $("#divMesSerie").show();
+        var tipo = $('#lbltipo').val();
+
+        if (tipo == "ORDEN") {
+            $("#divOrdenProduccion").show();
+            $("#divEncabezado").hide();
+            $("#divListaProduccion").hide();
+            $("#divRenTara").empty();
+        } else if (tipo == "EMISION") {
+            $("#divOrdenProduccion").show();
+            $("#divEncabezado").hide();
+            $("#divListaProduccion").hide();
+            $('#divLotes').hide();
+            $("#divLotes").empty();
+            $("#divRenTara").empty();
+        } else if (tipo == "DEVOLUCION") {
+            $("#divOrdenProduccion").show();
+            $("#divEncabezado").hide();
+            $("#divListaProduccion").hide();
+            $("#divLotes").empty();
+            $("#divRenTara").empty();
+        }
+
+        $("#divRegresa").hide();
+        reiniciaControlesForm();
+    };
+    function nuevaFila() {
+        $("#tblNlotes tbody").append("<tr>  <td><a href='#' class='fa fa-times eliminaFila' title='Elimina Fila's> </a></td><td><input class='form-control' type='text' id='txtNewNolote'></td><td><input class='form-control changeLoteNuevo' type='text' id='txtNewCantidad'></td><td><input class='form-control' type='date' id='txtNewFechaExpira'></td><td><input class='form-control' type='text' id='txtNewMnfSerial'></td><td><input class='form-control' type='text' id='txtNewLotNumber'></td><td><input class='form-control' type='text' id='txtNewLotNotes' Width='15%'></td></tr>");
+    };
+
+    function getPlatform() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Windows Phone must come first because its UA also contains "Android"
+        if (/windows phone/i.test(userAgent)) {
+            return "Windows Phone";
+        }
+
+        if (/android/i.test(userAgent)) {
+            return "Android";
+        }
+
+        // iOS detection from: http://stackoverflow.com/a/9039885/177710
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "iOS";
+        }
+
+        return userAgent;
+
+    }
+    function regresarOrden() {
+        $('#divOrdenProduccion').show();
+        $('#divDetalleOrdenProduccion').hide();
+        $("#divRegresa_Orden").hide();
+        reiniciaControlesForm();
+    }
+    function OnChangeAlmacen(sel, itemcode) {
+
+        var $v_whscode = sel.value;
+    }
+
+    function actualizaSerie(tipo) {
+        $.ajax({
+            url: '/Produccion/traeSerie',
+            type: "POST",
+            dataType: "JSON",
+            async: "false",
+            data: { value: tipo },
+            success: function (json) {
+
+                $('#cmbSeries').empty();
+                $.each(json, function (i, item) {
+
+                    $('#cmbSeries').append($('<option>', {
+                        value: item.id,
+                        text: item.value
+                    }));
+
+                });
+                CallChangeSerie();
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+
+
+    }
+    function reiniciaControlesForm() {
+        $('#txtNumDocto').val("");
+        $('#txt_fecha_contabiliza').val("");
+        $('#txt_ref2').val("");
+        $('#txt_cantidad').val("");
+        $('#txt_comentario').val("");
+        $("#cmbDispensadores").val("---");
+        $("#cmbDispensadores").val($("#target option:first").val());
+
+        $("#cmbVerificadores").val($("#target option:first").val());
+        $("#cmbVerificadores").val("---");
+        $('#divLotes').empty();
+        $("#divRenTara").empty();
+    }
+    function roundUsing(func, number, prec) {
+        var tempnumber = number * Math.pow(10, prec);
+        tempnumber = func(tempnumber);
+        return tempnumber / Math.pow(10, prec);
+    }
+
+
+
+    function CallChangeSerie() {
+
+
+        /*$("#divBotonRecibo").hide();*/
+        $.ajax({
+            url: '/Produccion/traeNumDocto',
+            type: "POST",
+            dataType: "JSON",
+            async: "false",
+            data: { value: $("#cmbSeries option:selected").val() },
+            success: function (json) {
+                if (json > 0) {
+                    $('#txtNumDocto').val(json);
+                    $("#divMesSerie").hide();
+                    var v_tipo = $('#lbltipo').val();
+                    if (v_tipo == "ORDEN") {
+                        $("#divBotonRecibo").show();
+                    } else if (v_tipo == "DEVOLUCION") {
+                        $("#divBotonDevolucion").show();
+                    } else if (v_tipo == "EMISION") {
+                        $("#divAgregaFabricacion").show();
+                    }
+                }
+            },
+            error: function (error) { }
+        });
+
+    }
+
+    function traeTotalConfEtiquetaEmbalaje() {
+
+        var table = $('#gridConfItemEm table').DataTable();
+
+        var data = table
+            .rows()
+            .data();
+        var $v_tot = 0;
+        for (i = 0; i <= data.length - 1; i++) {
+            var rows = table.rows(i).data();
+
+            var tname = "txtUni_" + rows[0][0];
+
+
+            var $v_num1 = document.getElementById(tname).value;
+
+            $v_tot = $v_tot + parseFloat($v_num1);
+
+
+        }
+
+        return $v_tot;
+    }
+    function muestraEtiqueta() {
+
+        var table = $('#gridConfItemEm table').DataTable();
+
+        var data = table
+            .rows()
+            .data();
+        var $v_html = "";
+        var $v_filas = "";
+        $v_html = "<table class='table table-responsive'><tr><th>Codigo</th><th>Limite</th><th>Unidades</th><th>No.Etiquetas</th></tr>"
+        for (i = 0; i <= data.length - 1; i++) {
+            var $v_tr = "<tr>";
+            var rows = table.rows(i).data();
+
+            var tname = "txtUni_" + rows[0][0];
+            $v_tr = $v_tr + "<td>" + rows[0][1] + "</td>";
+
+            var $v_num1 = document.getElementById(tname).value;
+            var $v_num2 = rows[0][3];
+
+            $v_tr = $v_tr + "<td>" + $v_num2 + "</td>";
+            $v_tr = $v_tr + "<td>" + $v_num1 + "</td>";
+
+            var $v_tot = parseFloat($v_num1) / parseFloat($v_num2);
+            var $v_tot_int = parseInt($v_tot);
+
+            var $v_resto = $v_tot - $v_tot_int
+            if ($v_resto > 0) {
+                $v_tot_int = $v_tot_int + 1;
+            }
+            $v_tr = $v_tr + "<td>" + $v_tot_int + "</td>";
+
+            $v_tr = $v_tr + "</tr>";
+
+            if ($v_num1 > 0) {
+                $v_filas = $v_filas + $v_tr;
+            }
+
+        }
+
+        $v_html = $v_html + $v_filas + "</table>"
+
+        var $v_cantidad = $('#txt_cantidad').val();
+
+        if (parseFloat($v_cantidad) != traeTotalConfEtiquetaEmbalaje()) {
+            swal("Informacion", "Las cantidades no coinciden revisar!", "error");
+        } else {
+            swal({
+                title: "Etiquetas",
+                text: $v_html,
+                html: true
+            });
+
+        }
+    };
+    </script>
+    }
+</div>

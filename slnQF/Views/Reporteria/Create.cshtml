@@ -1,0 +1,120 @@
+﻿@model slnQF.TREPORTE
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Creacion de Reporte </h4>
+        <hr />
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <br />
+        <label for="DESCRIPCION">Descripcion</label>
+        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="BDSERVER">BD Server</label>
+        @Html.EditorFor(model => model.BDSERVER, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        <br />
+        <label for="BDNAME">BD Nombre</label>
+        @Html.EditorFor(model => model.BDNAME, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="BDUSER">BD User</label>
+        @Html.EditorFor(model => model.BDUSER, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="BDPASS">BD Pass</label>
+       
+        @Html.PasswordFor(model => model.BDPASS, new { @class = "form-control" })
+       
+        <br/>
+        <label for="BDSP">BD Procedure</label>
+
+        @Html.EditorFor(model => model.BDSP, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+  
+        <div class="modal-footer">
+            <div id="DivGuardar">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveReport()" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+                    
+                    if (item2.IDPERMISO == 47 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function SaveReport() {
+        startSpinGen();
+        var DESCRIPCION = $("#DESCRIPCION").val();
+         
+        var BDSERVER = $("#BDSERVER").val();
+        var BDNAME = $("#BDNAME").val();
+        var BDUSER = $("#BDUSER").val();
+        var BDPASS = $("#BDPASS").val(); 
+        var ID_PERMISO = $("#ID_PERMISO").val();
+        var ESTADO = $("#ESTADO").val(); 
+        var BDSP = $("#BDSP").val();
+        var product = {
+            "ID_REPORTE": 0, "DESCRIPCION": DESCRIPCION,   "BDSERVER": BDSERVER,"BDSP":BDSP,
+            "BDNAME": BDNAME, "BDUSER": BDUSER, "BDPASS": BDPASS, "ID_PERMISO": ID_PERMISO,"ESTADO": 1
+        };
+      
+        $.post('/Reporteria/Create2', product,
+        function (data) {
+            stopSpinGen();
+            if (data.ID == 0) {
+                swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                    function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+            } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+        }
+   , 'json');
+    }
+
+  
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+

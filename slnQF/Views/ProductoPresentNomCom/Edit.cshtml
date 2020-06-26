@@ -1,0 +1,69 @@
+﻿@model slnQF.Models.ProductoPresentNomCom
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Editar Producto - Presentacion - Nombre Comercial</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID_PRODUCTO)
+
+        @Html.HiddenFor(model => model.ID_PRESENTACION)
+
+        @Html.HiddenFor(model => model.ID_NOMBRE_COMERCIAL)
+        <br />
+        @Html.LabelFor(model => model.CODIGO_SAP)
+        @Html.EditorFor(model => model.CODIGO_SAP, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
+        <br />
+        <label for="ESTADO">ESTADO</label>
+        @Html.DropDownListFor(model => model.ESTADO, ViewBag.CategoriesDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+
+
+        <br />
+
+
+        <div class="modal-footer">
+            <input type="button" value="Guardar" class="btn btn-primary" onclick="UpdateProduct()" />
+
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+    function UpdateProduct() {
+
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_PRESENTACION = $("#ID_PRESENTACION").val();
+        var ID_NOMBRE_COMERCIAL = $("#ID_NOMBRE_COMERCIAL").val();
+        var CODIGO_SAP = $("#CODIGO_SAP").val();
+
+        var ESTADO = $("#ESTADO").val();
+
+
+        var product = {
+            "ID_PRODUCTO": ID_PRODUCTO, "ID_PRESENTACION": ID_PRESENTACION,
+            "ESTADO": ESTADO, "ID_NOMBRE_COMERCIAL": ID_NOMBRE_COMERCIAL,
+            "CODIGO_SAP": CODIGO_SAP
+        };
+        console.log(product);
+        $.post('/ProductoPresentNomCom/Edit', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+    }
+</script>

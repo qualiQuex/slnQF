@@ -1,0 +1,86 @@
+﻿@model slnQF.Models.Cliente_Nom_Com
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Asociacion de Cliente a Nombre Comercial <label>"@(ViewBag.NOMBRE_COMERCIAL ?? String.Empty)"</label></h4>
+        <hr />
+
+        <input type="text" style="visibility: hidden;" id="ID_NOMBRE_COMERCIAL" value="@(ViewBag.ID_NOMBRE_COMERCIAL ?? String.Empty)">
+
+
+        <br />
+        <label for="ID_CLIENTE">CLIENTE</label>
+        @Html.DropDownListFor(model => model.ID_CLIENTE, ViewBag.ClienteDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+
+        <div class="modal-footer">
+            <div id="DivGuardar">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProduct()" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 35 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function SaveProduct() {
+        var ID_CLIENTE = $("#ID_CLIENTE").val();
+        var ID_NOMBRE_COMERCIAL = $("#ID_NOMBRE_COMERCIAL").val(); 
+
+        var product = {
+            "ID_CLIENTE": ID_CLIENTE, "ID_NOMBRE_COMERCIAL": ID_NOMBRE_COMERCIAL, "ESTADO": 1 
+        };
+
+        $.post('/Cliente_NombreCom/CreateJS', product,
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

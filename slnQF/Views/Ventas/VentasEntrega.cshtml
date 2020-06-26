@@ -1,0 +1,454 @@
+﻿@{
+    ViewBag.Title = "VentasEntrega";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+
+    }
+ 
+
+
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                
+                <label id="lbl_titulo"> </label>
+                <small>Version 1.0</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Datos Generales</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <label class="control-label" for="selectbasic" id="lbl_tipo_cli"> </label>
+                                <div >
+                                    @Html.DropDownList("Clientes", null, "Seleccionar ", new { @class = "form-control", @onchange = "CallChangeCliente(this.value)" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label" for="CmbSerie">Series Documento</label>
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+
+                                        @Html.DropDownList("CmbSerie", null, "Seleccionar moneda", new { @class = "btn btn-default", @onchange = "CallChangeSerie(this.value)" })
+
+                                    </div>
+                                    <input type="text" class="form-control" id="txtNumDocto" name="txtNumDocto">
+
+
+                                </div>
+                            </div>
+                                                    <!--
+                            <div class="col-md-4">
+                                <label class="control-label" for="txtManual">Manual</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox">
+                                    </span>
+                                    <input id="txtManual" name="txtManual" class="form-control" type="text" placeholder="Manual">
+                                </div>
+                            </div>
+                                -->
+                            <div class="col-md-4">
+                                <label class="control-label" for="txt_fecha_contabiliza">Fecha Contabilizacion:</label>
+                                <div>
+
+                                    <input type="date" class="form-control pull-right" id="txt_fecha_contabiliza">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label" for="txt_fecha_entrega">Fecha Entrega:</label>
+                                <div>
+                                    <input type="date" class="form-control pull-right" id="txt_fecha_entrega">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 ">
+                                <label class="control-label" for="CmbMoneda">Moneda</label>
+                                <div>
+                                    @Html.DropDownList("CmbMoneda", null, "Seleccionar moneda", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label" ></label>
+                                <div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 ">
+                                <label class="control-label" for="CmbContactos">Contacto</label>
+                                <div>
+                                    @Html.DropDownList("CmbContactos", new SelectList(new List<string>()), new { @class = "form-control" })
+                                     
+                                </div>
+                            </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            </div>
+
+
+            <div class="row">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Articulos</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <label class="control-label" for="CmbCodsArticulos">Codigo Articulo:</label>
+                                <div>
+
+                                    <div>
+                                        @Html.DropDownList("CmbCodsArticulos", null, "-----", new { @class = "form-control", @onchange = "CallChangeCodArti(this.value)" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="control-label" for="CmbArticulos">Nombre Articulo:</label>
+                                <div>
+
+                                    @Html.DropDownList("CmbArticulos", null, "Seleccionar articulo", new { @class = "form-control", @onchange = "CallChangeArti(this.value)" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <label class="control-label" for="CmbImpuestos">Impuesto:</label>
+                                <div>
+
+                                    @Html.DropDownList("CmbImpuestos", null, "-----", new { @class = "form-control" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <label class="control-label" for="CmbLote">Lote:</label>
+                                <div>
+
+                                 
+                                    @Html.DropDownList("CmbLote", new SelectList(new List<string>()), new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label" for="txtCantidad">Cantidad:</label>
+                                <div>
+
+                                    <input type="number" class="form-control" id="txtCantidad" min="1">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="control-label" for="txtPrecio">Precio:</label>
+                                <div>
+
+                                    <input type="number" class="form-control" id="txtPrecio" min="1">
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+
+                                <label class="control-label" for="btnAgregaItem"> </label>
+                                <div>
+                                    <button type="button" class="btn btn-primary add-item" id="btnAgregaItem">Agregar</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+
+
+                                @{
+
+
+                                    WebGrid grid = new WebGrid(Model.Items, canPage: true, rowsPerPage: 50, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent"); grid.Pager(WebGridPagerModes.NextPrevious);
+
+                                }
+                                <div id="gridContent">
+                                    @grid.GetHtml(tableStyle: "table table-hover",
+    mode: WebGridPagerModes.All,
+
+                columns: grid.Columns(
+                grid.Column("Id", " Id", null, "text-center", false),
+                grid.Column("Nombre", "Nombre", null, "text-left", false),
+                grid.Column("Precio", "Precio", null, "text-center", false),
+                grid.Column("Impuesto", "Impuesto", null, "text-center", false),
+                grid.Column("Cantidad", "Cantidad", null, "text-center", false),
+                grid.Column("Lote", "Lote", null, "text-center", false),
+                grid.Column(header: "Quitar", format: @<text><button class="btn btn_grid display-mode delete-item" id="@item.ID">Delete</button></text>
+            )
+        )
+    )
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <button type="button" class="btn btn-primary add-Orden" id="Agregar Orden">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+               
+               
+        </div>
+
+</section>
+        @section Scripts{
+            <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
+            <script  type="text/javascript">
+                initialize();
+                function initialize() {
+                    var tipo = '@Request.RequestContext.HttpContext.Session["tipo"]';
+                   
+                    if (tipo == "sale")  {
+                        $("#lbl_tipo_cli").text("Cliente");
+                        $("#lbl_titulo").text("ENTREGA");
+                        $("#lbl_breadcumb").text("Ventas");
+                    }
+                    if (  tipo == "sale-return") {
+                        $("#lbl_tipo_cli").text("Cliente");
+                        $("#lbl_titulo").text("DEVOLUCION");
+                        $("#lbl_breadcumb").text("Ventas");
+                    }
+                    if (tipo == "purchase") {
+                        $("#lbl_tipo_cli").text("Vendedor");
+                        $("#lbl_titulo").text("ENTRADA DE MERCANCIAS");
+                        $("#lbl_breadcumb").text("Entrada de mercancias");
+                    }
+                    if (tipo == "purchase-return") {
+                        $("#lbl_tipo_cli").text("Vendedor");
+                        $("#lbl_titulo").text("DEVOLUCION DE MERCANCIAS");
+                        $("#lbl_breadcumb").text("Devolucion de mercancias");
+                    }
+                    console.log(tipo);
+                    $(document).on('click','.delete-item', function () {
+                        
+                            var tr = $(this).parents('tr:first');
+                            var ID = $(this).prop('id');
+                            $.post(
+                                '/Ventas/quitarItemLista/',
+                                { value: ID },
+                                function (item){
+                                    tr.remove();
+                                }, "json");
+                       
+                    });
+
+                    $('.add-item').on('click', function () {
+                        var tr = $(this).parents('tr:first');
+                        var ID = $("#CmbCodsArticulos option:selected").val();
+                        var vid = $("#CmbCodsArticulos option:selected").val();
+                        var vnombre = $("#CmbCodsArticulos option:selected").val();
+                        var vprecio = $("#txtPrecio").val();
+                        var vcantidad = $("#txtCantidad").val();
+                        var vimpuesto = $("#CmbImpuestos option:selected").val();
+                        var vlote = $("#CmbLote option:selected").val();
+                        $.post(
+                            '/Ventas/AgregarItemLista/',
+                            { Id: vid, Nombre: vnombre, Precio: vprecio, Impuesto: vimpuesto, Cantidad: vcantidad, Lote: vlote },
+                            function (item) {
+                                var newrow = '<tr>' +
+                                '<td class="text-center">'+ vid +'</td>'+
+                                '<td class="text-left">' + vnombre + '</td>' +
+                                '<td class="text-center">' + vprecio + '</td>' +
+                                '<td class="text-center">' + vimpuesto + '</td>' +
+                                '<td class="text-center">' + vcantidad + '</td>' +
+                                '<td class="text-center">' + vlote + '</td>' +
+                                '<td><button class="btn_grid display-mode delete-item" id=' + vid + '>Delete</button></td>'
+                                '</tr>';
+
+                                $("#gridContent tbody").append(newrow);
+                                
+                               
+                            }, "json");
+                         
+                    });
+
+
+
+                    $('.add-Orden').on('click', function () {
+                        
+                        var VCLIENTE = $("#Clientes option:selected").val();
+                        $.post(
+                            '/Ventas/AgregarOrden/',
+                            { IdCliente: VCLIENTE },
+                            function (item) {
+                                Console.log(item);
+                            }, "json");
+
+                    });
+               
+                }
+            </script>
+
+            <script>
+                function CallChangeSerie() {
+                 
+                    $.ajax({
+                        url: '/Ventas/traeNumDocto',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { value: $("#CmbSerie option:selected").val() },
+                        success: function (json) {
+                       
+                            $('#txtNumDocto').val(json);
+                            console.log(json);
+                        },
+                        error: function (error) { }
+                    });
+                }
+
+                function CallOnClickDelete(row) {
+
+                    $.ajax({
+                        url: '/Ventas/quitarItemLista',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { value: row },
+                        success: function (json) {
+                        
+                            var parent = $(this).parents().get(0);
+                            $(parent).remove();
+                             
+                        },
+                        error: function (error) { }
+                    });
+                }
+
+
+            
+             
+ 
+                function CallChangeCliente() {
+                 
+                    $.ajax({
+                        url: '/Ventas/traeCliente',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { value: $("#Clientes option:selected").val() },
+                        success: function (json) {
+                        
+                            $('#CmbContactos').empty();
+                            $.each(json.contactos, function (i, item) {
+                                
+                                $('#CmbContactos').append($('<option>', {
+                                    value: item.id_Contacto,
+                                    text: item.nombre_Contacto
+                                }));
+                                console.log(item.nombre_Contacto);
+                            })
+                        
+                        },
+                        error: function (error) { }
+                    });
+                }
+                function CallChangeCodArti() {
+
+                    $('#CmbArticulos').val($("#CmbCodsArticulos option:selected").val());
+                    
+                    
+                    var codigoArticulo = $("#CmbCodsArticulos option:selected").val();
+                    var fecha = $("#txt_fecha_post").val();
+                    var clietnes = $("#Clientes option:selected").val();
+                    
+                    
+                    $.ajax({
+                        url: '/Ventas/traePrecioArticulo',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { codArticulo: codigoArticulo, fechaPost: fecha, codCliente: clietnes },
+                        success: function (json) {
+                            $('#txtPrecio').val(json);
+                            console.log(json);
+                        },
+                        error: function (error) { }
+                    });
+
+                }
+                function CallChangeArti() {
+
+                    $('#CmbCodsArticulos').val($("#CmbArticulos option:selected").val());
+
+                    var codigoArticulo = $("#CmbCodsArticulos option:selected").val();
+                    var fecha = $("#txt_fecha_post").val();
+                    var clietnes = $("#Clientes option:selected").val();
+
+
+                    $.ajax({
+                        url: '/Ventas/traePrecioArticulo',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { codArticulo: codigoArticulo, fechaPost: fecha, codCliente: clietnes },
+                        success: function (json) {
+                            $('#txtPrecio').val(json);
+                            console.log(json);
+                        },
+                        error: function (error) { }
+                    });
+                    
+                    $.ajax({
+                        url: '/Ventas/traeLotesArt',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { itemCode: codigoArticulo },
+                        success: function (json) {
+                            $('#CmbLote').empty();
+                            $.each(json, function (i, item) {
+                               
+                                $('#CmbLote').append($('<option>', {
+                                    value: item.id,
+                                    text: item.value
+                                }));
+                                console.log(item.id);
+                            })
+                        },
+                        error: function (error) { }
+                    });
+                }
+            
+
+            </script>
+        }
+    </div>
+
+

@@ -1,0 +1,640 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Salida de mercancia</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+
+
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                <div class="box-tools pull-right">
+                    <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+                <div class="container col-md-12">
+                    <div class="row">
+
+                        <div class="col-sm-4 ">
+                            <div class="form-group-sm">
+                                <label>Serie</label> @Html.DropDownList("cmbSeries", null, "---", new { @class = "form-control input-sm ", @onchange = "CallChangeSerie(this.value)", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4 ">
+                            <div class="form-group-sm">
+                                <label>Numero</label> <input class="form-control input-sm" id="txtNumero" type="text" placeholder="Numero" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group-sm">
+                                <a href="#" onclick="muestraArticulo();" title="Busqueda articulo">Articulo</a> <input type="text" id="txtArticuloBus" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-inline">
+                        </div>
+                        <div class="col-sm-3 form-inline">
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-bordered table-striped table-highlight" id="tblArticuloStock">
+                                <thead>
+                                    <tr>
+                                        <th align="center"><a href="#" class="delete-row">(-)</a></th>
+                                        <th>Codigo</th>
+                                        <th>Nombre</th>
+                                        <th>Almacen</th>
+                                        <th>Cantidad</th>
+                                        <th>Uom</th>
+                                        <th>Stock</th>
+                                        <th>Lotes</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+                            <button id="crearDocto" class="btn btn-success btn-lg" onclick="validaTransaccion()">Crear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalGenerico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
+                    </div>
+
+                    <div class="box box-primary">
+                        <div class="modal-body " style="overflow-y: scroll; max-height:100%;  margin-top: 50px; margin-bottom:80px;">
+
+                            <div id="DivToAppendPartialViewTS" class="container"></div>
+                        </div>
+                        <hr />
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalConfigLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Cantidad necesitada: <label id="lbl_quantity"></label>
+                        </h4>
+                        <h4><label id="lbl_itemName"></label></h4>
+                    </div>
+
+                    <div class="box box-primary">
+                        <label class="hidden" id="lbl_tableSelected"></label>
+                        <label class="hidden" id="lbl_itemCode"></label>
+
+                        <label class="hidden" id="lbl_itemAlmacen"></label>
+                       <div id="divLotes" class="modal-body table-responsive">
+
+                        </div>
+                        <hr />
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary okConfigLote" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </section>
+</div>
+
+
+<script type="text/javascript">
+    initialize();
+    $(document).ready(function () {
+        var navListItems = $('ul.setup-panel li a'),
+               allWells = $('.setup-content');
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this).closest('li');
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.closest('li').removeClass('active');
+                $item.addClass('active');
+                allWells.hide();
+                $target.show();
+            }
+        });
+
+        $('ul.setup-panel li.active a').trigger('click');
+
+
+        $(".delete-row").click(function () {
+            $("#tblArticuloStock tbody").find('input[name="record"]').each(function () {
+                if ($(this).is(":checked")) {
+
+                    var tr = $(this).parents('tr');
+                    var $item = $(this).closest("tr");
+                    var v_tableid = 'tblLotes' + $item.children("td:eq(1)").html();
+
+                    if (document.getElementById(v_tableid)) {
+                        $('#' + v_tableid).remove();
+                    }
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+        $(".paso2").click(function () {
+            if ($("#txtSocio").prop("disabled")){
+                $('ul.setup-panel li:eq(1)').removeClass('disabled');
+                $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+                $(this).remove();
+
+            }
+            else
+                swal("Informacion", "Seleccione socio para poder continuar.", "error");
+
+        });
+
+
+    });
+    function initialize() {
+
+
+        actualizaSerie('SALIDATRAN');
+
+        var listAlmacen1 = [];
+        $.ajax({
+            url: '/Produccion/traeWareHouse',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            cache: false,
+            success: function (json) {
+
+                listAlmacen1 = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+        $.each(listAlmacen1, function (i, item3) {
+            var $sel = "";
+
+
+            $('#selAlmacen').append($('<option >', {
+                value: item3.id,
+                text: item3.id,
+            }));
+
+
+
+        });
+        $(document).on('click', '.clickLotea', function () {
+            $("#divLotes").find("table").hide();
+
+            var tr = $(this).parents('tr');
+            var $item = $(this).closest("tr");
+            var v_campot;
+            var $v_contador = 0;
+            var $vCantidad = 0;
+            var $vAlmacen = "";
+            var $vCodigoItem = "0";
+            var $vNombreItem = "0";
+            $($item).find("input").each(function () {
+                $v_contador = $v_contador + 1;
+                if ($v_contador == 2) {
+                    $vCantidad = this.value;
+                }
+            });
+            $v_contador = 0;
+            $($item).find("select").each(function () {
+                $v_contador = $v_contador + 1;
+                $vAlmacen = this.value;
+            });
+
+            $vCodigoItem = $item.children("td:eq(1)").html();
+
+            $vNombreItem = $item.children("td:eq(2)").html();
+
+            //validaciones
+            var $v_band = 1;
+            if (($vCantidad == 0) || ($vAlmacen == "") || ($vCodigoItem == "0")
+                    || ($vAlmacen.length <= 0) || ($vCodigoItem.length <= 0)) {
+                $v_band = 0;
+                swal("Error", "Revise los datos de cantidad y almacen.", "error");
+            }
+            if ($v_band == 1) {
+                $("#lbl_quantity").text($vCantidad);
+                $("#lbl_itemName").text($vNombreItem + "[" + $vCodigoItem + "]");
+                $("#modalConfigLote").modal();
+                var v_tableid = 'tblLotes' + $vCodigoItem;
+                $("#lbl_tableSelected").text(v_tableid);
+                $("#lbl_itemCode").text($vCodigoItem);
+                $("#lbl_itemAlmacen").text($vCodigoItem);
+
+                
+                $('#divLotes').show();
+                v_campot = $vCantidad;
+                if (document.getElementById(v_tableid)) {
+
+                    $('#' + v_tableid).show();
+                } else {
+                    $.ajax({
+                        url: '/Produccion/traeLotesItem/',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: { docentry: $vCodigoItem },
+                        success: function (json) {
+                            var table = '<table id="' + v_tableid + '" class="table table-hover"> ' +
+                                                '<tr>' +
+                                                    '<th class="hidden">Codigo articulo</th> ' +
+                                                    '<th>Lote</th>' +
+                                                    '<th class="hidden">Cantidad</th>' +
+                                                    '<th></th>' +
+                                                    '<th>Almacen</th>' +
+                                                    '<th>F Vencim</th>' +
+                                                    '<th>Estatus</th>' +
+                                                    '<th>Potencia</th>' +
+                                                    '<th>Notas</th>' +
+                                                '</tr>' +
+                                        '</table>';
+
+                            $('#divLotes').append(table);
+                            if (Object.keys(json.ListaItems).length > 0) {
+
+                                var $enabled = "";
+
+                                var $v_totLote = v_campot;
+                                var $v_restTotal = 0;
+                                $v_restTotal = $v_totLote;
+                                $.each(json.ListaItems, function (i, item) {
+                                    if ($vAlmacen == item.WHSCODE) {
+                                    var $valCampoCant = 0;
+                                    if ($v_restTotal > 0) {
+
+                                        if (parseFloat(item.QUANTITY) >= parseFloat($v_restTotal)) {
+                                            var decimals = $v_restTotal - Math.floor($v_restTotal);
+                                            if (decimals <= 0) {
+                                                $v_restTotal = $v_restTotal + ".0";
+                                            }
+                                            var decPart = ($v_restTotal + "").split(".")[1];
+                                            var cuenta = 0;
+                                            if (decPart.length > 0) {
+                                                cuenta = decPart.length;
+                                            } else {
+                                                cuenta = 1;
+                                            }
+
+                                            var $cantTmp = roundUsing(Math.ceil, parseFloat($v_restTotal), cuenta); //Math.round(parseFloat($v_restTotal) * 10) / 10;
+                                            $valCampoCant = $cantTmp;
+                                            $v_restTotal = 0;
+
+                                        } else if (parseFloat(item.QUANTITY) < parseFloat($v_restTotal)) {
+
+                                            var tmpTotal = parseFloat($v_restTotal) - parseFloat(item.QUANTITY);
+                                            var decimals = tmpTotal - Math.floor(tmpTotal);
+                                            if (decimals <= 0) {
+                                                tmpTotal = tmpTotal + ".0";
+                                            }
+
+
+                                            var decPart1 = (tmpTotal + "").split(".")[1];
+                                            var cuenta1 = 0;
+                                            if (decPart1.length > 0) {
+                                                cuenta1 = decPart1.length;
+                                            } else {
+                                                cuenta1 = 1;
+                                            }
+
+                                            $valCampoCant = item.QUANTITY;
+
+                                            $v_restTotal = roundUsing(Math.ceil, tmpTotal, cuenta1);//Math.round((parseFloat($v_restTotal) - parseFloat(item.QUANTITY)) * 10) / 10;;
+
+                                        }
+
+                                    }
+
+                                    var newrow = '<tr>' +
+                                       '<td class="hidden">' + item.ITEMCODE + '</td>' +
+                                       '<td class="text-center">' + item.BATCHNUM + '</td>' +
+                                       '<td class="hidden text-center">' + item.QUANTITY + '</td>' +
+                                       '<td class="text-center" ><input type="text" value="' + $valCampoCant + '"/></td>' +
+                                       '<td class="text-center">' + item.WHSCODE + '</td>' +
+                                       '<td class="text-center">' + item.FECHA_VENCIM + '</td>' +
+                                        '<td class="text-center">' + item.MNF_SERIAL + '</td>' +
+                                        '<td class="text-center">' + item.LOT_NUMBER + '</td>' +
+                                         '<td class="text-center">' + item.NOTES + '</td>' +
+                                       '</tr>';
+
+                                    $("#" + v_tableid + " tbody").append(newrow);
+
+                                }
+                                })
+                            }
+                        },
+                        error: function (error) { stopSpin(); }
+                    });
+                }
+            }
+
+        });
+
+    
+
+    }
+
+    function validaTransaccion() {
+
+        var listOfItems = [];
+        var listOfLotes = [];
+
+        $('#tblArticuloStock tbody tr').each(function (index) {
+            var v_contador = 0;
+            var v_itemCode = "";
+            var v_Uom = "";
+
+            var v_cantidad = 0;
+
+            var v_Almacen = "";
+
+
+
+            $(this).children("td").each(function (index2){
+                v_contador = v_contador + 1;
+
+                if (v_contador == 2) {
+                    v_itemCode = $(this).text();
+                }
+                if (v_contador == 6) {
+                    v_Uom = $(this).text();
+                }
+            });
+
+            var v_contadorInput = 0;
+            $(this).find("input").each(function () {
+                v_contadorInput = v_contadorInput + 1;
+                if (v_contadorInput == 2) {
+                    v_cantidad = this.value;
+                }
+
+            });
+
+            $v_contadorSel = 0;
+            $(this).find("select").each(function () {
+                $v_contadorSel = $v_contadorSel + 1;
+                v_Almacen = this.value;
+            });
+
+            var objLote = new Object();
+            objLote.ITEMCODE = v_itemCode;
+
+            objLote.CANTIDAD = v_cantidad;
+            objLote.ALMACEN_DESTINO = v_Almacen;
+            objLote.UOM = v_Uom;
+
+            listOfItems.push(objLote);
+        });
+        // SE OBTIENEN LOS NOMBRES DE LAS TABLAS DE LOS LOTES
+
+        var divLotes = document.getElementById('divLotes');
+        var tablasLotes = [];
+        for (i22  = 0; i22 < divLotes.childNodes.length; i22++)
+            if (divLotes.childNodes[i22].nodeName == 'TABLE') {
+
+                var input = divLotes.childNodes[i22].id;
+                tablasLotes.push(input);
+
+            }
+        for (var rr = 0, n = tablasLotes.length; rr < n; rr++) {
+            $("#" + tablasLotes[rr] + " tbody tr").each(function (index) {
+
+                var campo1, campo2, campo3, campo4, campo44, campo5, campo6, campo7, campo8;
+                var vcuentaLineas = 0;
+
+                $(this).children("td").each(function (index2) {
+                    vcuentaLineas = vcuentaLineas + 1;
+                    var v_campo4;
+                    var $v_contadorLote = 0;
+                    $(this).find("input").each(function () {
+
+                        $v_contadorLote = $v_contadorLote + 1;
+                        if ($v_contadorLote == 1) {
+                            v_campo4 = this.value;
+
+                        }
+
+                    })
+
+                    switch (index2) {
+                        case 0: campo1 = $(this).text();
+                            break;
+                        case 1: campo2 = $(this).text();
+                            break;
+                        case 2: campo3 = $(this).text();
+                            break;
+                        case 3: campo4 = v_campo4;
+                            break;
+                        case 4: campo44 = $(this).text();
+                            break;
+                        case 5: campo5 = $(this).text();
+                            break;
+                        case 7: campo7 = $(this).text();
+                            break;
+
+                        case 8: campo8= $(this).text();
+                            break;
+                    }
+
+                });
+                if (vcuentaLineas > 0) {
+                    var obj = new Object();
+                    obj.ITEMCODE = campo1;
+                    obj.BATCHNUM = campo2;
+                    obj.QUANTITY = campo3;
+                    obj.TTOTAL = campo4;
+                    obj.FECHA_EXP = campo5;
+                    obj.NUEVO = "0";
+                    obj.MNFSERIAL = campo44;
+                    obj.LOTNUMBER = campo7;
+                    obj.LOTNOTES = campo8;
+
+                    listOfLotes.push(obj);
+                }
+            });
+        }
+        console.log(listOfLotes);
+        var vjsonStringItems = JSON.stringify(listOfItems);
+        var vjsonStringLotes = JSON.stringify(listOfLotes);
+
+        var $v_serie = $("#cmbSeries option:selected").val();
+        var $v_numero = $('#txtNumero').val();
+        startSpinGen();
+        $.ajax({
+            url: '/SalidaStock/creaSalidaStock/',
+            type: "POST",
+            dataType: "json",
+            data: { jsonStringItems: vjsonStringItems, jsonStringLotes: vjsonStringLotes,pserie:$v_serie,pnumero:$v_numero },
+            success: function (json) {
+                stopSpinGen();
+                if (json.P_OK == "NOK") {
+                    swal("Error", json.MENSAJE, "error");
+                } else {
+                    swal("Exito", json.MENSAJE, "success");
+                }
+            },
+            error: function (error) { console.log(error); }
+        });
+
+    }
+
+    function actualizaSerie(tipo) {
+
+        $.ajax({
+            url: '/Operaciones/traeSerie',
+            type: "POST",
+            dataType: "JSON",
+            async: "false",
+            data: { value: tipo },
+            success: function (json) {
+                console.log(json);
+                if (json.ID == "1") {
+                    $('#cmbSeries').empty();
+                    $.each(json.OBJETO, function (i, item) {
+
+                        $('#cmbSeries').append($('<option>', {
+                            value: item.id,
+                            text: item.value
+                        }));
+
+                    });
+                } else if(json.ID =="-100") {
+                    swal("Informacion", json.MENSAJE, "error");
+                    window.location.href = "/Usuario/Login2";
+                } else  {
+                    swal("Informacion", json.MENSAJE, "error");
+                }
+
+                CallChangeSerie();
+            },
+            error: function (error) { console.log(error); }
+        });
+        function CallChangeSerie() {
+
+
+            /*$("#divBotonRecibo").hide();*/
+            $.ajax({
+                url: '/Produccion/traeNumDocto',
+                type: "POST",
+                dataType: "JSON",
+                async: "false",
+                data: { value: $("#cmbSeries option:selected").val() },
+                success: function (json) {
+                    if (json > 0) {
+                        $('#txtNumero').val(json);
+
+                    }
+                },
+                error: function (error) { }
+            });
+
+        };
+
+    }
+    function muestraArticulo() {
+
+        var $vitemid = $("#txtArticuloBus").val();
+        if ($vitemid.length < 2) {
+            swal("Informacion", "Debe de ingresar por lo menos 2 caracteres para buscar.", "error");
+            return;
+        } else {
+            $("#modalGenerico").modal({ backdrop: 'static', keyboard: false });
+            $("#DivToAppendPartialViewTS").empty();
+            var ph = $("#DivToAppendPartialViewTS");
+
+            ph.load("/SalidaStock/ListaArticuloStockT?IdItemCode=" + $("#txtArticuloBus").val());
+        }
+    }
+    function limpiaEncabezado() {
+
+        $('#txtNombre').val("");
+        $('#txtSocio').val("");
+        $('#txtContacto').val("");
+        $('#txtDestinatario').val("");
+    }
+
+
+</script>

@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+    <title>Qualipharm | Login</title>
+
+    @RenderSection("Styles", false)
+    @Styles.Render("~/Content/css")
+    <style type="text/css">
+        body {
+            background-size: 100%;
+            background-image: url('../../Content/Imagenes/fondo.png');
+            background-repeat: no-repeat;
+        }
+
+        .style1 {
+            background-image: url('../../Content/Imagenes/fondo.png');
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div> 
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/AdminLTE")
+    @RenderSection("Scripts", false)
+
+
+</body>
+</html>

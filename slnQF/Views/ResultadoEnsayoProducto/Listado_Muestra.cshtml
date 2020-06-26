@@ -1,0 +1,165 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_PRUEBA_RESULTADOResult>
+
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridREsulta");
+    }
+    <div class="table-responsive">
+         
+        <label id="lbl_ID_LOTE_INGRESO" class="hidden">@(ViewBag.ID_LOTE_INGRESO ?? String.Empty) </label>
+        <H4> RESULTADOS DE CERTIFICADO: <label id="lbl_NO_INGRESO">"@(ViewBag.NO_INGRESO ?? String.Empty)"</label></H4>
+        <div id="gridREsulta">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column(columnName : "",format:@<text> @if(item.ID_RESULTADO_ENSAYO_PROD == -1) {<text><span class="label label-danger">-</span></text>}else {<span class="label label-success">+</span> } </text> ,header : "", style: "grid-60px",canSort : false),
+                                     grid.Column("ID_ENSAYO", "Ensayo", null, "text-center", false),
+                                     grid.Column("NOMBRE_ENSAYO", "Ensayo", null, "text-center", false),
+                                     grid.Column("ID_PRUEBA", "Prueba", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRUEBA", "Prueba", null, "text-center", false),
+                                     grid.Column("ID_PRUEBA_ESPECIFICA", "Prueba", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRUEBA_ESPECIFICA", "Prueba Especifica", null, "text-center", false),
+                                     grid.Column("ESPECIFICACION", "Especificación", null, "text-center", false),
+                                     grid.Column("TIPO_RESPUESTA", "Tipo de Respuesta", null, "text-center", false),
+                                     grid.Column("RESULTADO",format: (item) => Html.TextArea("RESULTADO", (string)item.RESULTADO, new { @class = "form-control",@rows="4",@cols="50" }), header: "Resultado",style: null,canSort : false),
+                                     grid.Column("USUARIO", "Usuario", null, "text-center", false),
+                                     grid.Column("ID_RESULTADO_ENSAYO_PROD", "", null, "text-center", false),
+                                    grid.Column("", header: "", canSort:false,
+                                         format: @<text> 
+                                        @Html.Raw("<a href='#' onclick='Edit("+ item.ID_RESULTADO_ENSAYO_PROD +")' class='glyphicon glyphicon-time ' title='HISTORIAL'> </a>")
+
+                                        </text>)
+                                     })
+            <CENTER>
+                <input type="button" value="Guardar" class="btn btn-primary btn-lg" onclick="SaveProduct()" />
+                <br />
+            </CENTER>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalHistorial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+
+            <div class="box box-primary">
+                <div class="modal-body ">
+
+                    <div id="DivHistorial">hola</div> 
+                </div>
+                <hr />
+
+            </div>
+
+
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridREsulta table').DataTable({
+            //"searching": true,
+            "paging": false,
+
+            "searching": true,
+
+            fixedColumns: true,
+            "columnDefs": [
+            { "class": "hidden", "targets": [1,3,5,11] }]
+
+        });
+    });
+
+    function Edit(pid) {
+        $("#modalHistorial").modal();
+        $("#DivHistorial").empty();
+        var ph = $("#DivHistorial");
+        ph.load("/ResultadoEnsayoProducto/Historial?Id=" + pid);
+    }
+
+    function SaveProduct() {
+        var list1 = [];
+        
+        $('.loader').css({ 'display': 'block' });
+
+        //startSpinGen();
+        var v_lote = $("#lbl_ID_LOTE_INGRESO").text();
+        $("#gridREsulta tbody tr").each(function (index) {
+            var contador = 0;
+            var v_resultado = "";
+            var obj = new Object();
+            obj.ID_LOTE_INGRESO = $("#lbl_ID_LOTE_INGRESO").text();
+            obj.ID_PRODUCTO = "0";
+            obj.ESTADO = "1";
+            obj.ID_TECNICO_ANALISTA = "0";
+            obj.ID_REVISADO_POR = "0";
+
+            
+            $(this).children("td").each(function (index2) {
+ 
+                if (contador == 1) {
+                    obj.ID_ENSAYO = $(this).text();
+                }
+
+                if (contador == 3) {
+                    obj.ID_PRUEBA = $(this).text();
+                }
+
+                if (contador == 5) {
+                    obj.ID_PRUEBA_ESPECIFICA = $(this).text();
+                }
+
+                if ((contador == 9)) {
+                    $(this).find("textarea").each(function () {
+                        v_resultado = this.value;
+                        obj.RESULTADO = v_resultado;
+                    });
+                    
+                }
+                if (contador == 11) {
+                    obj.ID_RESULTADO_ENSAYO_PROD = $(this).text();
+                }
+                
+         
+                contador = contador + 1;
+                
+            });
+            list1.push(obj);
+        });
+        var jsonSTR = JSON.stringify(list1);
+   
+        $.ajax({
+            url: '/ResultadoEnsayoProducto/CreaRegs/',
+            type: "POST",
+            dataType: "json",
+            data: { json: jsonSTR },
+            success: function (data) {
+                //stopSpinGen();
+                $('.loader').fadeOut("slow");
+                if (data.ID == 0) {
+
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { $("#divResultados").empty(); var div = $("#divResultados"); div.load("/ResultadoEnsayoProducto/Listado_Muestra?Id=" + v_lote); } });
+                } else if (data.ID == 2) {
+                    swal({ title: "Informacion", text: "NO EXISTEN CAMBIOS", type: "error", showConfirmButton: true });
+                }else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+
+            }
+
+        });
+
+    }
+
+    
+</script>

@@ -1,0 +1,137 @@
+﻿@model slnQF.Models.ModelUser
+
+@{
+    ViewBag.Title = "Login";
+ 
+    Layout = "~/Views/Shared/_MyLayoutLogin.cshtml";
+}
+<style>
+ 
+
+div.well{
+  height: 500px;
+} 
+
+.Absolute-Center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 80%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 0px;
+}
+
+#logo-container{
+  margin: auto;
+  margin-bottom: 10px;
+  width:200px;
+  height:30px;
+  background-image:url('http://placehold.it/200x30/000000/ffffff/&text=BRAND+LOGO');
+}
+      
+    </style>
+<section class="content-header">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+        }
+    </style>
+    <script type="text/javascript">
+                    $(window).load(function() {
+	                    $(".loader").fadeOut("slow");
+                    })
+    </script>
+
+</section>
+<section class="content">
+
+    <div class="row">
+        <div>
+            <div class="container">
+
+                <div class="loader"></div>
+              <div class="row">
+                <div class="Absolute-Center is-Responsive">
+                    <div class="col-sm-12 col-md-12 col-md-offset-1">
+                        <div class="login-panel panel panel-default">
+                            <div class="panel-heading">
+                                <center><h3 class="panel-title">Qualipharm</h3></center>
+                            </div>
+                            <div class="panel-body">
+                                 
+                                <section id="loginForm">
+                                    @using (Html.BeginForm("Login2", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                                        @Html.AntiForgeryToken()
+                                        <hr />
+                                        <label class="text-danger">@Session["LogedMessage"] </label>
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                  
+                                        <div class="form-group">
+                                            <label class="col-md-1"></label>
+                                            
+                                            <div class="col-md-10">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Usuario" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-md-1"></label>
+
+                                            <div class="col-md-10">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Contraseña" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-0 col-md-12">
+                                                <input type="submit" value="Iniciar sesión" class="btn btn-lg btn-primary btn-block" />
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                </section> 
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+     
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.prue').position({
+                of: $(document),
+                my: 'center center',
+                at: 'center center',
+                collision: 'flip flip'
+            });
+        });
+
+    </script>
+</section>

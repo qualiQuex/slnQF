@@ -1,0 +1,41 @@
+﻿
+
+@model IEnumerable<slnQF.SP_CONSULTA_REPORTE_PARAMETROResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridP");
+    }
+    <div class="table-responsive">
+        <div id="gridP">
+            @grid.GetHtml(
+                        htmlAttributes: new { width = "100%", id="tblParametros"},
+                        mode: WebGridPagerModes.All,
+                        columns: new[] {
+
+                        grid.Column("ID_REPORTE_PARAMETRO", null, null, "text-center;", false),
+                        grid.Column("NOMBRE_PARAMETRO", "NOMBRE", null, "text-center", false),
+                        grid.Column("DESC_PARAMETRO", "", null, "text-center", false),
+                        grid.Column("ID_TIPO_DATO", "ID TIPO", null, "text-center", false),
+                        grid.Column("TIPODATO", "TIPO", null, "text-center", false),
+                        grid.Column("", header: "", canSort:false,
+                        format: @<text>@Html.Raw("<input type='text' id='txt"+ item.ID_REPORTE_PARAMETRO +"'class='form-control' value='"+item.VALOR +"'/>")</text>)
+                        })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+        
+        $("#gridP th:nth-child(1)").hide();
+        $("#gridP td:nth-child(1)").hide();
+        $("#gridP th:nth-child(2)").hide();
+        $("#gridP td:nth-child(2)").hide();
+        $("#gridP th:nth-child(4)").hide();
+        $("#gridP td:nth-child(4)").hide();
+        $("#gridP th:nth-child(5)").hide();
+        $("#gridP td:nth-child(5)").hide();
+    };
+</script>

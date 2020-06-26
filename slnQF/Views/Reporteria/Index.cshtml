@@ -1,0 +1,183 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_REPORTEResult>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Reportes</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="divNuevo">
+                        <h4>
+
+                            <a href="#" class="glyphicon glyphicon-plus" onclick="OpenCreatePopup()">NUEVO</a>
+
+                        </h4>
+                    </div>
+                    <div class="col-md-12">
+                        @{
+                            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+                        }
+                        <div class="table-responsive">
+                            <div id="gridContent">
+
+                                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+                                         grid.Column("", header: "", canSort:false,format: @<text>
+                                    @Html.Raw("<a href='#' onclick='update("+ item.ID_REPORTE +")' class='glyphicon glyphicon-edit' title='Actualizar reporte'> </a>")</text>),
+                                            grid.Column("ID_REPORTE", "ID", null, "text-center", false),
+
+                                            grid.Column("DESCRIPCION", "Descripcion", null, "text-center", false),
+                                            grid.Column("BDSERVER", "Base de Datos", null, "text-center", false),
+                                            grid.Column("BDUSER", "Usuario BD", null, "text-center", false),
+                                            grid.Column("BDSP", "Procedimiento", null, "text-center", false),
+                                            grid.Column("ID_PERMISO", "Permiso", null, "text-center", false),
+                                            grid.Column("", header: "", canSort:false,format: @<text>
+                                            @Html.Raw("<a href='#' onclick='uploadReport("+ item.ID_REPORTE +")' class='glyphicon glyphicon-upload ' title='Subir reporte'> </a>")
+                                            </text>),
+                                            grid.Column("", header: "", canSort:false,format: @<text>
+                                            @Html.Raw("<a href='#' onclick='PopParametro("+ item.ID_REPORTE +")' class='glyphicon glyphicon-list-alt' title='Parametros'> </a>")
+                                                                                    </text>),
+                                            grid.Column("ESTADO_DESC", "ESTADO", null, "text-center", false),
+                                            grid.Column("FECHA_CREACION", "Fecha", null, "text-left", false),
+                                            grid.Column("USUARIO", "Usuario", null, "text-center", false)
+
+                                 })
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="modalEdita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+
+            <div class="box box-primary">
+                <div class="modal-body ">
+
+                    <div id="DivToAppendPartialVoew"></div>
+                    <div id="DivToAppendPartialViewList"></div>
+                </div>
+                <hr />
+
+            </div>
+
+            <div class="modal fade" id="modalFondo" aria-labelledby="myModalLabel">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#gridContent table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+    function OpenCreatePopup() {
+        startSpinGen();
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/Reporteria/Create");
+        stopSpinGen();
+    }
+    function uploadReport(pid) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/Reporteria/loadImage?Id=" + pid);
+    }
+
+    function update(pid) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/Reporteria/Update?Id=" + pid);
+    }
+
+    function PopParametro(pid) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        var div = $("#DivToAppendPartialVoew");
+        
+        div.load("/Reporteria/CreateParametro?Id=" + pid);
+
+        var ph2 = $("#DivToAppendPartialViewList");
+        ph2.load("/Reporteria/ListadoParametro?id=" + pid);
+    }
+    
+</script>

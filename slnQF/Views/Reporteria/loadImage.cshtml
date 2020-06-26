@@ -1,0 +1,97 @@
+﻿
+@model slnQF.TREPORTE
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Subir reporte </h4>
+        <hr />
+        @Html.HiddenFor(model => model.ID_REPORTE)
+        <label for="exampleInputFile">Archivo</label>
+        <input type="file" id="fileUpload" class="form-control" name="FileUpload1"    accept=".rpt" />
+        <p class="help-block">Seleccione reporte.</p>
+        <B>  @ViewBag.Message</B> <br />
+       
+        <div class="modal-footer">
+            <div id="DivGuardar">
+                <input type="button" value="Guardar" class="btn btn-primary" id="btnUploadFile" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+
+                    if (item2.IDPERMISO == 47 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+ 
+    
+    $(document).ready(function () {
+        $("#btnUploadFile").on("click", function () {
+            var data = new FormData();
+            var files = $("#fileUpload").get(0).files;
+            // Add the uploaded image content to the form data collection
+            if (files.length > 0) {
+                data.append("UploadedImage", files[0]);
+            }
+
+            var ID_REPORTE = $("#ID_REPORTE").val();
+            // Make Ajax request with the contentType = false, and procesDate = false
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "Reporteria/UploadFile2?Id=" + ID_REPORTE,
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (json) {
+                    if (json.ID == 1) {
+                        swal({ title: "Informacion", text: "Archivo almacenado correctamente", type: "success", showConfirmButton: true });
+                    } else { swal({ title: "Informacion", text: json.MENSAJE, type: "error", showConfirmButton: true }); }
+                },
+                error: function (er) {
+                    //alert(er);
+                }
+            });
+            
+        });
+    }); 
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+

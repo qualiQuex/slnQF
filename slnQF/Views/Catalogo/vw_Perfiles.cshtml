@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "vw_Perfiles";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+ 
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo"> </label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+                    $(window).load(function() {
+	                    $(".loader").fadeOut("slow");
+                    })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+
+            <a id="likNuevo"><i class="fa fa-plus"  data-toggle="modal" data-target="#creaCatalogo" ></i> Nuevo</a>
+        </div>
+
+        <div class="row" id="divCatalogos">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Perfil</h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                           
+                          
+
+
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+    </section>
+
+
+    <div class="modal fade" id="creaCatalogo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>-->
+                    <h4 class="modal-title"><asp:Label ID="tituloNuevo"   Text="Crear nuevo equipo"></asp:Label> </h4>
+                </div>
+                <div class="modal-body">
+                    <asp:Label ID="Label2" Text=""></asp:Label>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txt_nuevo_descripcion" class="col-sm-4 control-label">DESCRIPCION</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="txt_nuevo_descripcion" class="form-control" placeholder="Descripcion" />
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button> -->
+                    <asp:button id="Button2"
+                                text="GUARDAR"
+                                class="btn btn-primary"    />
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal --> 
+    <div id="ediCatalogo" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <h4 class="modal-title"><asp:Label ID="tituloEdita"  Text="Edita proveedor id."></asp:Label> </h4>
+                     
+                </div>
+                <div class="modal-body">
+                    <asp:Label ID="Label4" Text=""></asp:Label>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txt_edita_descripcion" class="col-sm-4 control-label">DESCRIPCION</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="txt_edita_descripcion"  class="form-control" placeholder="Descripcion" />
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sel_estados" class="col-sm-4 control-label">ESTADO</label>
+                            <div class="col-sm-8">
+
+                                <asp:DropDownList ID="sel_estados"  class="form-control">
+                                </asp:DropDownList>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <asp:button id="Button1"
+                                text="GUARDAR"
+                                  class="btn btn-primary"   AutoPostBack="true" OnClick="clickModificar"   />
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+</div>

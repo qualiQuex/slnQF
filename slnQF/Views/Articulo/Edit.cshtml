@@ -1,0 +1,361 @@
+﻿@model slnQF.TITEM
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h5>Articulo <label>@(ViewBag.ITEMNAME ?? String.Empty)</label></h5>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.ITEMCODE)
+        @Html.HiddenFor(model => model.ID_ITEM)
+        @Html.HiddenFor(model => model.ITEMNAME)
+        @Html.HiddenFor(model => model.QUERYGROUP64)
+
+        <label for="TIPO_ETIQUETA" class="control-label">TIPO ETIQUETA</label>
+
+        @Html.DropDownListFor(model => model.TIPO_ETIQUETA, ViewBag.TipoEtiqueta as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+
+        <label for="CONTENIDO" class="control-label">CONTENIDO</label>
+        @Html.EditorFor(model => model.CONTENIDO, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        <label for="VIA_ADMIN" class="control-label">VIA ADMINISTRACIÓN</label>
+        @Html.EditorFor(model => model.VIA_ADMIN, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="DOSIS" class="control-label">DOSIS</label>
+        @Html.EditorFor(model => model.DOSIS, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+
+        @Html.LabelFor(model => model.ADVERTENCIA, htmlAttributes: new { @class = "control-label  " })
+        @Html.EditorFor(model => model.ADVERTENCIA, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+
+        <label for="HECHO_POR" class="control-label">HECHO POR</label>
+
+        @Html.EditorFor(model => model.HECHO_POR, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+
+        <label for="CONDICION_ALMACENAMIENTO" class="control-label">CONDICION DE ALMACENAMIENTO</label>
+        @Html.EditorFor(model => model.CONDICION_ALMACENAMIENTO, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        @Html.LabelFor(model => model.EMPAQUE, htmlAttributes: new { @class = "control-label  " })
+        @Html.EditorFor(model => model.EMPAQUE, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+
+        @Html.LabelFor(model => model.PRESENTACION, htmlAttributes: new { @class = "control-label  " })
+        @Html.EditorFor(model => model.PRESENTACION, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        <label for="ID_FORMA_FARMACEUTICA" class="control-label">FORMA FARMACEUTICA</label>
+
+        @Html.DropDownListFor(model => model.ID_FORMA_FARMACEUTICA, ViewBag.FFarmaceutica as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+        <br />
+        <label for="ID_ETAPA_FABRICACION" class="control-label">ETAPA FABRICACION</label>
+
+        @Html.DropDownListFor(model => model.ID_ETAPA_FABRICACION, ViewBag.EFabricacion as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+
+        <br />
+
+
+        <label for="INDICACION_VENTA" class="control-label">INDICACIONES DE VENTA</label>
+        @Html.EditorFor(model => model.INDICACION_VENTA, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+
+        <label for="INDICACION_ESPECIAL" class="control-label">INDICACIONES ESPECIALES</label>
+        @Html.EditorFor(model => model.INDICACION_ESPECIAL, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+
+        @Html.LabelFor(model => model.CLIENTE, htmlAttributes: new { @class = "control-label  " })
+        @Html.EditorFor(model => model.CLIENTE, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="U_NORE_GUATE_BOOL" class="control-label ">REG. SANITARIO GUATEMALA</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_GUATE_BOOL" name="U_NORE_GUATE_BOOL" class="form-control" value="true" @(Model.U_NORE_GUATE_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6" >
+                <label for="U_NORE_ELSAL_BOOL" class="control-label ">REG. SANITARIO  EL SALVADOR</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_ELSAL_BOOL" name="U_NORE_ELSAL_BOOL" class="form-control" value="true" @(Model.U_NORE_ELSAL_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div> 
+            </div>
+        </div>
+              
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="U_NORE_HOND" class="control-label ">REG. SANITARIO HONDURAS</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_HOND_BOOL" name="U_NORE_HOND_BOOL" class="form-control" value="true" @(Model.U_NORE_HOND_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="U_NORE_NICA" class="control-label ">REG. SANITARIO NICARAGUA</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_NICA_BOOL" name="U_NORE_NICA_BOOL" class="form-control" value="true" @(Model.U_NORE_NICA_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div> 
+            </div>
+        </div>
+           
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="U_NORE_CR" class="control-label ">REG. SANITARIO COSTA RICA</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_CR_BOOL" name="U_NORE_CR_BOOL" class="form-control" value="true" @(Model.U_NORE_CR_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="U_NORE_PANA" class="control-label ">REG. SANITARIO PANAMA</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="U_NORE_PANA_BOOL" name="U_NORE_PANA_BOOL" class="form-control" value="true" @(Model.U_NORE_PANA_BOOL ? "checked=\"checked\"" : "") />
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="DATOS_BULTO" class="control-label ">MUESTRA DATOS BULTO?</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="DATOS_BULTO" name="DATOS_BULTO" class="form-control" value="true" @(Model.DATOS_BULTO ? "checked=\"checked\"" : "") />
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+               
+            </div>
+        </div>
+
+            <div class="modal-footer">
+                <div id="DivEditar">
+                    <input type="button" value="Guardar" class="btn btn-primary" onclick="UpdateProduct()" />
+                </div>
+            </div>
+
+        </div>
+@Html.HiddenFor(model => model.U_NORE_GUATE)
+@Html.HiddenFor(model => model.U_NORE_ELSAL)
+@Html.HiddenFor(model => model.U_NORE_HOND)
+
+@Html.HiddenFor(model => model.U_NORE_NICA)
+@Html.HiddenFor(model => model.U_NORE_CR)
+@Html.HiddenFor(model => model.U_NORE_PANA)
+
+}
+
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+        $("[name='U_NORE_GUATE_BOOL']").bootstrapSwitch();
+        $("[name='U_NORE_ELSAL_BOOL']").bootstrapSwitch();
+        $("[name='U_NORE_HOND_BOOL']").bootstrapSwitch();
+        $("[name='U_NORE_NICA_BOOL']").bootstrapSwitch();
+        $("[name='U_NORE_CR_BOOL']").bootstrapSwitch();
+
+        $("[name='U_NORE_PANA_BOOL']").bootstrapSwitch();
+        $("[name='DATOS_BULTO']").bootstrapSwitch();
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaEditar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 43 && item2.IDACCESO == 3)
+                        v_cuentaEditar = v_cuentaEditar + 1;
+                });
+
+
+
+                if (v_cuentaEditar <= 0) {
+                    document.getElementById("DivEditar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function UpdateProduct() {
+        var ID_ITEM = $("#ID_ITEM").val();
+        var ITEMCODE = $("#ITEMCODE").val();
+        var ITEMNAME = $("#ITEMNAME").val();
+        var TIPO_ETIQUETA = $("#TIPO_ETIQUETA").val();
+        var CONTENIDO = $("#CONTENIDO").val();
+        var VIA_ADMIN = $("#VIA_ADMIN").val();
+        var QUERYGROUP64 = $("#QUERYGROUP64").val();
+        var DOSIS = $("#DOSIS").val();
+        var ADVERTENCIA = $("#ADVERTENCIA").val();
+        var HECHO_POR = $("#HECHO_POR").val();
+        var CONDICION_ALMACENAMIENTO = $("#CONDICION_ALMACENAMIENTO").val();
+        var EMPAQUE = $("#EMPAQUE").val();
+        var PRESENTACION = $("#PRESENTACION").val();
+        var ID_FORMA_FARMACEUTICA = $("#ID_FORMA_FARMACEUTICA").val();
+        var ID_ETAPA_FABRICACION = $("#ID_ETAPA_FABRICACION").val();
+        var INDICACION_VENTA = $("#INDICACION_VENTA").val();
+        var INDICACION_ESPECIAL = $("#INDICACION_ESPECIAL").val();
+        var CLIENTE = $("#CLIENTE").val();
+        var BULTO = $("#BULTO").val();
+        var U_NORE_GUATE = $("#U_NORE_GUATE").val();
+        var U_NORE_ELSAL = $("#U_NORE_ELSAL").val();
+        var U_NORE_HOND = $("#U_NORE_HOND").val();
+        var U_NORE_NICA = $("#U_NORE_NICA").val();
+        var U_NORE_CR = $("#U_NORE_CR").val();
+        var U_NORE_PANA = $("#U_NORE_PANA").val();
+        var QUERYGROUP64 = $("#QUERYGROUP64").val();
+        var DATOS_BULTO = $('#DATOS_BULTO').bootstrapSwitch('state');
+        var U_NORE_GUATE_BOOL = $('#U_NORE_GUATE_BOOL').bootstrapSwitch('state');
+        var U_NORE_ELSAL_BOOL = $('#U_NORE_ELSAL_BOOL').bootstrapSwitch('state');
+        var U_NORE_HOND_BOOL = $('#U_NORE_HOND_BOOL').bootstrapSwitch('state');
+        var U_NORE_NICA_BOOL = $('#U_NORE_NICA_BOOL').bootstrapSwitch('state');
+        var U_NORE_CR_BOOL = $('#U_NORE_CR_BOOL').bootstrapSwitch('state');
+        var U_NORE_PANA_BOOL = $('#U_NORE_PANA_BOOL').bootstrapSwitch('state');
+        
+        
+
+        var product = {
+            "ID_ITEM": ID_ITEM,
+            "ITEMCODE": ITEMCODE,
+            "ITEMNAME": ITEMNAME,
+            "TIPO_ETIQUETA": TIPO_ETIQUETA,
+            "CONTENIDO": CONTENIDO,
+            "VIA_ADMIN": VIA_ADMIN,
+            "DOSIS": DOSIS,
+            "ADVERTENCIA": ADVERTENCIA,
+            "HECHO_POR": HECHO_POR,
+            "CONDICION_ALMACENAMIENTO": CONDICION_ALMACENAMIENTO,
+            "EMPAQUE": EMPAQUE,
+            "PRESENTACION": PRESENTACION,
+            "ID_FORMA_FARMACEUTICA": ID_FORMA_FARMACEUTICA,
+            "ID_ETAPA_FABRICACION": ID_ETAPA_FABRICACION,
+            "INDICACION_VENTA": INDICACION_VENTA,
+            "INDICACION_ESPECIAL": INDICACION_ESPECIAL,
+            "CLIENTE": CLIENTE,
+            "BULTO": BULTO,
+            "U_NORE_GUATE": U_NORE_GUATE,
+            "U_NORE_ELSAL": U_NORE_ELSAL,
+            "U_NORE_HOND": U_NORE_HOND,
+            "U_NORE_NICA": U_NORE_NICA,
+            "U_NORE_CR": U_NORE_CR,
+            "U_NORE_PANA": U_NORE_PANA,
+            "QUERYGROUP64": QUERYGROUP64,
+            "DATOS_BULTO": DATOS_BULTO,
+            "U_NORE_GUATE_BOOL": U_NORE_GUATE_BOOL,
+            "U_NORE_ELSAL_BOOL": U_NORE_ELSAL_BOOL,
+            "U_NORE_HOND_BOOL": U_NORE_HOND_BOOL,
+            "U_NORE_NICA_BOOL": U_NORE_NICA_BOOL,
+            "U_NORE_CR_BOOL": U_NORE_CR_BOOL,
+            "U_NORE_PANA_BOOL": U_NORE_PANA_BOOL
+            
+        };
+
+        $.post('/Articulo/Edit', product,
+                   function (data) {
+                       if (data.ID == 0) {
+                           swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                               function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                       } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                   }
+       , 'json');
+    }
+</script>

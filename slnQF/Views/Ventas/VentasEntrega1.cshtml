@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "VentasEntrega";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+ 
+ 
+ 
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            VENTAS
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Ventas</a></li>
+
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos Generales</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row"> 
+                            <div class="col-md-4 ">
+                                <label class="control-label" for="selectbasic">Cliente</label>
+                                <div >
+                                    @Html.DropDownList("Clientes", null, "Seleccionar cliente", new { @class = "form-control" })
+                                </div>
+                            </div>  
+                        
+
+                        <div class="col-md-4">
+                            <label class="control-label" for="CmbSerie">Series Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                     
+                                    @Html.DropDownList("CmbSerie", null, "Seleccionar moneda", new { @class = "btn btn-default", @onchange = "CallChangefunc(this.value)" })
+
+                                </div>
+                                <input type="text" class="form-control">
+
+
+                            </div>
+                        </div>
+                                                <!--
+                        <div class="col-md-4">
+                            <label class="control-label" for="txtManual">Manual</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox">
+                                </span>
+                                <input id="txtManual" name="txtManual" class="form-control" type="text" placeholder="Manual">
+                            </div>
+                        </div>
+                            -->     
+                        <div class="col-md-4">
+                            <label class="control-label" for="txt_fecha_contabiliza">Fecha Contabilizacion:</label>
+                            <div>
+                               
+                                <input type="date" class="form-control pull-right" id="txt_fecha_contabiliza">
+                            </div>
+                        </div> 
+                        <div class="col-md-4">
+                            <label class="control-label" for="txt_fecha_entrega">Fecha Entrega:</label>
+                            <div>
+                                <input type="date" class="form-control pull-right" id="txt_fecha_entrega">
+                            </div>
+                        </div>  
+                        <div class="col-md-4 ">
+                            <label class="control-label" for="CmbMoneda">Moneda</label>
+                            <div>
+                                @Html.DropDownList("CmbMoneda", null, "Seleccionar moneda", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 ">
+                            <label class="control-label" for="txt_referencia">Referencia</label>
+                            <div>
+                                
+                                 
+                                <input type="text" name="txt_referencia2">
+                                 
+                            </div>
+                        </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                    the plugin.
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </section>
+ 
+</div>
+ 

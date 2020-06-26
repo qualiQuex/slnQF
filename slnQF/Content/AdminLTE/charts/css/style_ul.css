@@ -1,0 +1,15 @@
+#ul-data {
+  position: relative;
+  top: -60px;
+  display: inline-block;
+  margin-left: 5%;
+  width: 90%;
+  margin-right: 5%;
+}
+#chart-container {
+  display: inline-block;
+  width: 100%;
+}
+#ul-data li {
+  font-size: 13px;
+}

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACIONResult>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        @{
+            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridnOMBRE");
+        }
+        <div class="table-responsive">
+            <div id="gridnOMBRE">
+
+                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+
+                                            grid.Column("", header: "", canSort:false,
+                                            format: @<text>
+                                            @Html.Raw("<a href='#' onclick='cambioEstado("+ item.ID_INGRESO_CANTIDAD_PRESENTACION +","+item.ID_LOTE_INGRESO+")' text='glyphicon glyphicon-edit ' title='Editar'>"+ item.ESTADO +" </a>")
+
+ 
+
+                                        </text>),
+
+                                     grid.Column("PRESENTACION_STR", "PRESENTACION", null, "text-center", false),
+                                     grid.Column("NOMBRE_COMERCIAL_STR", "NOM. COMERCIAL", null, "text-center", false),
+                                     grid.Column("UOM_STR", "UOM", null, "text-center", false),
+                                     grid.Column("NOMBRE_CLIENTE", "CLIENTE", null, "text-center", false),
+                                     grid.Column("LOTE", "LOTE", null, "text-center", false),
+                                     grid.Column("CANTIDAD", "CANTIDAD", null, "text-center", false)
+
+                                 })
+            </div>
+        </div>
+    </div>
+            }
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridnOMBRE table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+    function cambioEstado(pid,pid_loteing) {
+      
+    
+
+    $.post('/IngresoCantidadPresentacion/fnCambioEstadoCanInPre?Id=' + pid,
+        function (data) {
+            $("#DivToAppendPartialViewList").empty();
+            var ph2 = $("#DivToAppendPartialViewList");
+            ph2.load("/IngresoCantidadPresentacion/Listado?id=" + pid_loteing);
+          }
+        , 'json');
+            }
+
+</script>

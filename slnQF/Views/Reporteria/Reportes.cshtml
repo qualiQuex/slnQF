@@ -1,0 +1,292 @@
+﻿@model slnQF.TREPORTE
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Reportes</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="col-md-12">
+                        <center>
+                        <label for="ID_REPORTE">Reporte</label>
+                        @Html.DropDownListFor(model => model.ID_REPORTE, ViewBag.ReporteDDL as IEnumerable<SelectListItem>, new { @class = "form-control",@onchange ="loadParametros(this.value)" })
+                        </center>
+                        <br />
+                    </div>
+                    <div class="col-md-12" id="divParametros">
+                        <center>
+                            <label for="">Parametros</label>
+                            <div id="DivToAppendPartialVoew"></div>
+                            
+                        </center>
+                        <br />
+                    </div>
+                    <div class="col-md-12">
+                        <br />
+                        <center>
+                            <div id="DivGenerar">
+                                <input type="button" value="Generar" class="btn btn-primary" onclick="obtieneTablaParam()" />
+                            </div>
+                           
+                        </center>
+            
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <a href="#" class="glyphicon glyphicon-download"  download="arch.xls" id="downExcel">Excel</a>
+                        <br />
+                        <iframe src="" id="downloadIframe" width="100%" height="800" scrolling="yes"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+ 
+   } 
+
+
+<script>
+
+    initialize();
+    function initialize() {
+        var ID_REPORTE = $("#ID_REPORTE").val();
+        if (ID_REPORTE > 0) { 
+            loadParametros(ID_REPORTE);
+        }
+    }
+    function loadParametros(pId) {
+         
+       
+        $("#DivToAppendPartialVoew").empty(); 
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/Reporteria/ListadoParametroReporte?id=" + pId);
+         
+    }
+   
+    function obtieneTablaParam() {
+        startSpinGen();
+        var ID_REPORTE = $("#ID_REPORTE").val();
+        var listOfObjects = [];
+        var div2 = document.getElementById('gridP');
+        var tablas = [];
+        for (i = j = 0; i < div2.childNodes.length; i++) {
+             
+            if (div2.childNodes[i].nodeName == 'TABLE') {
+                j++;
+                var input = div2.childNodes[i].id;
+                tablas.push(input);
+                
+            }
+        }
+
+        for (var r = 0, n = tablas.length; r < n; r++) {
+            var contador = 0;
+            $("#" + tablas[r] + " tbody tr").each(function (index) {
+                var campo1, campo2, campo3, campo4;
+
+                $(this).children("td").each(function (index2) {
+                    var v_campo4;
+                    var $v_contador = 0;
+                    $(this).find("input").each(function () {
+                        $v_contador = $v_contador + 1;
+                        if ($v_contador == 1) {
+                            v_campo4 = this.value;
+                            
+                        }
+                    }) 
+                    switch (index2) {
+                        case 0: campo1 = $(this).text();
+                            break;
+                        case 1: campo2 = $(this).text();
+                            break;
+                        case 3: campo3 = $(this).text();
+                            break;
+                        case 5: campo4 = v_campo4;
+                            break;
+                    }
+
+                    
+                    //$(this).css("background-color", "#ECF8E0");
+                })
+                
+                 
+                    var obj = new Object();
+                    obj.ID_REPORTE_PARAMETRO = campo1;
+                    obj.NOMBRE_PARAMETRO = campo2;
+                    obj.ID_TIPO_DATO = campo3;
+                    obj.VALOR = campo4;
+                    obj.ID_REPORTE = ID_REPORTE;
+                    listOfObjects.push(obj);
+                  
+                 
+                contador = contador + 1;
+
+            });
+            if (contador == 0) {
+
+                var obj = new Object();
+                obj.ID_REPORTE_PARAMETRO = 0;
+                obj.NOMBRE_PARAMETRO = "";
+                obj.ID_TIPO_DATO = 0;
+                obj.VALOR = "";
+                obj.ID_REPORTE = ID_REPORTE;
+                listOfObjects.push(obj);
+            }
+            var jsonString = JSON.stringify(listOfObjects);
+            $.ajax({
+                url: '/Reporteria/GenReport/',
+                type: "POST",
+                dataType: "json",
+                data: { ParametrosJson: jsonString, tipo:"pdf" },
+                success: function (data) {
+                    stopSpinGen();
+                    if (data.ID == 0) {
+                        iframeId = 'downloadIframe',
+                        $iframe = $('iframe#downloadIframe');
+                        $iframe.attr('src', 'data:application/pdf;base64,' + data.MENSAJE);
+                        DownloadExcel();
+                    } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+
+                },
+                error: function (error) { stopSpin(); }
+            });
+        }
+    }
+    function DownloadExcel() {
+        var ID_REPORTE = $("#ID_REPORTE").val();
+        var listOfObjects = [];
+        var div2 = document.getElementById('gridP');
+        var tablas = [];
+        for (i = j = 0; i < div2.childNodes.length; i++) {
+
+            if (div2.childNodes[i].nodeName == 'TABLE') {
+                j++;
+                var input = div2.childNodes[i].id;
+                tablas.push(input);
+
+            }
+        }
+
+        for (var r = 0, n = tablas.length; r < n; r++) {
+            var contador = 0;
+            $("#" + tablas[r] + " tbody tr").each(function (index) {
+                var campo1, campo2, campo3, campo4;
+
+                $(this).children("td").each(function (index2) {
+                    var v_campo4;
+                    var $v_contador = 0;
+                    $(this).find("input").each(function () {
+                        $v_contador = $v_contador + 1;
+                        if ($v_contador == 1) {
+                            v_campo4 = this.value;
+
+                        }
+                    })
+                    switch (index2) {
+                        case 0: campo1 = $(this).text();
+                            break;
+                        case 1: campo2 = $(this).text();
+                            break;
+                        case 3: campo3 = $(this).text();
+                            break;
+                        case 5: campo4 = v_campo4;
+                            break;
+                    }
+
+
+                    //$(this).css("background-color", "#ECF8E0");
+                })
+
+
+                var obj = new Object();
+                obj.ID_REPORTE_PARAMETRO = campo1;
+                obj.NOMBRE_PARAMETRO = campo2;
+                obj.ID_TIPO_DATO = campo3;
+                obj.VALOR = campo4;
+                obj.ID_REPORTE = ID_REPORTE;
+                listOfObjects.push(obj);
+
+
+                contador = contador + 1;
+
+            });
+            if (contador == 0) {
+
+                var obj = new Object();
+                obj.ID_REPORTE_PARAMETRO = 0;
+                obj.NOMBRE_PARAMETRO = "";
+                obj.ID_TIPO_DATO = 0;
+                obj.VALOR = "";
+                obj.ID_REPORTE = ID_REPORTE;
+                listOfObjects.push(obj);
+            }
+            var jsonString = JSON.stringify(listOfObjects);
+            $.ajax({
+                url: '/Reporteria/GenReport/',
+                type: "POST",
+                dataType: "json",
+                data: { ParametrosJson: jsonString, tipo: "excel" },
+                success: function (data) {
+
+                    if (data.ID == 0) {
+                       
+                        $("#downExcel").attr("href", "data:application/vnd.ms-excel;base64," + data.MENSAJE);
+                    } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+
+                },
+                error: function (error) { stopSpin(); }
+            });
+        }
+    }
+</script>

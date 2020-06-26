@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<slnQF.SP_CONSULTA_SAP_ITEM_OPELOTE_DETAResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridArticuloLoteDeta");
+    }
+    <div>
+        <div id="gridArticuloLoteDeta">
+            @grid.GetHtml(
+                            htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     tableStyle: "table table-bordered table-hover table-responsive",
+                                     columns: new[] {
+                                     grid.Column("Documento", "Tipo Docto.", null, "text-center", false),
+                                     grid.Column("BaseNum", "No. Docto.", null, "text-center", false),
+                                     grid.Column("BaseLinNum", "Linea", null, "text-center", false),
+                                     grid.Column("DocDate", "Fecha", null, "text-center", false),
+                                     grid.Column("WhsCode", "Almacen", null, "text-center", false),
+                                     grid.Column("CardName", "Cuenta de mayor", null, "text-center", false),
+                                     grid.Column("Quantity", "Cantidad", null, "text-center", false),
+                                     grid.Column("Direction", "Sentido", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#gridArticuloLoteDeta table tbody tr').each(function (index) {
+
+            if ($(this).children('td:nth-child(8)').text() == "Entrada") {
+
+                $(this).children('td:nth-child(8)').css("background-color", "#33CC99");
+                $(this).children('td:nth-child(8)').css("font-weight", "bold");
+            } else if ($(this).children('td:nth-child(8)').text() == "Salida") {
+
+                $(this).children('td:nth-child(8)').css("background-color", "#fb6060");
+                $(this).children('td:nth-child(8)').css("font-weight", "bold");
+            }
+
+        });
+        $('#gridArticuloLoteDeta table').DataTable({
+            "pageLength": 5,
+            //"searching": true,
+            "paging": true,
+            "order": [],
+            "searching": true,
+
+            "fixedColumns": true,
+            "scrollX": true
+        });
+        
+   
+        stopSpinGen();
+    });  
+     
+    
+
+
+</script>

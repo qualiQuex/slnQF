@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 25, 24.875" name="DC_CALIDAD">
+  <DataContextMoniker Name="/DC_CALIDADDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6d2190b2-3e61-4997-99c4-ce6a2bf5fec6" absoluteBounds="0.75, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_UOM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4c5d7fdc-e6a8-49a2-a596-2ea95f66028a" absoluteBounds="0.76499999999999968, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="359b32b0-4538-4e0c-9d4f-4fd387a81bdb" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7b2a9ab2-ec3d-4148-aeb8-da77029f8884" absoluteBounds="3.7649999999999997, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d044e54f-729e-4357-8589-d014ee440a01" absoluteBounds="0.75, 3.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ENSAYO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39260dbd-cb9a-4881-91df-8e793adf97fe" absoluteBounds="0.76499999999999968, 4.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ca22e9be-2d9d-4297-b6b3-e6a3781f286d" absoluteBounds="3.75, 3.75, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_CONCENTRACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="56e9c4e0-3d5b-41d8-9282-0a282b82fd9e" absoluteBounds="3.7650000000000006, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="86bde907-3607-44c6-82c1-722cd0c804d8" absoluteBounds="6.75, 0.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_FORMA_FARMACEUTICA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5f62ce91-f438-47f8-a9b0-7c4c3840aa2b" absoluteBounds="6.7650000000000006, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c40a2455-6537-4dc3-9e17-92d8fa006ec1" absoluteBounds="0.75, 6.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRESENTACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8049fc24-a2c6-445e-8065-03ccc63a9608" absoluteBounds="0.76500000000000057, 7.2100000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bcd5988a-0abd-40d5-a451-0a72a0f3a288" absoluteBounds="6.75, 3.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRUEBA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8a2897c4-a3d4-40b4-aad0-8c950b2d0ef1" absoluteBounds="6.7650000000000006, 4.2100000000000009, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4bc9050e-737c-4f16-bc2f-d2e62296f4ca" absoluteBounds="3.75, 6.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_SWSI_NO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8c8b66dc-ea15-4a96-9d6f-e4e506a0f3a6" absoluteBounds="3.7650000000000006, 7.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="62ac1498-b2af-41ec-bb36-39ce98c2be44" absoluteBounds="6.75, 6.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ENSAYO_PRUEBA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ff8d6acb-f734-4412-804f-8a9223e8b28f" absoluteBounds="6.7650000000000006, 7.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7ffe430d-acdc-4a4b-ab67-06043e733248" absoluteBounds="9.75, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRUEBA_ESPECIFICA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5195a616-7712-4c97-a3d4-15c38c5a116c" absoluteBounds="9.765, 1.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="18f82e0a-b855-4ccb-b942-f9b9e645b7b4" absoluteBounds="0.75, 9.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ENSAYO_PRUEBA_PESPECIFICA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3995188e-9032-41da-b5f5-9c256bf466a9" absoluteBounds="0.76500000000000057, 10.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="47906703-c57e-42b1-a703-fd73e14031c8" absoluteBounds="9.75, 3.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_NOMBRE_COMERCIAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="26e0f0df-3c0a-4d38-ac49-4012b055c933" absoluteBounds="9.765, 4.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6eb2abd0-cffe-4c2f-a959-2064edd57502" absoluteBounds="3.75, 9.75, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRODUCTO_NOMBRE_COM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d874c581-9347-4802-b710-805d1a69e637" absoluteBounds="3.7650000000000006, 10.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7ca5d9e5-c6a2-4b34-9baa-408196482854" absoluteBounds="9.75, 6.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRODUCTO_PRESENTACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d89c758e-3680-4321-be29-38bcdd3d65fa" absoluteBounds="9.765, 7.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2c0b22cf-4939-4893-a2a3-24eb78ecc79e" absoluteBounds="6.75, 9.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/ESPECIFICACION_PRODUCTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64f8d22f-992a-41f0-8177-1188a51009b9" absoluteBounds="6.7650000000000006, 10.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8d2635c2-87f9-4385-92ce-a2933767243e" absoluteBounds="9.75, 9.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_FABRICANTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8b6ab233-e082-4e65-bd9d-1f4ec86e1c22" absoluteBounds="9.765, 10.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="97dc3e61-2422-48f5-8977-20a00c39acff" absoluteBounds="12.75, 0.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PAIS_FABRICANTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="038807fe-9a4f-40ad-91ba-98c8b1060e37" absoluteBounds="12.765, 1.2100000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6b243a6b-eff2-4b92-a240-703bd66412be" absoluteBounds="0.75, 12.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_STATUS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8d494e6d-9455-4184-9edd-fe5ad705d023" absoluteBounds="0.76500000000000057, 13.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="16db6649-b2c3-4a71-b090-1f22e43aa675" absoluteBounds="12.75, 3.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_CERTIFICADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6cb10b4c-3736-47e8-a60f-ba7ce71cec8f" absoluteBounds="12.765, 4.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="04eb8f9e-33fc-4486-b239-4910b0462ce8" absoluteBounds="12.75, 6.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PRODUCTO_PRES_NOMCOM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3627b0b5-657e-43dd-b968-1a35a1c6efc3" absoluteBounds="12.765, 7.2100000000000009, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f66a688b-9dcf-4888-8525-eb43de714b36" absoluteBounds="12.75, 9.75, 2.75, 2.9247054036458326">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/RESULTADO_ENSAYO_PRODUCTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9e684fa-e642-4735-8643-fe52a69464bc" absoluteBounds="12.765, 10.21, 2.7199999999999998, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8fbb2f32-d335-4329-bfb1-b942ee847dfa" absoluteBounds="3.75, 13.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_CLIENTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5c495a4e-1fd2-48dc-b3df-fba501c06bfc" absoluteBounds="3.7650000000000006, 14.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e0a5d93a-9fe5-49c7-9ddb-6a45618e2836" absoluteBounds="6.75, 13.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TLOG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a457082-bb6c-45dc-a61c-57e82a2b44e5" absoluteBounds="6.7650000000000006, 14.21, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="660853be-0c3c-4317-af3c-5d2a6f90aa9e" absoluteBounds="9.75, 13.75, 2, 2.9247054036458344">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/RESULTADO_BITACORA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dacdf056-3390-4b67-b7a4-9143d6e857fa" absoluteBounds="9.765, 14.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b73f9c0c-1cea-4957-ac4e-f0d5c85221e4" absoluteBounds="12.75, 13.75, 2, 3.1170068359375023">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TPRODUCTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cafc6ea9-d0bb-4837-8f90-f3b82161c257" absoluteBounds="12.765, 14.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d8409fbe-ae0e-4860-a792-23ec052b0a81" absoluteBounds="15.75, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PUESTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cd6bb81d-d532-4d62-bc25-2700efe55b47" absoluteBounds="15.765, 1.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0a967911-1523-43e5-ab03-2dcb2152595d" absoluteBounds="15.75, 3.75, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TPERSONA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a83a4db6-ab85-45f9-b537-1d266369091b" absoluteBounds="15.765, 4.2100000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="64dbde5d-1018-4aad-a15f-b4db7a95cd95" absoluteBounds="15.75, 13.75, 2, 5.8092268880208344">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/LOTE_INGRESO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8d12fde9-6b76-4834-b84c-8d6c08c128f9" absoluteBounds="15.765, 14.21, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9b456b66-67fe-416e-af6b-9b9bcd024b95" absoluteBounds="15.75, 6.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_CLIENTE_NOMBRE_COM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c69e0ee2-bee0-4b2b-b419-fd11c23ce0c0" absoluteBounds="15.765, 7.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0209ac3b-f0bf-4f04-998a-2136b01306eb" absoluteBounds="0.75, 16.75, 2, 2.9247054036458344">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/INGRESO_CANTIDAD_PRESENTACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa96ee21-8d80-4f62-9519-de763fa34463" absoluteBounds="0.76499999999999968, 17.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8594846c-74f5-48b1-9743-81aea62bed21" absoluteBounds="16.75, 9.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ETAPA_FABRICACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a8e5ade5-f188-4899-af1e-9ff5fe545218" absoluteBounds="16.765, 10.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="61f29d11-d142-4d31-811c-9fbe65bd32e4" absoluteBounds="3.75, 17.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_TIPO_ETIQUETA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39a31fe9-eac3-47d6-9c62-776b4f4ae4b5" absoluteBounds="3.7650000000000006, 18.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="58bc6e54-7a4c-4019-a8db-cc70c0966d5c" absoluteBounds="6.75, 17.75, 2, 2.3478011067708309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TITEM_EMBALAJE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a851c1a9-b911-40cc-bc6d-0f24f1fe3c0e" absoluteBounds="6.7650000000000006, 18.21, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="559513c7-1182-49ed-b81c-e2890e44909b" absoluteBounds="18.75, 0.75, 2, 7.3476383463541666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TITEM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6c0d2e43-8e57-4513-bad7-5e4cce33cc8a" absoluteBounds="18.765, 1.2100000000000009, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a09103bf-f92b-43ae-9daa-e4466a1dd828" absoluteBounds="18.75, 12.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_TIPO_DATO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59978acb-b136-4b42-bd79-aa8259646a44" absoluteBounds="18.765, 13.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8ddb31f5-9f25-49ba-a973-e0a0fe69648b" absoluteBounds="18.75, 15.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TREPORTE_BY" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4b3898b-6e23-40dd-8c83-142c1ff83efb" absoluteBounds="18.765, 16.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7dc5c913-ae7f-48e8-a0ed-fc3fbcf26f5c" absoluteBounds="18.75, 18.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TREPORTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9b9df72-bac7-4925-9410-69e7659df0ca" absoluteBounds="18.765, 19.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1b91bc0a-9291-43fb-8ee5-a4abc30059f6" absoluteBounds="19.75, 9.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PERMISO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6a632ff-2bd6-4dfc-8a6f-5994139b5734" absoluteBounds="19.765, 10.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2aeb9b15-2b9c-4efa-a7d7-81da1ec9f6a8" absoluteBounds="0.75, 20.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TACCESO_PERMISO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a0b65be3-4367-4a32-815b-eb9514358c66" absoluteBounds="0.76500000000000057, 21.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b4e05c2f-56f4-4c80-9be2-e02ea5b02d61" absoluteBounds="12.75, 20.75, 2, 2.3478011067708309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TREPORTE_PARAMETRO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ce27d2d5-9c52-4dee-832f-8e27ef4ffa4e" absoluteBounds="12.765, 21.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="76cc4ca2-a133-47cf-b6e4-43d5682834ae" absoluteBounds="21.75, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_PROVEEDOR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1f1bc220-9fee-46d5-a439-23a29045fff1" absoluteBounds="21.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5b71f66c-d1fb-4612-849f-1b2dff30bd79" absoluteBounds="3.75, 21.75, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TLOTEINGRESO_TECNICO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d186c01-4065-447b-a9ea-81c388281cc4" absoluteBounds="3.7649999999999997, 22.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8aef7cc6-434c-4b29-9112-b5eb1249cea3" absoluteBounds="21.75, 4.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_ESTADO_CERTIFICADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dd35f233-08bf-404a-aa14-c4b50097a3fc" absoluteBounds="21.765, 5.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="831e76a6-1a07-4e0f-8672-71ce671002d3" absoluteBounds="6.75, 21.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/LOTE_INGRESO_DATA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e306f3c6-fa2d-4919-b5ed-b3b80fce1406" absoluteBounds="6.7650000000000006, 22.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6ab40669-b94e-42ff-9eaa-a3a702f7d9d6" absoluteBounds="21.75, 12.75, 2, 3.1170068359375023">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/LOG_LOTE_INGRESO_DATA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1b7ed258-1d38-498f-9ecb-d343adc9fcab" absoluteBounds="21.765, 13.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ceecb130-0c98-4795-a5f5-f3a13f4b8716" absoluteBounds="21.75, 16.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_AREA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="70aef397-17f4-4ada-8b7a-a4e4a64ff98e" absoluteBounds="21.765, 17.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7a7949b7-f43b-4a6d-a18b-b8677545b4a8" absoluteBounds="21.75, 19.75, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_AREA_PRODUCTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="80e74275-196a-451b-8034-fde3f9a68567" absoluteBounds="21.765, 20.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e5603085-86c6-4198-a994-3fc0350bb331" absoluteBounds="22.75, 7.75, 2, 1.9631982421875014">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/CAT_USUARIO_AREA_CERT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c2ab112c-f18a-4355-b160-56e8a07dda27" absoluteBounds="22.765, 8.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6fef313d-a621-48ba-b12c-02ef3fe45d1d" absoluteBounds="6.75, 16.875, 2, 2.5401025390625">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TITEM_EMBALAJE_ORDEN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7158ca01-d50c-46c3-ab70-2894683dbfb6" absoluteBounds="6.765, 17.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="223db44b-ec37-4f70-ada8-015d1ab8ee54" absoluteBounds="6.375, 8.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DC_CALIDADDataContext/TUSUARIOATRIBUTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="174f9ce1-a959-4cd9-8f49-3067ab7cadac" absoluteBounds="6.39, 8.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

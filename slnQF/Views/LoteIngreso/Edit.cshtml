@@ -1,0 +1,194 @@
+﻿@model slnQF.Models.LoteIngresoModels
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Editar certificado</h4>
+        <hr />
+
+        @Html.HiddenFor(model => model.ID_LOTE_INGRESO)
+        @Html.HiddenFor(model => model.NO_INGRESO)
+         
+        
+        <label for="ID_CERTIFICADO">Certificado</label>
+        @Html.DropDownListFor(model => model.ID_CERTIFICADO, ViewBag.CertificadoDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="ID_PRODUCTO">Producto</label>
+        @Html.DropDownListFor(model => model.ID_PRODUCTO, ViewBag.ProductoDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="FECHA_ANALISIS">Fecha Analisis</label>
+        @Html.TextBoxFor(model => model.FECHA_ANALISIS, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+        <label for="TOMO">Tomo</label>
+        @Html.EditorFor(model => model.TOMO, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <label for="PAGINA">Pagina</label>
+        @Html.EditorFor(model => model.PAGINA, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <label for="NO_LOTE">Lote</label>
+        @Html.EditorFor(model => model.NO_LOTE, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <label for="FECHA_FABRICACION">Fecha Fabricacion</label>
+        @Html.TextBoxFor(model => model.FECHA_FABRICACION, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+        <label for="FECHA_VENCIMIENTO">Fecha Vencimiento</label>
+        @Html.TextBoxFor(model => model.FECHA_VENCIMIENTO, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+        <label for="ID_FABRICANTE">Fabricante</label>
+        @Html.DropDownListFor(model => model.ID_FABRICANTE, ViewBag.FabricanteDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="ID_PAIS_FABRICANTE">Pais</label>
+        @Html.DropDownListFor(model => model.ID_PAIS_FABRICANTE, ViewBag.PaisFabricanteDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="OBSERVACIONES">Observaciones</label>
+        @Html.EditorFor(model => model.OBSERVACIONES, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        <label for="CANTIDAD_ENVASES">Cantidad Envases</label>
+        @Html.EditorFor(model => model.CANTIDAD_ENVASES, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+
+        <label for="POTENCIA_PROVEEDOR">Potencia Proveedores</label>
+        @Html.EditorFor(model => model.POTENCIA_PROVEEDOR, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <label for="ID_TECNICO_ANALISTA">Tecnico Analista</label>
+        @Html.DropDownListFor(model => model.ID_TECNICO_ANALISTA, ViewBag.TecnicoDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="FECHA_INI_ANALISIS">Fecha inicio analisis</label>
+        
+        @Html.TextBoxFor(model => model.FECHA_INI_ANALISIS, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+
+        <label for="FECHA_FIN_ANALISIS">Fecha fin analisis</label>
+        
+        @Html.TextBoxFor(model => model.FECHA_FIN_ANALISIS, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+
+        <label for="FECHA_INGRESO">Fecha ingreso</label>
+        @Html.TextBoxFor(model => model.FECHA_INGRESO, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+
+        <label for="FECHA_REANALISIS">Fecha reanalisis</label>
+        @Html.TextBoxFor(model => model.FECHA_REANALISIS, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        <br />
+
+        <label for="ID_REVISADO_POR">Revisado Por</label>
+        @Html.DropDownListFor(model => model.ID_REVISADO_POR, ViewBag.RevisaDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="ID_STATUS">Status</label>
+        @Html.DropDownListFor(model => model.ID_STATUS, ViewBag.StatusDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <label for="ID_ASEGURAMIENTO">Aseguramiento</label>
+        @Html.DropDownListFor(model => model.ID_ASEGURAMIENTO, ViewBag.AseguraDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+        <div class="modal-footer">
+            <div id ="DivEditarCert">
+            <input type="button" value="Guardar" class="btn btn-primary" onclick="UpdateProduct()" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaEditar = 0;
+                var v_cuentaProducto = 0;
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 32 && item2.IDACCESO == 3)
+                        v_cuentaEditar = v_cuentaEditar + 1;
+                    if (item2.IDPERMISO == 49 && item2.IDACCESO == 2)
+                        v_cuentaProducto = v_cuentaProducto + 1;
+                    
+                });
+
+
+
+                if (v_cuentaEditar <= 0) {
+                    document.getElementById("DivEditarCert").style.display = "none";
+                }
+                if (v_cuentaProducto <= 0) {
+                    document.getElementById("ID_PRODUCTO").disabled = true;
+                }
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function UpdateProduct() {
+        var ID_LOTE_INGRESO = $("#ID_LOTE_INGRESO").val();
+        var NO_INGRESO = $("#NO_INGRESO").val();
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_CERTIFICADO = $("#ID_CERTIFICADO").val();
+        var FECHA_ANALISIS = new Date($("#FECHA_ANALISIS").val());
+        var TOMO = $("#TOMO").val();
+        var PAGINA = $("#PAGINA").val();
+        var NO_LOTE = $("#NO_LOTE").val();
+        var FECHA_FABRICACION = new Date($("#FECHA_FABRICACION").val());
+        var FECHA_VENCIMIENTO = new Date($("#FECHA_VENCIMIENTO").val());
+        var ID_FABRICANTE = $("#ID_FABRICANTE").val();
+        var ID_PAIS_FABRICANTE = $("#ID_PAIS_FABRICANTE").val();
+        var OBSERVACIONES = $("#OBSERVACIONES").val();
+
+        var POTENCIA_PROVEEDOR = $("#POTENCIA_PROVEEDOR").val();
+        var CANTIDAD_ENVASES = $("#CANTIDAD_ENVASES").val();
+
+        var ID_TECNICO_ANALISTA = $("#ID_TECNICO_ANALISTA").val();
+        var FECHA_INI_ANALISIS = new Date($("#FECHA_INI_ANALISIS").val());
+        var FECHA_FIN_ANALISIS = new Date($("#FECHA_FIN_ANALISIS").val());
+        var ID_REVISADO_POR = $("#ID_REVISADO_POR").val();
+        var ID_ASEGURAMIENTO = $("#ID_ASEGURAMIENTO").val();
+        var ID_STATUS = $("#ID_STATUS").val();
+        var ASEGURAMIENTO = '';
+        var FECHA_INGRESO = new Date($("#FECHA_INGRESO").val());
+        var FECHA_REANALISIS = new Date($("#FECHA_REANALISIS").val());
+
+        FECHA_ANALISIS = FECHA_ANALISIS.toDateString("yyyy-MM-dd");
+        FECHA_FABRICACION = FECHA_FABRICACION.toDateString("yyyy-MM-dd");
+        FECHA_VENCIMIENTO = FECHA_VENCIMIENTO.toDateString("yyyy-MM-dd");
+        FECHA_INI_ANALISIS = FECHA_INI_ANALISIS.toDateString("yyyy-MM-dd");
+        FECHA_FIN_ANALISIS = FECHA_FIN_ANALISIS.toDateString("yyyy-MM-dd");
+
+        FECHA_INGRESO = FECHA_INGRESO.toDateString("yyyy-MM-dd");
+        FECHA_REANALISIS = FECHA_REANALISIS.toDateString("yyyy-MM-dd");
+
+        var product = {
+            "NO_INGRESO": NO_INGRESO, "ID_PRODUCTO": ID_PRODUCTO,
+            "ID_CERTIFICADO": ID_CERTIFICADO, "FECHA_ANALISIS": FECHA_ANALISIS,
+            "TOMO": TOMO, "PAGINA": PAGINA,
+            "NO_LOTE": NO_LOTE, "FECHA_FABRICACION": FECHA_FABRICACION,
+            "FECHA_VENCIMIENTO": FECHA_VENCIMIENTO, "ID_FABRICANTE": ID_FABRICANTE,
+            "ID_PAIS_FABRICANTE": ID_PAIS_FABRICANTE, "OBSERVACIONES": OBSERVACIONES,
+            "ID_TECNICO_ANALISTA": ID_TECNICO_ANALISTA, "FECHA_INI_ANALISIS": FECHA_INI_ANALISIS,
+            "FECHA_FIN_ANALISIS": FECHA_FIN_ANALISIS, "ID_REVISADO_POR": ID_REVISADO_POR,
+            "ID_STATUS": ID_STATUS, "ASEGURAMIENTO": ASEGURAMIENTO, "ID_ASEGURAMIENTO": ID_ASEGURAMIENTO
+            , "ID_LOTE_INGRESO": ID_LOTE_INGRESO, "FECHA_INGRESO": FECHA_INGRESO, "FECHA_REANALISIS": FECHA_REANALISIS,
+            "CANTIDAD_ENVASES": CANTIDAD_ENVASES, "POTENCIA_PROVEEDOR": POTENCIA_PROVEEDOR
+        };
+
+        $.post('/LoteIngreso/Edit', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+    }
+</script>

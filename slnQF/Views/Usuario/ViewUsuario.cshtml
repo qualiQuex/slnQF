@@ -1,0 +1,1062 @@
+﻿@{
+    ViewBag.Title = "Usuario";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Usuario</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+                    $(window).load(function() {
+	                    $(".loader").fadeOut("slow");
+                    })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+
+
+                    <h4>
+                        <div id="divNuevo">
+                            <a href="#" data-toggle="modal" data-target="#creaUsuario" class="glyphicon glyphicon-plus">NUEVO</a>
+                        </div>
+                    </h4>
+                    @{
+
+
+                        WebGrid grid = new WebGrid(Model.ItemsUsuarios, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridUsuarios");
+                        WebGrid grid2 = new WebGrid(Model.ItemsUsersSuper, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridUsuariosSuper");
+                        WebGrid grid3 = new WebGrid(Model.ItemsUsersBodega, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridUsuariosBodega");
+
+
+                    }
+
+
+
+                    <div id="gridUsuarios">
+
+                        @grid.GetHtml(htmlAttributes: new { width = "100%" },
+                                    mode: WebGridPagerModes.All,
+
+                                        columns: grid.Columns(
+                                        /*grid2.Column(header: "Seleccionar", format: @<text><input type="checkbox" name="selectedrows" value="item.linenum" /></text>),*/
+                                        grid.Column(header: "", format: @<text><a href="#" data-toggle="modal" data-target="#modificaUsuario" class="glyphicon glyphicon-edit edit-item click-modificaUser" id="@item.id_usuario"></a></text>),
+                                        grid.Column("id_usuario", "Id", null, "text-center", false),
+                                        grid.Column("usuario", "User", null, "text-center", false),
+                                        grid.Column("nombres", "Nombre", null, "text-left", false),
+                                        grid.Column("apellidos", "Apellido", null, "text-left", false),
+                                        grid.Column("correo", "Correo", null, "text-left", false),
+                                        grid.Column("serieemision", "S.Emision", null, "text-left", false),
+                                        grid.Column("serierecibo", "S.Recibo", null, "text-left", false),
+                                        grid.Column("serietransferStock", "S.Trans.Stock", null, "text-left", false),
+                                        grid.Column("id_tipouser", "Id", null, "text-left ", false),
+                                        grid.Column("desc_tipouser", "Tipo", null, "text - left", false),
+                                        grid.Column("id_tipouser", "Id", null, "text-left ", false),
+                                        grid.Column("desc_tipouser", "Tipo", null, "text - left", false),
+                                        grid.Column("user_sap", "Usuario Sap", null, "text - left", false),
+                                        grid.Column(header: "Supervisa", format: @<text><a href="#" data-toggle="modal" data-target="#asociaSuperv" class="glyphicon glyphicon-list click-superv-user" id="@item.id_usuario"> </a></text>),
+                                        grid.Column(header: "Perfil", format: @<text><a href="#" data-toggle="modal" data-target="#asociaPerfil" class="glyphicon glyphicon-list click-perfiles-user" id="@item.id_perfil"> </a></text>),
+                                        grid.Column(header: "Cambio Pass", format: @<text><a href="#" data-toggle="modal" data-target="#cambioContrasena" class="glyphicon glyphicon-list click-pass-user" id="@item.id_usuario"> </a></text>),
+                                        grid.Column(header: "Bodega", format: @<text><a href="#" data-toggle="modal" data-target="#asociaBodega" class="glyphicon glyphicon-list click-bodega-user" id="@item.id_usuario"> </a></text>),
+                                        grid.Column(header: "Area", format: @<text><a href="#" data-toggle="modal" data-target="#asociaArea" class="glyphicon glyphicon-list click-area-user" id="@item.id_usuario"> </a></text>)
+
+
+                                        /*grid.Column(header: "", format: @<text><button id="a" data-toggle="modal" data-target="#modAsignaAcceso" class="accesos-click">ACCESOS</button></text>),
+ grid.Column(header: "", format: @<text><button id="p" data-toggle="modal" data-target="#modAsignaPermisos" class="permisos-click">PERMISOS</button></text>)*/
+                                        )
+                                        )
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="creaUsuario" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>-->
+                            <h4 class="modal-title"><label ID="titulo" Text="Crear Usuario">Crear Usuario</label> </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputNames" class="col-sm-4 control-label">Nombres:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Nombres" id="txtNombres">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputApellidos" class="col-sm-4 control-label">Apellidos:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Apellidos" id="txtApellidos">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUser" class="col-sm-4 control-label">Correo:</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" placeholder="Correo" id="txtCorreo">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUsuario" class="col-sm-4 control-label">Usuario:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Usuario" id="txtUsuario">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUsuarioSap" class="col-sm-4 control-label">Usuario Sap:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Usuario Sap" id="txtUsuarioSap">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="chkSupervisor" class="col-sm-4 control-label">Tipo:</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("cmbTipoUser", null, null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtSerieRecibo" class="col-sm-4 control-label">Serie Recibo:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Recibo" id="txtSerieRecibo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtSerieEmision" class="col-sm-4 control-label">Serie Emision:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Emision" id="txtSerieEmision">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtSerieTranStock" class="col-sm-4 control-label">Serie Trans. Stock:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Trans. Stock" id="txtSerieTranStock">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <button id="Button2"
+                                    text="GUARDAR"
+                                    class="btn btn-primary guarda-usuario">
+                                GUARDAR
+                            </button>
+
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <div id="modificaUsuario" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>-->
+                            <label class="hidden" ID="lblmodIdUserMod"></label>
+                            <h4 class="modal-title"><label ID="tituloUserMod"></label> </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="txtMODNombres" class="col-sm-4 control-label">Nombres:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Nombres" id="txtMODNombres">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtMODApellidos" class="col-sm-4 control-label">Apellidos:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Apellidos" id="txtMODApellidos">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtMODCorreo" class="col-sm-4 control-label">Correo:</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" placeholder="Correo" id="txtMODCorreo">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtMODUsuario" class="col-sm-4 control-label">Usuario :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Usuario" id="txtMODUsuario">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtMODUsuarioSap" class="col-sm-4 control-label">Usuario Sap:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Usuario Sap" id="txtMODUsuarioSap">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cmbMODTipoUser" class="col-sm-4 control-label">Tipo:</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("cmbMODTipoUser", null, null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMODSerieRecibo" class="col-sm-4 control-label">Serie Recibo:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Recibo" id="txtMODSerieRecibo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMODSerieEmision" class="col-sm-4 control-label">Serie Emision:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Emision" id="txtMODSerieEmision">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtMODSerieTransStock" class="col-sm-4 control-label">Serie Tran.Stock:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Serie Transferencia Stock" id="txtMODSerieTransStock">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <button id="Button3"
+                                    text="Atributos"
+                                    class="btn btn-success redirec-Atributo-User">
+                                Atributos
+                            </button>
+                            <button id="Button2"
+                                    text="GUARDAR"
+                                    class="btn btn-primary modifica-usuario">
+                                GUARDAR
+                            </button>
+
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div id="asociaSuperv" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>-->
+                            <h4 class="modal-title"><label ID="titulo">Asociar a supervisor</label> </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="gridUsuariosSuper">
+
+                                <label id="lblIdSuperv" style="display:none"></label>
+                                @grid2.GetHtml(tableStyle: "table table-hover",
+                mode: WebGridPagerModes.All,
+
+                columns: grid2.Columns(
+
+                grid2.Column("id_usuario", "ID", null, "text-center", false),
+                grid2.Column("nombre_usuario", "NOMBRE", null, "text-center", false),
+
+                grid2.Column(" ", format: (item) =>
+                {
+                    if (item.sw_asocia == "0")
+                    {
+                        return Html.Raw(string.Format("<text><input type='checkbox' name='selectedrows' id= checkU" + item.id_usuario + " value=" + item.id_usuario + " /></text>"));
+                    }
+                    else
+                    {
+                        return Html.Raw(string.Format("<text><input type='checkbox' name='selectedrows' id= checkU" + item.id_usuario + " value=" + item.id_usuario + " checked/></text>"));
+                    }
+                }, style: "text-center", canSort: false)
+
+                )
+                )
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <button id="Button3"
+                                    text="GUARDAR"
+                                    class="btn btn-primary text-center guarda-superv-user">
+                                GUARDAR
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <div id="asociaBodega" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title"><label ID="lblTituloAsociaBodega">Asociar bodega al Usuario [</label><label id="lblIduSbOD"></label><label>]</label> </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="gridUsuariosBodega">
+
+                                
+                                @grid3.GetHtml(tableStyle: "table table-hover",
+                mode: WebGridPagerModes.All,
+
+                columns: grid3.Columns(
+
+                grid3.Column("id_bodega", "ID", null, "text-center", false),
+                grid3.Column("nombre_bodega", "NOMBRE", null, "text-center", false),
+
+                grid3.Column(" ", format: (item) =>
+                {
+                    if (item.sw_asocia == "0")
+                    {
+                        return Html.Raw(string.Format("<text><input type='checkbox' name='selectedrows' value=" + item.id_bodega + " /></text>"));
+                    }
+                    else
+                    {
+                        return Html.Raw(string.Format("<text><input type='checkbox' name='selectedrows' value=" + item.id_bodega + " checked/></text>"));
+                    }
+                }, style: "text-center", canSort: false)
+
+                )
+                )
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <button id="Button3"
+                                    text="GUARDAR"
+                                    class="btn btn-primary text-center guarda-bodega-user">
+                                GUARDAR
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </div>
+
+
+
+
+
+        <div id="cambioContrasena" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label id="lblIdPass" style="display:none"></label>
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>-->
+                        <h4 class="modal-title"><label ID="tituloPass">Cambio contraseña</label> </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputApellidos" class="col-sm-4 control-label">Password:</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" placeholder="Password" id="txtContrasena">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <button id="Button3"
+                                text="GUARDAR"
+                                class="btn btn-primary text-center guarda-contrasena">
+                            GUARDAR
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <div id="asociaPerfil" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>-->
+                        <h4 class="modal-title"><label ID="tituloPerfil">Asociar perfil</label> </h4>
+                    </div>
+                    <div class="modal-body">
+                        <label id="lblMensaje" class="text-red"></label>
+                        <label id="lblId" style="display:none"></label>
+                        <div class="form-group">
+                            <label for="cmbPerfil" class="col-sm-4 control-label">Perfil:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownList("cmbPerfil", null, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <button id="Button3"
+                                text="GUARDAR"
+                                class="btn btn-primary text-center guarda-perfiles-user">
+                            GUARDAR
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <div class="modal fade" id="modalEdita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="modal-body ">
+
+                            <div id="DivToAppendPartialVoew"></div>
+                            <div id="DivToAppendPartialViewList"></div>
+                        </div>
+                        <hr />
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        initialize();
+
+        $(function () {
+            $('#gridUsuarios Table').append("<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>")
+
+
+            $.ajax({
+                url: '/Usuario/jsTraeAccesosUser/',
+                type: "GET",
+                dataType: "JSON",
+                data: {},
+                async: false,
+                success: function (json) {
+
+                    var columnas = [1, 9,11,12];
+                    var v_cuentaEditarUs = 0;
+                    var v_cuentaGuardaUs = 0;
+                    var v_cuentaVerUs = 0;
+                    $.each(json, function (j, item2) {
+
+                        if (item2.IDPERMISO == 6 && item2.IDACCESO == 3)
+                            v_cuentaEditarUs = 1;
+
+                        if (item2.IDPERMISO == 6 && item2.IDACCESO == 1)
+                            v_cuentaGuardaUs = 1;
+
+                        if (item2.IDPERMISO == 6 && item2.IDACCESO == 2)
+                            v_cuentaVerUs = 1;
+
+
+                    });
+                    if (v_cuentaEditarUs == 0) {
+                        columnas.push(0);
+                        columnas.push(14);
+                        columnas.push(15);
+                        columnas.push(16);
+                        columnas.push(17);
+                        columnas.push(18);
+                    }
+                    if (v_cuentaGuardaUs == 0) {
+                        $('#divNuevo').hide();
+                    }
+                    if (v_cuentaVerUs == 0) {
+                        $('#gridUsuarios').hide();
+                    }
+
+
+                    $('#gridUsuarios Table').DataTable({
+                        "pageLength": 20,
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": true,
+                        "scrollX": true,
+                        "columnDefs": [
+                        { "class": "hidden", "targets": columnas },
+                        { "class": "text-center", "targets": [1, 12, 13, 14, 15,16,17,18] }
+                        ]
+                    });
+                },
+                error: function (error) { console.log(error); }
+            });
+
+
+        });
+        function initialize() {
+
+            $(document).on('click', '.click-modificaUser', function () {
+                $("#txtMODNombres").val("");
+                $("#txtMODApellidos").val("");
+                $("#txtMODCorreo").val("");
+                $("#txtMODUsuarioSap").val("");
+                $("#txtMODUsuario").val("");
+
+
+                $("#txtMODSerieRecibo").val("");
+                $("#txtMODSerieEmision").val("");
+                $("#txtMODSerieTransStock").val("");
+
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+                var pd = $(this).prop('id');
+
+
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_id = $item.children("td:eq(1)").html();
+                var $v_usuario = $item.children("td:eq(2)").html();
+                var $v_nombre = $item.children("td:eq(3)").html();
+                var $v_apellido = $item.children("td:eq(4)").html();
+                var $v_correo = $item.children("td:eq(5)").html();
+                var $v_serieemision = $item.children("td:eq(6)").html();
+                var $v_serierecibo = $item.children("td:eq(7)").html();
+                var $v_serietransStock = $item.children("td:eq(8)").html();
+                var $v_id_tipouser = $item.children("td:eq(9)").html();
+                var $v_id_bodega = $item.children("td:eq(11)").html();
+                var $v_USERSAP = $item.children("td:eq(13)").html();
+
+                $("#txtMODNombres").val($v_nombre);
+
+                $("#txtMODApellidos").val($v_apellido);
+                $("#txtMODCorreo").val($v_correo);
+                $("#txtMODUsuarioSap").val($v_USERSAP);
+                $("#txtMODSerieRecibo").val($v_serierecibo);
+                $("#txtMODSerieEmision").val($v_serieemision);
+                $("#txtMODSerieTransStock").val($v_serietransStock);
+
+
+                $("#txtMODUsuario").val($v_usuario);
+                $("#cmbMODTipoUser").val($v_id_tipouser);
+                $("#lblmodIdUserMod").text($v_id);
+
+                $("#tituloUserMod").text("Modifica Usuario: "+ $v_usuario + "[" + $v_id + "]");
+
+            });
+            $(document).on('click', '.guarda-usuario', function () {
+                var $v_txtNombres = $('#txtNombres').val();
+                var $v_txtApellidos = $('#txtApellidos').val();
+                var $v_txtCorreo = $('#txtCorreo').val();
+                var $v_txtUsuario = $('#txtUsuario').val();
+                var $v_tipoUser = $("#cmbTipoUser option:selected").val();
+                var $v_SerieRecibo = $('#txtSerieRecibo').val();
+                var $v_SerieEmision = $('#txtSerieEmision').val();
+                var $v_SerieTranStock= $('#txtSerieTranStock').val();
+
+                
+                var $v_txtUserSap = $('#txtUsuarioSap').val();
+
+                try {
+
+                    if ($v_txtNombres.length == 0)
+                        throw "Ingrese el nombre del usuario.";
+
+                    if ($v_txtApellidos.length == 0)
+                        throw "Ingrese el apellido del usuario.";
+
+                    if ($v_txtUsuario.length == 0)
+                        throw "Ingrese el usuario.";
+
+
+                    if ($v_txtUserSap.length == 0)
+                        throw "Ingrese el usuario sap, sino lo conoce es el mismo usuario.";
+
+
+                $.ajax({
+                    url: '/Usuario/grabaUsuario/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { nombre: $v_txtNombres, apellido: $v_txtApellidos, correo: $v_txtCorreo, usuario: $v_txtUsuario, tipoUser: $v_tipoUser, SerieRecibo: $v_SerieRecibo, SerieEmision: $v_SerieEmision, SerieTranStock: $v_SerieTranStock, Bodega: "1", UserSap: $v_txtUserSap },
+                    success: function (json) {
+                        if (json.ID == 1) {
+                            location.reload();
+                        } else {
+                            swal("Informacion", json.MENSAJE1 + ' ' + json.MENSAJE2, "error")
+
+                        }
+
+                    },
+                    error: function (error) { console.log(error); }
+                });
+
+                } catch (e) {
+                    swal("Error", e, "error")
+                }
+            });
+            
+            
+            $(document).on('click', '.redirec-Atributo-User', function () {
+                var $v_txtUsuario = $("#lblmodIdUserMod").text();
+                window.location.href = '/Usuario/AtributoUsuario?idUsuario=' + $v_txtUsuario;
+
+            });
+            $(document).on('click', '.modifica-usuario', function () {
+                var $v_txtNombres = $('#txtMODNombres').val();
+                var $v_txtApellidos = $('#txtMODApellidos').val();
+                var $v_txtCorreo = $('#txtMODCorreo').val();
+                //id usuario
+                var $v_txtUsuario = $("#lblmodIdUserMod").text();
+
+                var $v_tipoUser = $("#cmbMODTipoUser option:selected").val();
+
+                var $v_SerieRecibo = $('#txtMODSerieRecibo').val();
+                var $v_SerieEmision = $('#txtMODSerieEmision').val();
+                var $v_SerieTransStock = $('#txtMODSerieTransStock').val();
+                var $v_txtUserSap = $('#txtMODUsuarioSap').val();
+                var $v_txtUser = $('#txtMODUsuario').val();
+                try {
+
+                    if ($v_txtNombres.length == 0)
+                        throw "Ingrese el nombre del usuario.";
+
+                    if ($v_txtApellidos.length == 0)
+                        throw "Ingrese el apellido del usuario.";
+
+                    if ($v_txtUser.length == 0)
+                        throw "Ingrese el usuario.";
+
+
+
+                    if ($v_txtUserSap.length == 0)
+                        throw "Ingrese el usuario sap, sino lo conoce es el mismo usuario.";
+
+
+                    $.ajax({
+                        url: '/Usuario/modificaUsuario/',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: { nombre: $v_txtNombres, apellido: $v_txtApellidos, correo: $v_txtCorreo, usuario: $v_txtUsuario, tipoUser: $v_tipoUser, SerieRecibo: $v_SerieRecibo, SerieEmision: $v_SerieEmision, SerieTranStock: $v_SerieTransStock, Bodega: "1", UserSap: $v_txtUserSap, user: $v_txtUser },
+                        success: function (json) {
+                            if (json.ID == 1) {
+                                location.reload();
+                            } else {
+                                swal("Informacion", json.MENSAJE1 + ' ' + json.MENSAJE2, "error")
+
+                            }
+
+                        },
+                        error: function (error) { console.log(error); }
+                    });
+
+                } catch (e) {
+                    swal("Error", e, "error")
+                }
+            });
+
+            $(document).on('click', '.guarda-superv-user', function () {
+                var tablas = [];
+
+                var listOfObjects3 = [];
+
+                $("#gridUsuariosSuper tbody tr").each(function (index) {
+                    var campo1, campo2, campo3, campo4;
+
+
+                    $(this).children("td").each(function (index2) {
+
+                        var v_campo4, v_campo5;
+                        $(this).find("input").each(function () {
+                            v_campo4 = $("#" + this.id).is(":checked");
+                        })
+
+                        if (v_campo4 == false) {
+                            v_campo5 = "0";
+                        } else {
+                            v_campo5 = "1";
+                        }
+
+                        switch (index2) {
+                            case 0: campo1 = $(this).text();
+                                break;
+                            case 1: campo2 = $(this).text();
+                                break;
+                            case 2: campo3 = v_campo5;
+                                break;
+                        }
+
+
+
+
+                        //$(this).css("background-color", "#ECF8E0");
+                    })
+
+
+                    var obj = new Object();
+                    obj.id_usuario = campo1;
+                    obj.nombre_usuario = campo2;
+                    obj.sw_asocia = campo3;
+                    listOfObjects3.push(obj);
+                    //alert(campo1 + ' - ' + campo2 + ' - ' + campo3 + ' - ' + campo4);
+
+
+                })
+               
+
+                var jsonString = JSON.stringify(listOfObjects3);
+
+                $.ajax({
+                    url: '/Usuario/grabaSupervUser/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { idSuperv: $("#lblIdSuperv").text(), listastr: jsonString },
+                    success: function (json) {
+
+                        if (json.ID == 1) {
+                            swal("Informacion", json.MENSAJEPOP, "success")
+                        } else {
+                            swal("Error", json.MENSAJEPOP, "error")
+
+                        }
+                    },
+                    error: function (error) { }
+                });
+
+
+            });
+
+
+            $(document).on('click', '.guarda-bodega-user', function () {
+                var tablas = [];
+
+                var listOfObjects2 = [];
+
+                $("#gridUsuariosBodega tbody tr").each(function (index) {
+                    var campo1, campo2, campo3, campo4;
+
+
+                    $(this).children("td").each(function (index2) {
+
+                        var v_campo4, v_campo5;
+                        $(this).find("input").each(function () {
+                            
+                            v_campo4 = $("#" + this.id).is(":checked");
+                        })
+
+                        if (v_campo4 == false) {
+                            v_campo5 = "0";
+                        } else {
+                            v_campo5 = "1";
+                        }
+
+                        switch (index2) {
+                            case 0: campo1 = $(this).text();
+                                break;
+                            case 1: campo2 = $(this).text();
+                                break;
+                            case 2: campo3 = v_campo5;
+                                break;
+                        }
+
+
+
+
+                        //$(this).css("background-color", "#ECF8E0");
+                    })
+
+
+                    var obj = new Object();
+                    obj.id_bodega = campo1;
+                    obj.nombre_bodega = campo2;
+                    obj.sw_asocia = campo3;
+                    listOfObjects2.push(obj);
+                    //alert(campo1 + ' - ' + campo2 + ' - ' + campo3 + ' - ' + campo4);
+
+
+                })
+                console.log(listOfObjects2);
+
+                var jsonString = JSON.stringify(listOfObjects2);
+
+                $.ajax({
+                    url: '/Usuario/grabaBodegaUser/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { id_usuario: $("#lblIduSbOD").text(), listastr: jsonString },
+                    success: function (json) {
+
+                        if (json.ID == 1) {
+                            swal("Informacion", json.MENSAJEPOP, "success")
+                        } else {
+                            swal("Error", json.MENSAJEPOP, "error")
+
+                        }
+                    },
+                    error: function (error) { }
+                });
+
+
+            });
+
+            $(document).on('click', '.click-superv-user', function () {
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_id = $item.children("td:eq(1)").html();
+               
+                $("#lblIdSuperv").text($v_id);
+
+                $("#gridUsuariosSuper tbody").empty();
+                $.ajax({
+                    url: '/Usuario/traeSupervUser/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { id: $v_id },
+                    success: function (json) {
+
+                        $.each(json, function (j, item2) {
+                            var $v_checked = "";
+                            if (item2.sw_asocia == "1") {
+                                $v_checked = "checked";
+                            } else {
+                                $v_checked = "";
+                            }
+                            var newrow = '<tr>' +
+                               '<td class="text-left">' + item2.id_usuario + '</td>' +
+                               '<td class="text-center">' + item2.nombre_usuario + '</td>' +
+
+                                '<td class="text-center">' + '<input type="checkbox" class="checkItem" name="selectedrows" value="' + item2.id_usuario + '" id="checkU' + item2.id_usuario + '"  ' + $v_checked + ' />' + '</td>' +
+                                '</tr>';
+
+                            $("#gridUsuariosSuper tbody").append(newrow);
+                        })
+
+
+                    },
+                    error: function (error) { }
+                });
+
+            });
+
+            $(document).on('click', '.click-bodega-user', function () {
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_id = $item.children("td:eq(1)").html();
+                 
+                $("#lblIduSbOD").text($v_id);
+                
+                $("#gridUsuariosBodega tbody").empty();
+                $.ajax({
+                    url: '/Usuario/traeBodegaUser/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { id: $v_id },
+                    success: function (json) {
+
+                        $.each(json, function (j, item2) {
+                            var $v_checked = "";
+                            if (item2.sw_asocia == "1") {
+                                $v_checked = "checked";
+                            } else {
+                                $v_checked = "";
+                            }
+                            var newrow = '<tr>' +
+                               '<td class="text-left">' + item2.id_bodega + '</td>' +
+                               '<td class="text-center">' + item2.nombre_bodega + '</td>' +
+
+                                '<td class="text-center">' + '<input type="checkbox" class="checkItem" name="selectedrows" value="' + item2.id_bodega + '" id="checkB' + item2.id_bodega + '"  ' + $v_checked + ' />' + '</td>' +
+                                '</tr>';
+
+                            $("#gridUsuariosBodega tbody").append(newrow);
+                        })
+
+                    },
+                    error: function (error) { }
+                });
+
+            });
+
+
+
+
+            $(document).on('click', '.guarda-perfiles-user', function () {
+
+                var $v_Perfil = $("#cmbPerfil option:selected").val();
+
+
+                $.ajax({
+                    url: '/Usuario/grabaPerfilesUser/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { idUser: $("#lblId").text(), idPerfil: $v_Perfil },
+                    success: function (json) {
+
+                        if (json.ID == 1) {
+                            swal("Informacion", json.MENSAJEPOP, "success");
+							location.reload();
+                        } else {
+                            swal("Error", json.MENSAJEPOP, "error")
+
+                        }
+                        $("#lblMensaje").text("");
+
+                    },
+                    error: function (error) { }
+                });
+
+
+            });
+
+            $(document).on('click', '.click-perfiles-user', function () {
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+                var pd = $(this).prop('id');
+
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_id = $item.children("td:eq(1)").html();
+
+                $("#lblId").text($v_id);
+                $("#tituloPerfil").text("Asociar perfil a usuario id: " +$v_id);
+                if (pd > 0) {
+                    $("#cmbPerfil").val(pd);
+                    $("#lblMensaje").text("");
+
+                } else {
+                    $("#cmbPerfil").val("1");
+                    $("#lblMensaje").text("No tiene perfil asociado");
+                }
+            });
+
+
+            $(document).on('click', '.click-area-user', function () {
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+                var pd = $(this).prop('id');
+
+                $("#DivToAppendPartialVoew").empty();
+                $("#DivToAppendPartialViewList").empty();
+                $("#modalEdita").modal();
+                var div = $("#DivToAppendPartialVoew");
+                div.load("/UsuarioArea/CreateAreaUsuario/?id_Usuario=" + pd);
+                $("#DivToAppendPartialViewList").empty();
+                var ph2 = $("#DivToAppendPartialViewList");
+                ph2.load("/UsuarioArea/Listado?id=" + pd);
+            });
+            $(document).on('click', '.click-pass-user', function () {
+
+                /*$('.gridContent table thead tr th:eq(3)').hide();*/
+                var pd = $(this).prop('id');
+
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_id = $item.children("td:eq(1)").html();
+
+                $("#lblIdPass").text($v_id);
+                $("#tituloPass").text("Cambio contraseña a usuario id: " + $v_id);
+
+            });
+            $(document).on('click', '.guarda-contrasena', function () {
+                var pd = $("#lblIdPass").text();
+                var $v_pass = $('#txtContrasena').val();
+                $.ajax({
+                    url: '/Usuario/grabaContrasena/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { id_user: pd, contrasena: $v_pass },
+                    success: function (json) {
+                        if (json.ID == 1) {
+                            swal("Informacion", json.MENSAJE1 + ' ' + json.MENSAJE2, "success")
+                        } else {
+                            swal("Error", json.MENSAJE1 + ' ' + json.MENSAJE2, "error")
+
+                        }
+
+
+                    },
+                    error: function (error) { console.log(error); }
+                });
+            });
+        }
+
+
+    </script>
+
+}

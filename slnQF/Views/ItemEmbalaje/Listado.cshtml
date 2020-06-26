@@ -1,0 +1,34 @@
+﻿@model IEnumerable<slnQF.TITEM_EMBALAJE>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridEmbalaje");
+    }
+    <div class="table-responsive">
+        <div id="gridEmbalaje">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column("ID_ITEM_EMBALAJE", "ID", null, "text-center", false),
+                                     grid.Column("CODIGO", "CODIGO", null, "text-center", false),
+                                     grid.Column("DESCRIPCION", "DESCRIPCION", null, "text-center", false),
+                                     grid.Column("CAPACIDAD", "CAPACIDAD", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#gridEmbalaje table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+  
+</script>

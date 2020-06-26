@@ -1,0 +1,598 @@
+﻿
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    @RenderSection("Styles", false)
+    @Styles.Render("~/Content/css")
+    <title>Qualipharm</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+    <div class="wrapper">
+
+        <header class="main-header">
+
+            <!-- Logo -->
+            <span class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+
+                <span class="logo-mini"><b>Q</b> </span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Q</b>UALIPHARM</span>
+
+            </span>
+
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+
+                                @if (Session["LogedUser"] != null)
+                                {
+                                    <span class="hidden-xs" ID="lbllBien">@Session["LogedUser"] </span>
+                                }
+                                else
+                                {
+                                    <span class="hidden-xs" ID="lbllBien">Inicie Sesion </span>
+                                }
+
+
+
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    @Html.Partial("_LoginPartial")
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Control Sidebar Toggle Button -->
+
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            @Html.Partial("_MenuPartial")
+
+        </aside>
+
+        <div id="previewGen" class="spinner"></div>
+        <div class="loader"></div>
+        @RenderBody()
+        <div class="modal fade" id="modalFondoGen" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> @ViewContext.Controller.GetType().Assembly.GetName().Version
+            </div>
+
+            <strong>Copyright &copy; 2017 <a href="#">QUALIPHARM</a>.</strong> All rights
+            reserved.
+        </footer>
+
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.1.1 + Jquery UI 1.10.4 -->
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Content/Qualipharm/Qualipharm.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/AdminLTE")
+    @RenderSection("scripts", false)
+
+    <script type="text/javascript">
+
+        initialize();
+        var spinner;
+
+        var opts = {
+            lines: 17 // The number of lines to draw
+            , length: 56 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '50%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: true // Whether to render a shadow
+            , hwaccel: false // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+        };
+        $("#modalFondo").modal({
+            show: false,
+            backdrop: 'static'
+        });
+        function startSpinGen() {
+            $("#modalFondoGen").modal("show");
+            var target = document.getElementById('previewGen');
+            spinner = new Spinner(opts).spin(target);
+
+
+        }
+        function stopSpinGen() {
+            var target = document.getElementById('previewGen');
+
+            //setTimeout(function () {
+            spinner.stop();
+            //}, 3000);
+
+            $("#modalFondoGen").modal('hide');
+        }
+       function initialize() {
+
+           $.ajax({
+               url: '/Usuario/jsTraeAccesosUser/',
+               type: "GET",
+               dataType: "JSON",
+               data: {},
+               async: false,
+               success: function (json) {
+                   console.log('hola');
+                   var v_cuentaOrdeProd = 0;
+
+                   //STOCK MENU
+                   var v_cuentaEntradaStock = 0;
+                   var v_cuentaSalidaStock  = 0;
+                   var v_cuentaTransfeStok = 0;
+
+                   var v_cuentausuarios = 0;
+                   var v_cuentaperfiles = 0;
+                   var v_cuentapermisos = 0;
+                   var v_cuentaaccesos = 0;
+                   var v_cuentabodegas = 0;
+                   var v_cuentaCatalogo2 = 0;
+
+                   var v_cuentaArticulo = 0;
+                   var v_cuentaArticuloEmbalaje = 0;
+
+                   var v_cuentauom = 0;
+                   var v_cuentaefab = 0;
+                   var v_cuentafabricante = 0;
+                   var v_cuentapais = 0;
+                   var v_cuentaffarm = 0;
+                   var v_cuentaproducto = 0;
+                   var v_cuentaArea = 0;
+                   var v_cuentanombrecomercial = 0;
+                   var v_cuentapresentacion = 0;
+                   var v_cuentacertificado = 0;
+                   var v_cuentaproducto_nomcomer = 0;
+                   var v_cuentaproducto_present = 0;
+                   var v_cuentaespecif_producto = 0;
+                   var v_cuentaclientes = 0;
+                   var v_cuentapuestos = 0;
+                   var v_cuentapersonas = 0;
+                   var v_cuentaproveedores = 0;
+
+
+
+                   var v_cuentaensayo = 0;
+                   var v_cuentaprueba = 0;
+                   var v_cuentapruebaespecifica = 0;
+                   var v_cuentaensayo_prueba = 0;
+                   var v_cuentaprueba_pruebaespecifica = 0;
+
+                   var v_cuenta_reporte = 0;
+
+                   var v_cuenta_reporte_modulo = 0;
+
+                   var v_cuenta_reporte_genera = 0;
+
+                   var v_cuentaprueba_ingreso_certificado = 0;
+
+                   var v_cuenta_ingreso_certificado_vista = 0;
+
+
+
+
+                   $.each(json, function (j, item2) {
+                       //menu operativo
+                       if (item2.IDPERMISO == 1 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+                       if (item2.IDPERMISO == 2 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+                       if (item2.IDPERMISO == 3 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+
+                       if (item2.IDPERMISO == 4 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+
+                       if (item2.IDPERMISO == 5 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+                       if (item2.IDPERMISO == 5 && item2.IDACCESO == 2)
+                           v_cuentaOrdeProd = v_cuentaOrdeProd + 1;
+
+                       if (item2.IDPERMISO == 73 && item2.IDACCESO == 2)
+                           v_cuentaTransfeStok = v_cuentaTransfeStok + 1;
+
+                       if (item2.IDPERMISO == 82 && item2.IDACCESO == 2)
+                           v_cuentaEntradaStock = v_cuentaEntradaStock + 1;
+
+                       if (item2.IDPERMISO == 83 && item2.IDACCESO == 2)
+                           v_cuentaSalidaStock = v_cuentaSalidaStock + 1;
+
+
+                       
+                       
+
+
+                       if (item2.IDPERMISO == 6 && item2.IDACCESO == 2)
+                           v_cuentausuarios = v_cuentausuarios + 1;
+
+                       if (item2.IDPERMISO == 7 && item2.IDACCESO == 2)
+                           v_cuentaperfiles = v_cuentaperfiles + 1;
+
+                       if (item2.IDPERMISO == 8 && item2.IDACCESO == 2)
+                           v_cuentapermisos = v_cuentapermisos + 1;
+
+                       if (item2.IDPERMISO == 9 && item2.IDACCESO == 2)
+                           v_cuentaaccesos = v_cuentaaccesos + 1;
+
+                       if (item2.IDPERMISO == 15 && item2.IDACCESO == 2)
+                           v_cuentabodegas = v_cuentabodegas + 1;
+
+
+
+                       if (item2.IDPERMISO == 17 && item2.IDACCESO == 2)
+                           v_cuentauom = v_cuentauom + 1;
+
+                       if (item2.IDPERMISO == 18 && item2.IDACCESO == 2)
+                           v_cuentaffarm = v_cuentaffarm + 1;
+
+                       if (item2.IDPERMISO == 19 && item2.IDACCESO == 2)
+                           v_cuentaproducto = v_cuentaproducto + 1;
+
+                       if (item2.IDPERMISO == 62 && item2.IDACCESO == 2)
+                           v_cuentaArea = v_cuentaArea + 1;
+
+
+                       if (item2.IDPERMISO == 20 && item2.IDACCESO == 2)
+                           v_cuentanombrecomercial = v_cuentanombrecomercial + 1;
+
+                       if (item2.IDPERMISO == 21 && item2.IDACCESO == 2)
+                           v_cuentapresentacion = v_cuentapresentacion + 1;
+
+                       if (item2.IDPERMISO == 22 && item2.IDACCESO == 2)
+                           v_cuentacertificado = v_cuentacertificado + 1;
+
+                       if (item2.IDPERMISO == 23 && item2.IDACCESO == 2)
+                           v_cuentaproducto_nomcomer = v_cuentaproducto_nomcomer + 1;
+
+                       if (item2.IDPERMISO == 24 && item2.IDACCESO == 2)
+                           v_cuentaproducto_present = v_cuentaproducto_present + 1;
+
+                       if (item2.IDPERMISO == 25 && item2.IDACCESO == 2)
+                           v_cuentaespecif_producto = v_cuentaespecif_producto + 1;
+
+                       if (item2.IDPERMISO == 26 && item2.IDACCESO == 2)
+                           v_cuentaclientes = v_cuentaclientes + 1;
+
+                       if (item2.IDPERMISO == 27 && item2.IDACCESO == 2)
+                           v_cuentaensayo = v_cuentaensayo + 1;
+
+                       if (item2.IDPERMISO == 28 && item2.IDACCESO == 2)
+                           v_cuentaprueba = v_cuentaprueba + 1;
+
+                       if (item2.IDPERMISO == 29 && item2.IDACCESO == 2)
+                           v_cuentapruebaespecifica = v_cuentapruebaespecifica + 1;
+
+                       if (item2.IDPERMISO == 30 && item2.IDACCESO == 2)
+                           v_cuentaensayo_prueba = v_cuentaensayo_prueba + 1;
+
+                       if (item2.IDPERMISO == 31 && item2.IDACCESO == 2)
+                           v_cuentaprueba_pruebaespecifica = v_cuentaprueba_pruebaespecifica + 1;
+
+                       if (item2.IDPERMISO == 32 && item2.IDACCESO == 2)
+                           v_cuentaprueba_ingreso_certificado = v_cuentaprueba_ingreso_certificado + 1;
+
+                       if (item2.IDPERMISO == 57 && item2.IDACCESO == 2)
+                           v_cuenta_ingreso_certificado_vista = v_cuenta_ingreso_certificado_vista + 1;
+
+
+
+
+                       if (item2.IDPERMISO == 33 && item2.IDACCESO == 2)
+                           v_cuentapuestos = v_cuentapuestos + 1;
+
+                       if (item2.IDPERMISO == 34 && item2.IDACCESO == 2)
+                           v_cuentapersonas = v_cuentapersonas + 1;
+
+                       if (item2.IDPERMISO == 42 && item2.IDACCESO == 2)
+                           v_cuentaefab = v_cuentaefab + 1;
+
+                       if (item2.IDPERMISO == 63 && item2.IDACCESO == 2)
+                           v_cuentafabricante = v_cuentafabricante + 1;
+
+                       if (item2.IDPERMISO == 64 && item2.IDACCESO == 2)
+                           v_cuentapais = v_cuentapais + 1;
+
+                       if (item2.IDPERMISO == 43 && item2.IDACCESO == 2)
+                           v_cuentaArticulo = v_cuentaArticulo + 1;
+
+                       if (item2.IDPERMISO == 44 && item2.IDACCESO == 2)
+                           v_cuentaArticuloEmbalaje = v_cuentaArticuloEmbalaje + 1;
+
+
+                       if (item2.IDPERMISO == 46 && item2.IDACCESO == 2)
+                           v_cuenta_reporte = v_cuenta_reporte + 1;
+
+                       if (item2.IDPERMISO == 47 && item2.IDACCESO == 2)
+                           v_cuenta_reporte_modulo = v_cuenta_reporte_modulo + 1;
+
+                       if (item2.IDPERMISO == 48 && item2.IDACCESO == 2)
+                           v_cuenta_reporte_genera = v_cuenta_reporte_genera + 1;
+
+                       if (item2.IDPERMISO == 53 && item2.IDACCESO == 2)
+                           v_cuentaproveedores = v_cuentaproveedores + 1;
+
+
+                   });
+
+                   if (v_cuentaOrdeProd <= 0) {
+                       document.getElementById("pmProduccion1").style.display = "none";
+
+
+                   }
+
+                   if (v_cuentaTransfeStok <= 0) {
+                       document.getElementById("pmTransfeStock").style.display = "none";
+                   }
+
+                   if (v_cuentaEntradaStock <= 0) {
+                       document.getElementById("pmEntradaStock").style.display = "none";
+                   }
+
+                   if (v_cuentaSalidaStock <= 0) {
+                       document.getElementById("pmSalidaStock").style.display = "none";
+                   }
+
+
+                   if (v_cuentaTransfeStok <= 0) {
+                       document.getElementById("pmStock").style.display = "none";
+
+                   }
+
+
+                   if (v_cuentaOrdeProd + v_cuentaTransfeStok <= 0) {
+                       document.getElementById("pmMENU1").style.display = "none";
+                   }
+
+
+                   if (v_cuentaArticulo + v_cuentaArticuloEmbalaje <= 0) {
+                       document.getElementById("pmMENUInventario").style.display = "none";
+
+                   }
+                   if (v_cuentaArticulo <= 0) {
+                       document.getElementById("pmArticulo2").style.display = "none";
+
+                   }
+
+                   if (v_cuentaArticuloEmbalaje <= 0) {
+                       document.getElementById("pmArticuloEmbalaje2").style.display = "none";
+
+                   }
+
+                   if (v_cuentausuarios <= 0) {
+                       document.getElementById("pmCatUsuarios").style.display = "none";
+                   }
+
+                   if (v_cuentaperfiles <= 0) {
+                       document.getElementById("pmCatPerfiles").style.display = "none";
+                   }
+
+                   if (v_cuentapermisos <= 0) {
+                       document.getElementById("pmCatPermisos").style.display = "none";
+                   }
+                   if (v_cuentaaccesos <= 0) {
+                       document.getElementById("pmCatAccesos").style.display = "none";
+                   }
+                   if (v_cuentabodegas <= 0) {
+                       document.getElementById("pmCatBodegas").style.display = "none";
+                   }
+
+                   if ((v_cuentabodegas + v_cuentaaccesos + v_cuentapermisos + v_cuentaperfiles) <= 0) {
+                       document.getElementById("pmCatalogos").style.display = "none";
+                   }
+
+                   if ((v_cuentabodegas + v_cuentaaccesos + v_cuentapermisos + v_cuentaperfiles + v_cuentausuarios) <= 0) {
+                       document.getElementById("pMenuCatalogos").style.display = "none";
+                   }
+
+                   var v_cuenta_cat_producto = 0;
+                   v_cuenta_cat_producto = v_cuentauom + v_cuentaffarm + v_cuentaefab + v_cuentafabricante + v_cuentapais + v_cuentaproducto + v_cuentaArea + v_cuentanombrecomercial + v_cuentapresentacion + v_cuentacertificado + v_cuentaproducto_nomcomer + v_cuentaproducto_present + v_cuentaespecif_producto + v_cuentaclientes + v_cuentapuestos + v_cuentapersonas + v_cuentaproveedores;
+
+                   if (v_cuenta_cat_producto <= 0) {
+                       document.getElementById("pmProducto").style.display = "none";
+                   }
+
+                   if (v_cuentauom <= 0) {
+                       document.getElementById("pmCatUom").style.display = "none";
+                   }
+
+                   if (v_cuentaffarm <= 0) {
+                       document.getElementById("pmCatFFarmaceutica").style.display = "none";
+                   }
+
+                   if (v_cuentaefab <= 0) {
+                       document.getElementById("pmCatEFabricacion").style.display = "none";
+                   }
+
+                   if (v_cuentafabricante <= 0) {
+                       document.getElementById("pmCatFabricante").style.display = "none";
+                   }
+
+                   if (v_cuentapais <= 0) {
+                       document.getElementById("pmCatPais").style.display = "none";
+                   }
+
+                   if (v_cuentaproducto <= 0) {
+                       document.getElementById("pmCatProducto").style.display = "none";
+                   }
+                   if (v_cuentaArea <= 0) {
+                       document.getElementById("pmCatArea").style.display = "none";
+                   }
+
+                   if (v_cuentanombrecomercial <= 0) {
+                       document.getElementById("pmCatNombreComercial").style.display = "none";
+                   }
+                   if (v_cuentapresentacion <= 0) {
+                       document.getElementById("pmCatPresentacion").style.display = "none";
+                   }
+                   if (v_cuentacertificado <= 0) {
+                       document.getElementById("pmCatCertificado").style.display = "none";
+                   }
+                   if (v_cuentaproducto_nomcomer <= 0) {
+                       document.getElementById("pmCatProductoNomCom").style.display = "none";
+                   }
+
+                   if (v_cuentaproducto_present <= 0) {
+                       document.getElementById("pmCatProductoPresentacion").style.display = "none";
+                   }
+
+                   if (v_cuentaespecif_producto <= 0) {
+                       document.getElementById("pmCatEspecificacionProd").style.display = "none";
+                   }
+
+                   if (v_cuentaclientes <= 0) {
+                       document.getElementById("pmCatCliente").style.display = "none";
+                   }
+
+                   if (v_cuentapuestos <= 0) {
+                       document.getElementById("pmCatPuesto").style.display = "none";
+                   }
+
+                   if (v_cuentapersonas <= 0) {
+                       document.getElementById("pmCatPersona").style.display = "none";
+                   }
+
+                   if (v_cuentaproveedores <= 0) {
+                       document.getElementById("pmCatProveedor").style.display = "none";
+                   }
+
+
+
+                   var v_cuenta_cat_ensayo = 0;
+                   v_cuenta_cat_ensayo = v_cuentaensayo + v_cuentaprueba + v_cuentapruebaespecifica + v_cuentaensayo_prueba + v_cuentaprueba_pruebaespecifica;
+
+                   if (v_cuenta_cat_ensayo <= 0) {
+                       document.getElementById("pmEnsayo").style.display = "none";
+                   }
+                   if (v_cuentaensayo <= 0) {
+                       document.getElementById("pmCatEnsayo").style.display = "none";
+                   }
+                   if (v_cuentaprueba <= 0) {
+                       document.getElementById("pmCatPrueba").style.display = "none";
+                   }
+                   if (v_cuentapruebaespecifica <= 0) {
+                       document.getElementById("pmCatPrueba_Especifica").style.display = "none";
+                   }
+                   if (v_cuentaensayo_prueba <= 0) {
+                       document.getElementById("pmCatEnsayoPrueba").style.display = "none";
+                   }
+                   if (v_cuentaprueba_pruebaespecifica <= 0) {
+                       document.getElementById("pmCatEnPrueEsp").style.display = "none";
+                   }
+
+
+                   var v_cuenta_catalogos_2 = 0;
+                   v_cuenta_catalogos_2 = v_cuenta_cat_producto + v_cuenta_cat_ensayo;
+
+                   if (v_cuenta_catalogos_2 <= 0) {
+                       document.getElementById("pmCertificado").style.display = "none";
+                   }
+
+                   var v_cuenta_catalogo_certificados = 0;
+                   v_cuenta_catalogo_certificados = v_cuentaprueba_ingreso_certificado + v_cuenta_ingreso_certificado_vista;
+
+                   if (v_cuenta_catalogo_certificados <= 0) {
+                       document.getElementById("pmLote").style.display = "none";
+                   }
+
+                   if (v_cuentaprueba_ingreso_certificado <= 0) {
+                       document.getElementById("pmInLote").style.display = "none";
+                   }
+                   if (v_cuenta_ingreso_certificado_vista <= 0) {
+                       document.getElementById("pmInLoteData").style.display = "none";
+                   }
+
+
+
+                   v_cuentaCatalogo2 = v_cuenta_catalogo_certificados + v_cuenta_catalogos_2;
+                   if (v_cuentaCatalogo2 <= 0) {
+                       document.getElementById("pMenuCatalogos2").style.display = "none";
+                   }
+
+                   var vcuentaReportes = v_cuenta_reporte + v_cuenta_reporte_genera + v_cuenta_reporte_modulo;
+
+                   if (vcuentaReportes <= 0) {
+                       document.getElementById("pmMENUReporte").style.display = "none";
+                   }
+
+                   if (v_cuenta_reporte <= 0) {
+                       document.getElementById("pmReporte1").style.display = "none";
+                   }
+
+
+                   if (v_cuenta_reporte_modulo <= 0) {
+                       document.getElementById("pmReporteModulo").style.display = "none";
+                   }
+
+                   if (v_cuenta_reporte_genera <= 0) {
+                       document.getElementById("pmReporteGenera").style.display = "none";
+                   }
+
+               },
+               error: function (error) { console.log(error); }
+           });
+       }
+
+    </script>
+
+
+</body>
+</html>

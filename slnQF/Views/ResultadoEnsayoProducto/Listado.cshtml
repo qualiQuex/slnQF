@@ -1,0 +1,36 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_RESULTADO_ENSAYO_PRODResult>
+
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridNomRel");
+    }
+    <div class="table-responsive">
+        <div id="gridNomRel">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column("NOMBRE_ENSAYO", "Ensayo", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRUEBA", "Prueba", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRUEBA_ESPECIFICA", "Prueba Especifica", null, "text-center", false), 
+                                     grid.Column("RESULTADO", "Resultado", null, "text-center", false),
+                                     grid.Column("FECHA_CREACION", "Fecha", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridNomRel table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+</script>

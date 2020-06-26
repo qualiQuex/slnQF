@@ -1,0 +1,221 @@
+﻿
+@model LOTE_INGRESO_DATA
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal ">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <label class="control-label">Fisico Quimico</label>
+                <hr />
+                <label for="FECHA_FISQUI">Fecha Dictamen</label>
+                @Html.TextBoxFor(model => model.FECHA_FISQUI, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+
+
+                <label for="RESULT_FISQUI">Resultado</label>
+                @Html.DropDownListFor(model => model.RESULT_FISQUI, ViewBag.ESTADO_CERTIFICADO as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                    <label class="control-label">Microbiologico</label>
+                    <hr />
+                    <label for="FECHA_MICROBIO">Fecha Dictamen</label>
+                    @Html.TextBoxFor(model => model.FECHA_MICROBIO, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+
+                    <label for="RESULT_MICROBIO">Resultado</label>
+                    @Html.DropDownListFor(model => model.RESULT_MICROBIO, ViewBag.ESTADO_CERTIFICADO as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <label for="RESULT_FINAL">Dictamen Final</label>
+                @Html.DropDownListFor(model => model.RESULT_FINAL, ViewBag.ESTADO_CERTIFICADO as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+                <label for="ID_PROVEEDOR">Proveedor</label>
+                @Html.DropDownListFor(model => model.ID_PROVEEDOR, ViewBag.PROVEEDOR as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+            </div>
+        </div>
+         
+        @Html.HiddenFor(model => model.ID_LOTE_INGRESO)
+        @Html.HiddenFor(model => model.ID_LOTE_DATA)
+            <div id="DivGuardarDataCert">
+                <input type="button" value="Guardar" class="btn btn-primary pull-right" onclick="SaveProductData()" />
+            </div>
+       
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+        
+
+
+        validaSesion();
+
+        $("#FECHA_FISQUI").attr('disabled', 'disabled');
+        $("#RESULT_FISQUI").attr('disabled', 'disabled');
+        $("#FECHA_MICROBIO").attr('disabled', 'disabled');
+        $("#RESULT_MICROBIO").attr('disabled', 'disabled');
+        $("#ID_PROVEEDOR").attr('disabled', 'disabled');
+        $("#RESULT_FINAL").attr('disabled', 'disabled');
+        document.getElementById("DivGuardarDataCert").style.display = "";
+        var v_cuentaGuardar = 0;
+        var v_cuentaFisico = 0;
+        var v_cuentaMicrob = 0;
+        var v_cuentaProv = 0;
+        var v_cuentaFinal = 0;
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 56 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+
+                    if (item2.IDPERMISO == 58 && item2.IDACCESO == 3)
+                        v_cuentaFisico = v_cuentaFisico + 1;
+
+                    if (item2.IDPERMISO == 59 && item2.IDACCESO == 3)
+                        v_cuentaMicrob = v_cuentaMicrob + 1;
+                    if (item2.IDPERMISO == 60 && item2.IDACCESO == 3)
+                        v_cuentaProv = v_cuentaProv + 1;
+                    if (item2.IDPERMISO == 61 && item2.IDACCESO == 3)
+                        v_cuentaFinal = v_cuentaFinal + 1;
+
+
+                });
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+     
+
+
+        if (v_cuentaGuardar <= 0) {
+
+            document.getElementById("DivGuardarDataCert").style.display = "none";
+        }
+
+        if (v_cuentaFisico + v_cuentaMicrob + v_cuentaProv + v_cuentaFinal <= 0) {
+            document.getElementById("DivGuardarDataCert").style.display = "none";
+        }
+            if (v_cuentaFisico == 0) {
+
+                $("#FECHA_FISQUI").attr('disabled', 'disabled');
+                $("#RESULT_FISQUI").attr('disabled', 'disabled');
+            } else {
+                $("#FECHA_FISQUI").removeAttr("disabled");
+                $("#RESULT_FISQUI").removeAttr("disabled");
+
+            }
+
+            if (v_cuentaMicrob == 0) {
+
+                $("#FECHA_MICROBIO").attr('disabled', 'disabled');
+                $("#RESULT_MICROBIO").attr('disabled', 'disabled');
+            } else {
+
+                $("#FECHA_MICROBIO").removeAttr("disabled");
+                $("#RESULT_MICROBIO").removeAttr("disabled");
+            }
+
+            if (v_cuentaProv == 0) {
+
+                $("#ID_PROVEEDOR").attr('disabled', 'disabled');
+            } else {
+                $("#ID_PROVEEDOR").removeAttr("disabled");
+            }
+
+
+            if (v_cuentaFinal == 0) {
+
+                $("#RESULT_FINAL").attr('disabled', 'disabled');
+            } else {
+                $("#RESULT_FINAL").removeAttr("disabled");
+            }
+
+
+    }
+
+    function validaSesion() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeUserSession/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+
+                console.log(json);
+                if (json.ID == 0) {
+                    window.location.href = json.MENSAJE;
+                }
+            },
+            error: function (error) { console.log(error); }
+        });
+    }
+    function SaveProductData() {
+
+
+
+
+        var ID_LOTE_INGRESO = $("#ID_LOTE_INGRESO").val();
+        var ID_LOTE_DATA = $("#ID_LOTE_DATA").val();
+        var FECHA_FISQUI = $("#FECHA_FISQUI").val();
+        var RESULT_FISQUI = $("#RESULT_FISQUI").val();
+        var FECHA_MICROBIO = $("#FECHA_MICROBIO").val();
+        var RESULT_MICROBIO = $("#RESULT_MICROBIO").val();
+        var RESULT_FINAL = $("#RESULT_FINAL").val();
+        var ID_PROVEEDOR = $("#ID_PROVEEDOR").val();
+        var ESTADO = $("#ID_ESTADO").val();
+
+
+        var product = {
+            "ID_LOTE_INGRESO": ID_LOTE_INGRESO, "FECHA_FISQUI": FECHA_FISQUI, "RESULT_FISQUI": RESULT_FISQUI,
+            "FECHA_MICROBIO": FECHA_MICROBIO, "RESULT_MICROBIO": RESULT_MICROBIO, "RESULT_FINAL": RESULT_FINAL,
+            "ID_PROVEEDOR": ID_PROVEEDOR, "ID_ESTADO": 1, "ID_LOTE_DATA": ID_LOTE_DATA
+        };
+
+        $.post('/LoteIngresoData/createDictamen', product,
+                    function (data) {
+                        if (data.ID == 0) {
+                            $("#DivToAppendPartialVoew").empty();
+                            $("#DivToAppendPartialViewList").empty();
+                            $("#modalEdita .close").click();
+                            swal({ title: "Informacion", text: "Datos almacenados correctamente", type: "success", showConfirmButton: true });
+                            
+                            
+                        } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                    }
+       , 'json');
+    }
+
+</script>

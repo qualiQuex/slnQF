@@ -1,0 +1,83 @@
+﻿@model TLOTEINGRESO_TECNICO
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Asociar Tecnico</h4>
+        <hr />
+        @Html.EditorFor(model => model.ID_LOTE_INGRESO, new { htmlAttributes = new { @style = "visibility: hidden" } })
+        <br />
+        <label for="ID_PERSONA">Tecnico </label>
+        @Html.DropDownListFor(model => model.ID_PERSONA, ViewBag.TecnicoDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+      
+        <div class="modal-footer">
+            <div id="DivGuardarTecCert">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProductTec()"  />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 55 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardarTecCert").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function SaveProductTec() {
+        var ID_LOTE_INGRESO = $("#ID_LOTE_INGRESO").val();
+        var ID_PERSONA = $("#ID_PERSONA").val();
+
+        var product = {
+            "ID_LOTE_INGRESO": ID_LOTE_INGRESO, "ID_PERSONA": ID_PERSONA, "ID_ESTADO": 1
+        };
+
+        $.post('/LoteIngreso/createLoteTecnico', product,
+                    function (data) {
+                        if (data.ID == 0) {
+                            $("#DivToAppendPartialVoew").empty();
+                            $("#DivToAppendPartialViewList").empty();
+                            var ph2 = $("#DivToAppendPartialVoew");
+                            ph2.load("/LoteIngreso/CrearLote_Tecnico?id=" + $("#lbl_IDLOTEINGRESO").text());
+                            var div = $("#DivToAppendPartialViewList");
+                            div.load("/LoteIngreso/ListadoTecnico?Id=" + $("#lbl_IDLOTEINGRESO").text());
+                        } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                    }
+       , 'json');
+    }
+
+</script>

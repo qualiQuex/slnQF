@@ -1,0 +1,61 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_SAP_ARTICULO_EMBALAJE_DATAResult>
+
+<div class="modal-body col-md-12">
+    <div class="container col-md-12">
+
+            <ul class="nav nav-tabs  col-md-12">
+                <li class="active"><a data-toggle="tab" href="#embalaje">Embalaje</a></li>
+              
+            </ul>
+
+            <div class="tab-content  col-md-12">
+                <div id="embalaje" class="tab-pane fade in active">
+                    @{
+                        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridConfItemEm");
+                    }
+                    <div>
+                        <div id="gridConfItemEm" class="table table-responsive">
+                            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column("ID_ITEM_EMBALAJE", "ID", null, "text-center", false),
+                                     grid.Column("CODIGO", "CODIGO", null, "text-center", false),
+                                     grid.Column("DESCRIPCION", "DESCRIPCION", null, "text-center", false),
+                                     grid.Column("LIMITE","LIMITE", null, "text-center", false),
+                                     grid.Column("UNIDADES", format: @<text><input type="number" class="form-control input-sm" style="width:100px" id= "txtUni_@item.ID_ITEM_EMBALAJE" value="@item.DATO_INGRESADO"/></text>,canSort:false)
+
+
+                                 })
+                        </div>
+                    </div>
+
+                    <br />
+                    
+                </div>
+              
+
+            </div>
+
+
+
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#gridConfItemEm table').DataTable({
+                "pageLength": 10,
+                //"searching": true,
+                "paging": false,
+                "info":false,
+                "searching": false,
+
+                fixedColumns: true,
+                "columnDefs": [
+                    { "class": "hidden", "targets": [0] }
+                ]
+            });
+        });
+  
+    </script>

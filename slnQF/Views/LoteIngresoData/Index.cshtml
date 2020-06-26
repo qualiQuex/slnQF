@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">CERTIFICADOS</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+            $(document).ready(function () {
+ 
+                $("#tbProdTerm").DataTable({
+                    "info": true,
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "pageLength": 15,
+
+                    "ajax": {
+                        "url": "/LoteIngresoData/LoadDataTerm",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "NO_INGRESO", "name": "NO_INGRESO", "autoWidth": true },
+                        { "data": "NOMBRE", "name": "NOMBRE", "autoWidth": true },
+                        { "data": "PRESENTACION", "name": "PRESENTACION", "autoWidth": true },
+                        { "data": "FECHA_ANALISIS", "name": "FECHA_ANALISIS", "autoWidth": true },
+                        { "data": "NO_LOTE", "name": "NO_LOTE", "autoWidth": true },
+                        { "data": "FECHA_FABRICACION", "name": "FECHA_FABRICACION", "autoWidth": true },
+                        { "data": "FECHA_VENCIMIENTO", "name": "FECHA_VENCIMIENTO", "autoWidth": true },
+                        { "data": "FECHA_FISQUI", "name": "FECHA_FISQUI", "autoWidth": true },
+                        { "data": "RESULT_FISQUI", "name": "RESULT_FISQUI", "autoWidth": true },
+                        { "data": "FECHA_MICROBIO", "name": "FECHA_MICROBIO", "autoWidth": true },
+                        { "data": "RESULT_MICROBIO", "name": "RESULT_MICROBIO", "autoWidth": true },
+                        { "data": "RESULT_FINAL", "name": "RESULT_FINAL", "autoWidth": true }
+                    ],
+
+
+                    "order": [[0, "desc"]]
+                });
+               
+                $("#tbMateriaP").DataTable({
+                    "info": true,
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "pageLength": 20,
+
+                    "ajax": {
+                        "url": "/LoteIngresoData/LoadDataMateria",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "NO_INGRESO", "name": "NO_INGRESO", "autoWidth": true },
+                        { "data": "NOMBRE", "name": "NOMBRE", "autoWidth": true },
+                        { "data": "PROVEEDOR", "name": "PROVEEDOR", "autoWidth": true },
+                        { "data": "CANTIDAD_BULTOS", "name": "CANTIDAD_BULTOS", "autoWidth": true },
+                        { "data": "CANTIDAD_INGRESADA", "name": "CANTIDAD_INGRESADA", "autoWidth": true },
+                        { "data": "UOM", "name": "UOM", "autoWidth": true },
+                        { "data": "FECHA_ANALISIS", "name": "FECHA_ANALISIS", "autoWidth": true },
+                        { "data": "NO_LOTE", "name": "NO_LOTE", "autoWidth": true },
+                        { "data": "FECHA_FABRICACION", "name": "FECHA_FABRICACION", "autoWidth": true },
+                        { "data": "FECHA_VENCIMIENTO", "name": "FECHA_VENCIMIENTO", "autoWidth": true },
+                        { "data": "FECHA_FISQUI", "name": "FECHA_FISQUI", "autoWidth": true },
+                        { "data": "RESULT_FISQUI", "name": "RESULT_FISQUI", "autoWidth": true },
+                        { "data": "FECHA_MICROBIO", "name": "FECHA_MICROBIO", "autoWidth": true },
+                        { "data": "RESULT_MICROBIO", "name": "RESULT_MICROBIO", "autoWidth": true },
+                        { "data": "RESULT_FINAL", "name": "RESULT_FINAL", "autoWidth": true }
+                         
+
+                    ],
+               
+               
+                    "order": [[0, "desc"]]
+                })
+
+            });
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="container col-md-12">
+                       
+                        <ul class="nav nav-tabs">
+                            <li class="active clickLibPter"><a data-toggle="tab" href="#lib_p_ter">Lib. Prod. Term.</a></li>
+                            <li class="clickLibMatpri"><a data-toggle="tab" href="#lib_mat_pri">Lib. Mat. Pri.</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="lib_p_ter" class="tab-pane fade in active ">
+                                <h3>Liberacion de Producto Terminado</h3>
+                                <div id="divProdTerm">
+                                
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="tbProdTerm">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Control</th>
+                                                <th>Producto</th>
+                                                <th>Presentacion</th>
+                                                <th>Fecha de Muestra</th>
+                                                <th>Lote</th>
+                                                <th>Fecha Fabricacio</th>
+                                                <th>Vence</th>
+                                                <th>Fecha Fis-Qui</th>
+                                                <th>Resultado Fis-Qui</th>
+                                                <th>Fecha MicroB.</th>
+                                                <th>Resultado Microbiologico</th>
+                                                <th>Dictamen Final</th>
+
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="lib_mat_pri" class="tab-pane fade ">
+                                <h3>Liberacion Materia Prima</h3>
+                                <div id="divMatPrima">
+
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="tbMateriaP">
+                                        <thead>
+                                            <tr>
+
+                                                <th>No. Control</th>
+                                                <th>Producto</th>
+                                                <th>Proveedor</th>
+                                                <th>Cantidad de Bultos</th>
+                                                <th>Cantidad Ingresada</th>
+                                                <th>Unidad de Medida</th>
+                                                <th>Fecha de Muestra</th>
+                                                <th>Lote</th>
+                                                <th>Fecha Fabricacio</th>
+                                                <th>Vence</th>
+                                                <th>Fecha Fis-Qui</th>
+                                                <th>Resultado Fis-Qui</th>
+                                                <th>Fecha MicroB.</th>
+                                                <th>Resultado Microbiologico</th>
+                                                <th>Dictamen Final</th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+ 

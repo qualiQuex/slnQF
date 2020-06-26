@@ -1,0 +1,154 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_SAP_ARTICULO_DATA_USERResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    }
+    <div >
+        <div id="gridContent">
+
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+                                       tableStyle: "table table-bordered table-hover table-responsive",
+                                     columns: new[] {
+                                    grid.Column("", header: "", canSort:false,
+                                    format: @<text>
+                                        @if (item.ID_ITEM != -1)
+                                    {
+                                            <span class="label label-success">Configurado</span>
+
+                                    }else {
+                                            <span class="label label-danger">No Configurado</span>
+
+                                    }
+
+
+                                    </text>),
+                                     grid.Column("", header: "", canSort:false,
+                                         format: @<text>
+                                        
+                                        @Html.Raw("<a href='#' onclick=Edit(\'" + item.ITEMCODE+"\',"+ item.ID_ITEM +",\'"+item.SAP_QRYGROUP64+"\') class='glyphicon glyphicon-edit ' title='Editar'> </a>")
+                                       
+                                        
+                                        @Html.Raw("<a href='#' id='lkEmbalaje"+ item.ITEMCODE +"' onclick=levantaListado(\'" + item.ITEMCODE+"\') class='glyphicon glyphicon-link ' title='Asociar Embalaje'> </a>")
+                                         
+                                        @Html.Raw("<a href='#' id='lkLoteInfo"+ item.ITEMCODE +"' onclick=muestraInfoLote(\'" + item.ITEMCODE+  "\',\'"+ item.ItemName.Replace(" ","_")+ "\') class='glyphicon glyphicon-list lkLoteInfo' title='Informe de operaciones de numeros de lote'> </a>")
+                                        @Html.Raw("<a href='#' id='lkLoteConta"+ item.ITEMCODE +"' onclick=muestraContaLote(\'" + item.ITEMCODE+"\',\'"+ item.ItemName.Replace(" ","_")+ "\') class='glyphicon glyphicon-book lkLoteConta' title='Lista de registros contables de inventario'> </a>")
+                    
+                                        </text>),
+
+
+                                     grid.Column("ItemCode", "ITEMCODE", null, "text-center", false),
+                                     grid.Column("ItemName", "ITEMNAME", null, "text-left", false),
+                                     grid.Column("TIPO_ETIQUETA", "ETIQUETA", null, "text-center", false),
+                                     grid.Column("CONTENIDO", "CONTENIDO", null, "text-left", false),
+                                     grid.Column("VIA_ADMIN", "VIA", null, "text-left", false),
+                                     grid.Column("DOSIS", "DOSIS", null, "text-left", false),
+                                     grid.Column("HECHO_POR", "HECHO", null, "text-left", false),
+                                     grid.Column("CONDICION_ALMACENAMIENTO", "CONDICION ALMACENAJE", null, "text-left", false),
+                                     grid.Column("EMPAQUE", "EMPAQUE", null, "text-left", false),
+                                     grid.Column("PRESENTACION", "PRESENTACION", null, "text-left", false),
+                                     grid.Column("FORMA_FARMACEUTICA", "F.FARMACEUTICA", null, "text-left", false),
+                                     grid.Column("ETAPA_FABRICACION", "ETAPA FABRICACION", null, "text-left", false),
+                                     grid.Column("INDICACION_VENTA", "INDIC. VENTA", null, "text-left", false),
+                                     grid.Column("INDICACION_ESPECIAL", "INDIC. ESPECIAL", null, "text-left", false),
+                                     grid.Column("SAP_QRYGROUP64", "EMBALAJE", null, "text-left", false)
+
+                                 })
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEdita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+
+            <div class="box box-primary">
+                <div class="modal-body ">
+
+                    <div id="DivToAppendPartialVoew"></div>
+                    <div id="DivToAppendPartialViewList"></div>
+                </div>
+                <hr />
+
+            </div>
+
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#gridContent table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true,
+            "scrollX": true
+        });
+    });
+    function Edit(pid, piditem, pQUERYGROUP64) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        var ph = $("#DivToAppendPartialVoew");
+        $("#DivToAppendPartialViewList").empty();
+        var val = pid.toString();
+
+
+        var v_itemcode = pid;
+        ph.load("/Articulo/Edit?Id=" + v_itemcode + "&ID_ITEM=" + piditem + "&pQUERYGROUP64=" + pQUERYGROUP64);
+    }
+
+
+    function levantaListado(pid) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+
+        var ph = $("#DivToAppendPartialVoew");
+        ph.load("/ItemEmbalaje/Create?Id=" + pid)
+        var ph2 = $("#DivToAppendPartialViewList");
+        ph2.load("/ItemEmbalaje/Listado?Id=" + pid);
+    }
+    
+    function muestraInfoLote(pid,pnombre) {
+        $("#lblTituloInfoLote").text("Informe de operaciones de numeros de lote, ItemCode: " + pid + " ItemName:" + pnombre.replace(/_/g," "));
+        $("#divLote").empty();
+        $("#divDetalleLote").empty();
+        var ph = $("#divLote");
+        ph.load("/Articulo/ListaMaesLote?IdItemCode=" + pid);
+        $("#divArticulos").hide();
+        $("#divInfoLote").show();
+       
+    }
+
+    function muestraContaLote(pid, pnombre) {
+        startSpinGen();
+        $("#lblTituloInfoLote").text("Lista de registros contables de inventario, ItemCode: " + pid + " ItemName:" + pnombre.replace(/_/g, " "));
+        $("#divLote").empty();
+        $("#divDetalleLote").empty();
+        var ph = $("#divLote");
+        ph.load("/Articulo/ListaContaLote?IdItemCode=" + pid);
+        $("#divArticulos").hide();
+        $("#divInfoLote").show();
+
+    }
+    function regresar() {
+        
+        $("#divArticulos").show();
+        $("#divInfoLote").hide();
+
+    }
+
+
+</script>

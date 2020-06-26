@@ -1,0 +1,44 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_RESULTADO_BITACORAResult>
+
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridREsulta2");
+    }
+    <div class="table-responsive">
+         
+       
+        <H4> Historial Resultados</H4>
+        <div id="gridREsulta2">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column("RESULTADO", "Resultado", null, "text-center", false),
+                                     grid.Column("FECHA_CREACION", "Fecha", null, "text-center", false),
+                                     grid.Column("USUARIO", "Usuario", null, "text-center", false)
+                })
+
+                                     
+
+        </div>
+    </div>
+</div>
+ 
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridREsulta2 table').DataTable({
+            //"searching": true,
+            "paging": false,
+
+            "searching": true,
+
+            fixedColumns: true
+
+        });
+    });
+ 
+
+    
+</script>

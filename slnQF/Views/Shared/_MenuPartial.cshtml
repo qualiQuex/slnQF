@@ -1,0 +1,280 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Session["LogedUser"] != null)
+{
+    @Html.AntiForgeryToken();
+    <!-- sidebar: style can be found in sidebar.less -->
+
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
+            </div>
+            <div class="pull-left info">
+                <!--<p>Alexander Pierce</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
+            </div>
+        </div>
+        <!-- search form -->
+        <!--
+        <div class="sidebar-form" id="pm_Buscar">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..." />
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+         /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">MENU</li>
+            <li class="treeview" id="pmMENU1">
+                <a href="#" id="pmOperativo">
+                    <i class="fa fa-tasks"></i> <span>Operativo</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    
+                    <li id="pmProduccion1">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Produccion
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmProduccion"><a href="@Url.Action("Produccion", "Produccion")" class="click-orden"><i class="fa fa-circle-o"></i> Ordenes de Produccion</a></li>
+                            <li id="pmProduccionCan"><a href='@Url.Action("Produccion", "Produccion",new { estado = "Can"})' class="click-orden"><i class="fa fa-circle-o"></i> Ordenes de Canceladas</a></li>
+                            <li id="pmProduccionCer"><a href='@Url.Action("Produccion", "Produccion",new { estado = "Cer"})' class="click-orden"><i class="fa fa-circle-o"></i> Ordenes de Cerradas</a></li>
+                            <li id="pmProduccionPla"><a href='@Url.Action("Produccion", "Produccion",new { estado = "Pla"})' class="click-orden"><i class="fa fa-circle-o"></i> Ordenes de Planificadas</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li id="pmStock">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Operaciones Stock
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmTransfeStock"><a href="@Url.Action("Index", "TranStock")" class="click-orden-tran"><i class="fa fa-circle-o"></i> Transferencia de Stock</a></li>
+                            <li id="pmEntradaStock"><a href="@Url.Action("Index", "EntradaStock")" class="click-orden-tran"><i class="fa fa-circle-o"></i> Entrada de mercancias</a></li>
+                            <li id="pmSalidaStock"><a href="@Url.Action("Index", "SalidaStock")" class="click-orden-tran"><i class="fa fa-circle-o"></i> Salida de mercancias</a></li>
+                        </ul>
+                    </li>
+    
+                    
+                     
+                    <li id="pmVentas" class="hidden">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Ventas
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmVTentrega"><a href="@Url.Action("VentasEntrega", "Ventas", new { tipo = "sale" })"><i class="fa fa-circle-o"></i> Entrega</a></li>
+                            <li id="pmVT
+                            "><a href="@Url.Action("VentasEntrega", "Ventas", new { tipo = "sale-return" })"><i class="fa fa-circle-o"></i> Devolución</a></li>
+
+                        </ul>
+                    </li>
+                    <li id="pmCompras" class="hidden">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Compras
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmCMentrega"><a href="@Url.Action("VentasEntrega", "Ventas", new { tipo = "purchase" })"><i class="fa fa-circle-o"></i> Entrada de mercancia</a></li>
+                            <li id="pmCMdevolucion"><a href="@Url.Action("VentasEntrega", "Ventas", new { tipo = "purchase-return" })"><i class="fa fa-circle-o"></i> Devolución de mercancia</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="header"></li>
+                </ul>
+            </li>
+
+            <li class="treeview" id="pmMENUInventario">
+                <a href="#" id="pmInv">
+                    <i class="fa  fa-list-alt"></i> <span>Inventario</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li id="pmArticulo2"><a href="@Url.Action("Index", "Articulo")"><i class="fa fa-circle-o"></i> Datos de árticulo</a></li>
+                    <li id="pmArticuloEmbalaje2"><a href="@Url.Action("Index", "ItemEmbalaje")"><i class="fa fa-circle-o"></i> Embalaje-Articulo</a></li>
+
+                    <li class="header"></li>
+                </ul>
+            </li>
+
+            <li class="treeview" id="pMenuCatalogos">
+                <a href="#">
+                    <i class="fa fa-columns"></i> <span>Catalogos</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="pmCatUsuarios">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Usuarios
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>@Html.ActionLink("Usuario", "Usuario", "Usuario")</li>
+                        </ul>
+                    </li>
+                    <li id="pmCatalogos">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Catalogos
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmCatPerfiles">@Html.ActionLink("Perfiles", "Perfiles", "Catalogo")</li>
+                            <li id="pmCatPermisos">@Html.ActionLink("Permisos", "Permisos", "Catalogo")</li>
+                            <li id="pmCatAccesos">@Html.ActionLink("Accesos", "Accesos", "Catalogo")</li>
+                            <li id="pmCatBodegas">@Html.ActionLink("Bodegas", "Bodegas", "Catalogo")</li> 
+
+                        </ul>
+                    </li>
+                </ul>
+
+            </li>
+
+           
+            <li class="header"></li>
+            <li class="treeview" id="pMenuCatalogos2">
+                <a href="#">
+                    <i class="fa fa-columns"></i> <span>Certificados</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+ 
+                    <li id="pmCertificado">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Catalogos
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu"> 
+                            <li  id="pmProducto">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Producto
+                                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li id="pmCatProducto">@Html.ActionLink("Producto", "Index", "Producto")</li>
+                                    <li id="pmCatArea">@Html.ActionLink("Areas", "Index", "Areas")</li>
+                                    <li id="pmCatUom">@Html.ActionLink("Uom", "Index", "Uom")</li>
+                                    <li id="pmCatFFarmaceutica">@Html.ActionLink("F. Farmaceutica", "Index", "Forma_Farmaceutica")</li>
+                                    <li id="pmCatEFabricacion">@Html.ActionLink("Etapa Fab.", "Index", "EtapaFabricacion")</li>
+                                    <li id="pmCatFabricante">@Html.ActionLink("Fabricante", "Index", "Fabricante")</li>
+                                    <li id="pmCatPais">@Html.ActionLink("Pais", "Index", "Pais")</li>
+                                    <li id="pmCatNombreComercial">@Html.ActionLink("Nombre Comercial", "Index", "NombreComercial")</li>
+                                    <li id="pmCatPresentacion">@Html.ActionLink("Presentacion", "Index", "Presentacion")</li>
+                                    <li id="pmCatCertificado">@Html.ActionLink("Certificado", "Index", "Certificado")</li>
+                                    <li id="pmCatProductoNomCom">@Html.ActionLink("Producto-Nombre Com.", "Index", "ProductoNombreCom")</li>
+                                    <li id="pmCatProductoPresentacion">@Html.ActionLink("Producto-Presentacion", "Index", "ProductoPresentacion")</li>
+                                    <li id="pmCatEspecificacionProd">@Html.ActionLink("Especificacion-Producto", "Index", "EspecificacionProducto")</li>
+                                    <li id="pmCatCliente">@Html.ActionLink("Clientes", "Index", "Cliente")</li>
+                                    <li id="pmCatPuesto">@Html.ActionLink("Puestos", "Index", "Puesto")</li>
+                                    <li id="pmCatPersona">@Html.ActionLink("Personas", "Index", "Persona")</li>
+                                    <li id="pmCatProveedor">@Html.ActionLink("Proveedores", "Index","Proveedor")</li>
+                                    
+                                </ul>
+                            </li> 
+                            
+                            <li   id="pmEnsayo">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Ensayo
+                                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li id="pmCatEnsayo">@Html.ActionLink("Ensayo", "Index", "Ensayo")</li>
+                                    <li id="pmCatPrueba">@Html.ActionLink("Prueba", "Index", "Prueba")</li>
+                                    <li id="pmCatPrueba_Especifica">@Html.ActionLink("Prueba Especifica", "Index", "PruebaEspecifica")</li>
+                                    <li id="pmCatEnsayoPrueba">@Html.ActionLink("Ensayo - Prueba", "Index", "EnsayoPrueba")</li>
+                                    <li id="pmCatEnPrueEsp">@Html.ActionLink("Prueba - P.Especifica", "Index", "En_Prue_PrueEsp")</li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li  id="pmLote">
+                        <a href="#">
+                            <i class="fa fa-circle-o"></i> Certificado
+                            <span class="pull-right-container"/>
+                            <i class="fa fa-angle-left pull-right"></i>
+                            <span class="pull-right-container"/>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="pmInLote">@Html.ActionLink("Ingreso", "Index", "LoteIngreso")</li> 
+                            <li id="pmInLoteData">@Html.ActionLink("Liberacion", "Index", "LoteIngresoData")</li> 
+                        </ul>
+                    </li>
+                     
+
+                </ul>
+
+            </li>
+
+            <li class="treeview" id="pmMENUReporte">
+                <a href="#" id="pmInv">
+                    <i class="fa  fa-file"></i> <span>Reporte</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    
+                    <li id="pmReporte1">@Html.ActionLink("Reporte Facturacion", "Index", "MuestraReporte")</li>
+                    <li id="pmReporteModulo">@Html.ActionLink("Mantenimiento", "Index", "Reporteria")</li>
+                    <li id="pmReporteGenera">@Html.ActionLink("Reportes", "Reportes", "Reporteria")</li>
+                 
+                    <li class="header"></li>
+                </ul>
+            </li>
+            <li id="pmImportante" class="hidden"><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Importante</span></a></li>
+            <li id="pmAmarillo" class="hidden"><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Aviso</span></a></li>
+            <li id="pmAqua" class="hidden"> <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Informacion</span></a></li>
+        </ul>
+
+        <div class="modal fade" id="modalFondo" aria-labelledby="myModalLabel">
+
+        </div>
+
+    </section>
+    @section Scripts{
+
+
+ 
+    }
+    <!-- /.sidebar -->
+
+}

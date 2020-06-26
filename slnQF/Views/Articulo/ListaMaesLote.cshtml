@@ -1,0 +1,100 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_SAP_ITEM_OPELOTEResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridArticuloLote");
+    }
+    <div  >
+        <div id="gsapdArticuloLote">
+            @grid.GetHtml(
+                            htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     tableStyle: "table table-bordered table-hover table-responsive",
+                                     columns: new[] {
+                                       grid.Column("", header: "", canSort:false,
+                                         format: @<text>
+
+                                        @Html.Raw("<a href='#' onclick=muestraInfoLote('" +item.BATCHNUM +"') class='glyphicon glyphicon-list ' title='Editar'> </a>")
+
+
+                                        </text>),
+                                     grid.Column("ITEMCODE", "Id", null, "text-center", false),
+                                     grid.Column("ITEMNAME", "Articulo", null, "text-center", false),
+                                     grid.Column("BATCHNUM", "Lote", null, "text-center", false),
+                                     grid.Column("WHSCODE", "Almacen", null, "text-center", false),
+                                     grid.Column("QUANTITY", "Cantidad", null, "text-center", false),
+                                     grid.Column("MNFSERIAL", "Atributo 1", null, "text-center", false),
+                                     grid.Column("LOTNUMBER", "Atributo 2", null, "text-center", false),
+                                     grid.Column("STATUS", "Estado", null, "text-center", false),
+                                     grid.Column("FE_VENCIMIENTO", "Fecha Vencimiento",null, "text-center", false),
+                                     grid.Column("FE_FABRICACION", "Fecha Fabricacion", null, "text-center", false),
+                                     grid.Column("FE_ADMISION", "Fecha Admision", null, "text-center", false),
+                                     grid.Column("NOTES", "Info Detallada", null, "text-center", false),
+                                     grid.Column("U_CERTICA", "Certificado de Calidad", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalGen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="DivToAppendPartialViewArt"></div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript">
+    $(function () { 
+        $('#gridArticuloLote table').DataTable({
+            "pageLength": 5,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true,
+            "scrollX":true
+        })
+
+        $('#gridArticuloLote table tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+
+            }
+            else {
+                $('#gridArticuloLote table tbody tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                var tr = $(this).parents('tr');
+                var $item = $(this).closest("tr");
+                var $v_itemcode = $item.children("td:eq(0)").html();
+
+                var $v_batchnum = $item.children("td:eq(2)").html();
+                var $v_whscode = $item.children("td:eq(3)").html();
+                startSpinGen();
+                $("#divDetalleLote").empty();
+                var ph = $("#divDetalleLote");
+                ph.load("/Articulo/ListaDetLote?IdItemCode=" + $v_itemcode + "&batchnum=" + $v_batchnum + "&whscode=" + $v_whscode);
+            }
+        });
+
+    });
+
+    function muestraInfoLote(PLOTE) {
+        $("#modalGen").modal({ backdrop: 'static', keyboard: false });
+         
+        $("#DivToAppendPartialViewArt").empty();
+        var ph = $("#DivToAppendPartialViewArt"); 
+        ph.load("/Lote/loteInfo?lote=" + PLOTE);
+        
+    }
+
+</script>

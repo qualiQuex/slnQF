@@ -1,0 +1,140 @@
+﻿@model slnQF.Models.ResultadoEnsayoProductoModels
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Resultado</h4>
+        <hr /> 
+        <input type="text" style="visibility: hidden;" id="ID_PRODUCTO" value="@(ViewBag.ID_PRODUCTO ?? String.Empty)">
+        <input type="text" style="visibility: hidden;" id="ID_LOTE_INGRESO" value="@(ViewBag.ID_LOTE_INGRESO ?? String.Empty)">
+
+        <br />
+        <label for="ID_ENSAYO">ENSAYO</label>
+        @Html.DropDownListFor(model => model.ID_ENSAYO, ViewBag.EnsayoDDL as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangeEnsayo(this.value)" })
+        <br />
+
+        <label for="ID_PRUEBA">PRUEBA</label>
+        @Html.DropDownListFor(model => model.ID_PRUEBA, ViewBag.PruebaDDL as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangePrueba(this.value)" })
+        <br />
+        <label for="ID_PRUEBA_ESPECIFICA">PRUEBA ESPECIFICA</label>
+        @Html.DropDownListFor(model => model.ID_PRUEBA_ESPECIFICA, ViewBag.PruebaEspecificaDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+        @Html.LabelFor(model => model.RESULTADO)
+        @Html.EditorFor(model => model.RESULTADO, new { htmlAttributes = new { @class = "form-control" } })
+
+
+       
+<br />
+
+        <div class="modal-footer">
+            <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProduct()" />
+
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+    function initialize() {
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();  
+        CallChangeEnsayo(ID_PRODUCTO);
+ 
+
+    };
+
+    function CallChangeEnsayo(id) {
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        $('#ID_PRUEBA').empty();
+        var listAlmacen = [];
+        $.ajax({
+            url: '/ResultadoEnsayoProducto/traePruebas',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_producto: ID_PRODUCTO, id_ensayo: ID_ENSAYO },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_PRUEBA').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+        CallChangePrueba(id)
+    }
+
+    function CallChangePrueba(id) {
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+        $('#ID_PRUEBA_ESPECIFICA').empty();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var listAlmacen = [];
+        $.ajax({
+            url: '/ResultadoEnsayoProducto/traePruebasEspecificas',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_producto: ID_PRODUCTO, id_ensayo: ID_ENSAYO, id_prueba: ID_PRUEBA },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_PRUEBA_ESPECIFICA').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+    }
+
+    function SaveProduct() {
+        
+        var ID_LOTE_INGRESO = $("#ID_LOTE_INGRESO").val(); 
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var ID_PRUEBA_ESPECIFICA = $("#ID_PRUEBA_ESPECIFICA").val();
+        var RESULTADO = $("#RESULTADO").val();
+        var ID_TECNICO_ANALISTA =0;
+        var ID_REVISADO_POR = 0;
+
+        var product = {
+            "ID_PRODUCTO": ID_PRODUCTO, "ID_ENSAYO": ID_ENSAYO, "ID_PRUEBA": ID_PRUEBA
+            , "ESTADO": 1, "ID_PRUEBA_ESPECIFICA": ID_PRUEBA_ESPECIFICA, "RESULTADO": RESULTADO
+            , "ID_TECNICO_ANALISTA": ID_TECNICO_ANALISTA, "ID_REVISADO_POR": ID_REVISADO_POR,
+            "ID_LOTE_INGRESO": ID_LOTE_INGRESO
+        };
+
+        $.post('/ResultadoEnsayoProducto/CreaReg', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

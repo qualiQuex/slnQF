@@ -1,0 +1,97 @@
+﻿@model slnQF.Models.ClienteModels
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Editar Cliente</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.ID_CLIENTE)
+
+        <label for="NOMBRE">Nombre</label>
+        @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="CODIGO_SAP">Codigo SAP</label>
+        @Html.EditorFor(model => model.CODIGO_SAP, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="ESTADO">ESTADO</label>
+        @Html.DropDownListFor(model => model.ESTADO, ViewBag.CategoriesDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+        <br />
+
+
+
+        <div class="modal-footer">
+            <div id="DivEditar">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="UpdateProduct()" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaEditar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 26 && item2.IDACCESO == 3)
+                        v_cuentaEditar = v_cuentaEditar + 1;
+                });
+
+
+
+                if (v_cuentaEditar <= 0) {
+                    document.getElementById("DivEditar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function UpdateProduct() {
+
+        var NOMBRE = $("#NOMBRE").val();
+        var CODIGO_SAP = $("#CODIGO_SAP").val();
+        var ESTADO = $("#ESTADO").val();
+        var ID_CLIENTE = $("#ID_CLIENTE").val();
+
+
+        var product = {
+            "CODIGO_SAP": CODIGO_SAP, "NOMBRE": NOMBRE,
+            "ESTADO": ESTADO, "ID_CLIENTE": ID_CLIENTE
+        };
+
+        $.post('/Cliente/Edit', product,
+                   function (data) {
+                       if (data.ID == 0) {
+                           swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                               function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                       } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                   }
+       , 'json');
+    }
+</script>

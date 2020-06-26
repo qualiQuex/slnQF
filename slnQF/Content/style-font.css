@@ -1,0 +1,25 @@
+table *{
+   font-size: 10px;
+   line-height: 1;
+}
+/*
+input[type="text"] {
+   font-size: 10px;
+   line-height: 1;
+}
+
+input[type="date"] {
+   font-size: 10px;
+   line-height: 1;
+}*/
+
+
+.form-group label{
+   font-size: 12px;
+   line-height: 1.5;
+}
+
+.form-group .form-control{
+   font-size: 10px;
+   line-height: 0.8;
+}

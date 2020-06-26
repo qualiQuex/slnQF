@@ -1,0 +1,172 @@
+﻿@model slnQF.Models.EspecificacionProductoModels
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Editar Especificacion de producto  <label>"@(ViewBag.ID_PRODUCTO ?? String.Empty)"</label></h4>
+        <hr />
+        @Html.HiddenFor(model => model.ID_PRODUCTO)
+        @Html.HiddenFor(model => model.ID_ESPECIFICACION_PRODUCTO)
+        <label for="ID_ENSAYO">ENSAYO</label>
+        @Html.DropDownListFor(model => model.ID_ENSAYO, ViewBag.EnsayoDDL as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangeEnsayo(this.value)" })
+        <br />
+
+        <label for="ID_PRUEBA">PRUEBA</label>
+        @Html.DropDownListFor(model => model.ID_PRUEBA, ViewBag.PruebaDDL as IEnumerable<SelectListItem>, new { @class = "form-control", @onchange = "CallChangePrueba(this.value)" })
+        <br />
+        <label for="ID_PRUEBA_ESPECIFICA">PRUEBA ESPECIFICA</label>
+        @Html.DropDownListFor(model => model.ID_PRUEBA_ESPECIFICA, ViewBag.PruebaEspecificaDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+        @Html.LabelFor(model => model.ESPECIFICACION)
+        @Html.EditorFor(model => model.ESPECIFICACION, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        @Html.LabelFor(model => model.TIPO_RESPUESTA)
+        @Html.EditorFor(model => model.TIPO_RESPUESTA, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="ESTADO">ESTADO</label>
+        @Html.DropDownListFor(model => model.ESTADO, ViewBag.CategoriesDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+
+        <br />
+
+
+        <div class="modal-footer">
+            <div id="DivEditar">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="UpdateProduct()" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+    initialize();
+    function initialize() {
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+
+        CallChangeEnsayo(ID_ENSAYO);
+       
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaEditar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 25 && item2.IDACCESO == 3)
+                        v_cuentaEditar = v_cuentaEditar + 1;
+                });
+
+
+
+                if (v_cuentaEditar <= 0) {
+                    document.getElementById("DivEditar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+    };
+    function CallChangeEnsayo(id) {
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+        $('#ID_PRUEBA').empty();
+        var listAlmacen = [];
+        $.ajax({
+            url: '/EspecificacionProducto/traePruebas',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_ensayo: id },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_PRUEBA').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+
+       
+        $("#ID_PRUEBA").val(ID_PRUEBA);
+        CallChangePrueba(ID_PRUEBA);
+
+    }
+
+    function CallChangePrueba(id) {
+        var ID_PRUEBA_ESPECIFICA = $("#ID_PRUEBA_ESPECIFICA").val();
+        $('#ID_PRUEBA_ESPECIFICA').empty();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var listAlmacen = [];
+        $.ajax({
+            url: '/EspecificacionProducto/traePruebasEspecificas',
+            type: "GET",
+            dataType: "JSON",
+            data: { id_ensayo: ID_ENSAYO, id_prueba: id },
+            async: false,
+            cache: false,
+            success: function (json) {
+                listAlmacen = json;
+            },
+            error: function (error) { console.log(error); }
+        });
+
+        $.each(listAlmacen, function (i, item3) {
+            var $sel = "";
+            $('#ID_PRUEBA_ESPECIFICA').append($('<option >', {
+                value: item3.id,
+                text: item3.value,
+            }));
+        });
+        if (ID_PRUEBA_ESPECIFICA.length()>0)
+        $("#ID_PRUEBA_ESPECIFICA").val(ID_PRUEBA_ESPECIFICA);
+    }
+
+    function UpdateProduct() {
+
+        var ID_ESPECIFICACION_PRODUCTO = $("#ID_ESPECIFICACION_PRODUCTO").val();
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_ENSAYO = $("#ID_ENSAYO").val();
+        var ID_PRUEBA = $("#ID_PRUEBA").val();
+        var ID_PRUEBA_ESPECIFICA = $("#ID_PRUEBA_ESPECIFICA").val();
+        var ESPECIFICACION = $("#ESPECIFICACION").val(); 
+        var TIPO_RESPUESTA = $("#TIPO_RESPUESTA").val();
+        var ESTADO = $("#ESTADO").val();
+
+
+        var product = {
+            "ID_ESPECIFICACION_PRODUCTO": ID_ESPECIFICACION_PRODUCTO, "ID_PRODUCTO": ID_PRODUCTO,
+            "ID_ENSAYO": ID_ENSAYO, "ID_PRUEBA": ID_PRUEBA,
+            "ID_PRUEBA_ESPECIFICA": ID_PRUEBA_ESPECIFICA, "ESPECIFICACION": ESPECIFICACION,
+            "TIPO_RESPUESTA": TIPO_RESPUESTA,"ESTADO": ESTADO
+        };
+        console.log(product);
+        $.post('/EspecificacionProducto/Edit', product,
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+    }
+</script>

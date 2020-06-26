@@ -1,0 +1,35 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_EN_PRUE_PRUE_ESPResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridEspecifica");
+    }
+    <div class="table-responsive">
+        <div id="gridEspecifica">
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     columns: new[] {
+                                     grid.Column("ID_PRUEBA", "ID", null, "text-center", false),
+                                     grid.Column("PRUEBA_DESC", "PRUEBA", null, "text-center", false),
+                                     grid.Column("ID_PRUEBA_ESPECIFICA", "ID", null, "text-center", false),
+                                     grid.Column("PRUEBA_ESPECIFICA_DESC", "PRUEBA ESPECIFICA", null, "text-center", false),
+                                     grid.Column("ESTADO", "ESTADO", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridEspecifica table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+</script>

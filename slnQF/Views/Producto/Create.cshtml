@@ -1,0 +1,124 @@
+﻿@model slnQF.Models.ProductoModels
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Creacion de Producto</h4>
+        <hr />
+        <label for="NOMBRE">Nombre</label>
+        @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control" } })
+
+       <br/>
+        <label for="DESCRIPCION">Descripcion</label>
+        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control" } })
+        <br />
+        <label for="CANTIDAD_MUESTRAS">Cantidad Muestras</label>
+        @Html.EditorFor(model => model.CANTIDAD_MUESTRAS, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        <br />
+        <label for="ID_FORMA_FARMACEUTICA">F. Farmaceutica</label>
+        @Html.DropDownListFor(model => model.ID_FORMA_FARMACEUTICA, ViewBag.FFARMACEUTICADDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+
+        <br />
+        <label for="CONCENTRACION">Concentracion</label>
+        @Html.EditorFor(model => model.CONCENTRACION, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
+        <br />
+        <label for="ID_UOM">UOM</label>
+        @Html.DropDownListFor(model => model.ID_UOM, ViewBag.UOMDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+        <br />
+        <label for="REFERENCIA">Referencia</label>
+        @Html.EditorFor(model => model.REFERENCIA, new { htmlAttributes = new { @class = "form-control" } })
+
+        <br />
+        <label for="CONDICION_ALMACENA">Condiciones de almacenamiento</label>
+        @Html.EditorFor(model => model.CONDICION_ALMACENA, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        
+
+        <div class="modal-footer">
+            <div id="DivGuardar">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProduct()" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 19 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardar").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function SaveProduct() {
+        var NOMBRE = $("#NOMBRE").val();
+        var DESCRIPCION = $("#DESCRIPCION").val();
+        var CANTIDAD_MUESTRAS = $("#CANTIDAD_MUESTRAS").val(); 
+        var ID_FORMA_FARMACEUTICA = $("#ID_FORMA_FARMACEUTICA").val();
+        var CONCENTRACION = $("#CONCENTRACION").val();
+        var ID_UOM = $("#ID_UOM").val();
+        var REFERENCIA = $("#REFERENCIA").val();
+        var CONDICION_ALMACENA = $("#CONDICION_ALMACENA").val();
+        
+
+        var product = {
+            "DESCRIPCION": DESCRIPCION, "NOMBRE": NOMBRE, "CANTIDAD_MUESTRAS": CANTIDAD_MUESTRAS,
+            "ID_FORMA_FARMACEUTICA": ID_FORMA_FARMACEUTICA, "CONCENTRACION": CONCENTRACION, "ID_UOM": ID_UOM
+            , "REFERENCIA": REFERENCIA, "CONDICION_ALMACENA": CONDICION_ALMACENA
+        };
+
+        $.post('/Producto/create', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

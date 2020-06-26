@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Reporte</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo">Reporte Factura Mensual</label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+                        
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+ 
+                    <div class="col-md-12">
+                        <a href="#" class="glyphicon glyphicon-download" onclick="DownloadExcel()">Excel</a>
+                        <br />
+                        <iframe src="" id="downloadIframe"  width="100%" height="800" scrolling="yes"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    init();
+    function init() {
+        
+        //$('#downloadIframe').attr('src', '/MuestraReporte/DownloadReport');
+        $.ajax({
+            url: '/MuestraReporte/DownloadReport2',
+            async: true,
+            success: function (data) {
+
+                iframeId = 'downloadIframe',
+                $iframe = $('iframe#downloadIframe');
+
+                $iframe.attr('src', 'data:application/pdf;base64,' + data);
+
+            }
+        })
+    }
+   
+    function DownloadExcel() {
+        window.location = '/MuestraReporte/DownloadReportExcel';
+    }
+</script>

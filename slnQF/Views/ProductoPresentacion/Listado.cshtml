@@ -1,0 +1,42 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_PRODUCTO_PRESENTACIONResult>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        @{
+            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridnOMBRE");
+        }
+        <div class="table-responsive">
+            <div id="gridnOMBRE">
+
+                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+                                     grid.Column("ID_PRESENTACION", "ID", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRESENTACION", "PRESENTACION", null, "text-center", false),
+                                     grid.Column("ESTADO", "ESTADO", null, "text-center", false)
+
+                                 })
+            </div>
+        </div>
+    </div>
+            }
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridnOMBRE table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+
+</script>

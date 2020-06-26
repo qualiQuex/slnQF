@@ -1,0 +1,101 @@
+﻿
+@model CAT_AREA_PRODUCTO
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>Asignacion de Producto a Area #: <label>"@(ViewBag.ID_AREA ?? String.Empty)"</label></h4>
+        <hr />
+
+        <input type="text" style="visibility: hidden;" id="ID_AREA" value="@(ViewBag.ID_AREA ?? String.Empty)">
+
+        <br />
+        <label for="ID_PRODUCTO">PRODUCTO</label>
+        @Html.DropDownListFor(model => model.ID_PRODUCTO, ViewBag.AreasDLL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        <br />
+
+
+        <div class="modal-footer">
+            <div id="DivGuardarAreaProducto">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveAreaProducto()" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 19 && item2.IDACCESO == 5)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("DivGuardarAreaProducto").style.display = "none";
+                }
+
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    function SaveAreaProducto() {
+        var ID_PRODUCTO = $("#ID_PRODUCTO").val();
+        var ID_AREA = $("#ID_AREA").val();
+
+        var product = {
+            "ID_PRODUCTO": ID_PRODUCTO, "ID_AREA": ID_AREA, "ID_ESTADO": 1
+        };
+        if (ID_PRODUCTO == null) {
+            swal("Informacion", "No hay producto a asociar", "warning");
+        } else {
+        $.post('/Area_Producto/createAreaProducto', product,
+
+            function (data) {
+                if (data.ID == 0) {
+                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $("#DivToAppendPartialVoew").empty();
+                                var ph = $("#DivToAppendPartialVoew");
+                                ph.load("/Area_Producto/CreateProductoArea?id_Area=" + ID_AREA);
+                                $("#DivToAppendPartialViewList").empty();
+                                var ph2 = $("#DivToAppendPartialViewList");
+                                ph2.load("/Area_Producto/ListadoProductos?id=" + ID_AREA);
+
+                            }
+                        });
+                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+            }
+       , 'json');
+
+        }
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

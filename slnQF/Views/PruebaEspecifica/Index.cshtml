@@ -1,0 +1,180 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_PRUEBA_ESPECIFICAResult>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">Pruebas Especificas</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="divNuevo">
+                        <h4>
+
+                            <a href="#" class="glyphicon glyphicon-plus" onclick="OpenCreatePopup()">NUEVO</a>
+
+                        </h4>
+                    </div>
+                    <div class="col-md-12">
+                        @{
+                            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridUOM");
+                        }
+                        <div class="table-responsive">
+                            <div id="gridContent">
+
+                                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+                                     grid.Column("", header: "", canSort:false,
+                                         format: @<text>
+                                        @Html.Raw("<a href='#'  onclick='Edit("+ item.ID_PRUEBA_ESPECIFICA +")' class='glyphicon glyphicon-edit ' title='Editar'> </a>")
+                                        
+                                        </text>),
+                                     grid.Column("ID_PRUEBA_ESPECIFICA", "ID", null, "text-center", false),
+                                     grid.Column("DESCRIPCION", "DESCRIPCION", null, "text-left", false),
+                                     grid.Column("ESTADO", "ESTADO", null, "text-center", false),
+                                     grid.Column("FECHA_CREACION", "FECHA", null, "text-left", false),
+                                     grid.Column("USUARIO", "USUARIO", null, "text-left", false)
+
+                                 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modalEdita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                        <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel"></h4>
+                                </div>
+
+                                <div id="DivToAppendPartialVoew" class="box box-primary">
+
+
+                                </div>
+
+
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaGuardar = 0;
+                var v_cuentaVer = 0;
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 29 && item2.IDACCESO == 1)
+                        v_cuentaGuardar = v_cuentaGuardar + 1;
+
+                    if (item2.IDPERMISO == 29 && item2.IDACCESO == 2)
+                        v_cuentaVer = v_cuentaVer + 1;
+                });
+
+
+
+                if (v_cuentaGuardar <= 0) {
+                    document.getElementById("divNuevo").style.display = "none";
+                }
+                if (v_cuentaVer <= 0) {
+                    document.getElementById("gridContent").style.display = "none";
+                }
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    $(function () {
+        $('#gridContent table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+    function Edit(pid) {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        var ph = $("#DivToAppendPartialVoew");
+        ph.load("/PruebaEspecifica/Edit?Id=" + pid);
+    }
+
+
+    function OpenCreatePopup() {
+        $("#modalEdita").modal();
+        $("#DivToAppendPartialVoew").empty();
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/PruebaEspecifica/Create");
+    }
+
+</script>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_AREA_PRODUCTOResult>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        @{
+            WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridAreaPrd");
+        }
+        <div class="table-responsive">
+            <div id="gridAreaPrd">
+
+                @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+
+                                            grid.Column("", header: "", canSort:false,
+                                            format: @<text>
+                                                @Html.Raw("<a href='#' onclick='cambioEstado("+ item.ID_AREA_PRODUCTO +","+item.ID_PRODUCTO+")' text='glyphicon glyphicon-edit ' title='Editar'>"+ item.ESTADO +" </a>")
+
+
+
+                                            </text>),
+
+                                     grid.Column("NOMBRE_AREA", "AREA", null, "text-center", false),
+                                     grid.Column("FECHA_CREACION", "FECHA", null, "text-center", false),
+                                     grid.Column("USUARIO", "CREADO POR", null, "text-center", false)
+                                    
+
+                                 })
+            </div>
+        </div>
+    </div>
+            }
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridAreaPrd table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+    function cambioEstado(pid,pid_producto) {
+
+
+
+    $.post('/Area_Producto/fnCambioEstado?Id=' + pid,
+        function (data) {
+            $("#DivToAppendPartialViewList").empty();
+            var ph2 = $("#DivToAppendPartialViewList");
+            ph2.load("/Area_Producto/Listado?id=" + pid_producto);
+          }
+        , 'json');
+            }
+
+</script>

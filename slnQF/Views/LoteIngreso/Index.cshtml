@@ -1,0 +1,519 @@
+﻿@model IEnumerable<SP_CONSULTA_LOTE_INGRESOResult>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+        <h1>
+
+            <label id="lbl_titulo">CERTIFICADOS</label>
+            <small>Version 1.0</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb"> </label> </a></li>
+
+        </ol>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('../../img/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+            }
+        </style>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            })
+            $(document).ready(function () {
+
+                $("#tbLote").DataTable({
+                    "info": true,
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multiple column at once
+                    "pageLength": 10,
+
+                    "ajax": {
+                        "url": "/LoteIngreso/LoadDataLote",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "ID_LOTE_INGRESO", "name": "ID_LOTE_INGRESO", "autoWidth": true },
+                        { "data": "NO_INGRESO", "name": "NO_INGRESO", "autoWidth": true },
+                        { "data": "NOMBRE_PRODUCTO", "name": "NOMBRE_PRODUCTO", "autoWidth": true },
+                        { "data": "NOMBRE_CERTIFICADO", "name": "NOMBRE_CERTIFICADO", "autoWidth": true },
+                        { "data": "FECHA_ANALISIS_STR", "name": "FECHA_ANALISIS_STR", "autoWidth": true },
+                        { "data": "TOMO", "name": "TOMO", "autoWidth": true },
+                        { "data": "PAGINA", "name": "PAGINA", "autoWidth": true },
+                        { "data": "NO_LOTE", "name": "NO_LOTE", "autoWidth": true },
+                        { "data": "FECHA_FABRICACION_STR", "name": "FECHA_FABRICACION_STR", "autoWidth": true },
+                        { "data": "FECHA_VENCIMIENTO_STR", "name": "FECHA_VENCIMIENTO_STR", "autoWidth": true },
+                        { "data": "NOMBRE_FABRICANTE", "name": "NOMBRE_FABRICANTE", "autoWidth": true },
+                        { "data": "NOMBRE_PAIS_FABRICANTE", "name": "NOMBRE_PAIS_FABRICANTE", "autoWidth": true },
+                        { "data": "OBSERVACIONES", "name": "OBSERVACIONES", "autoWidth": true },
+                        { "data": "NOMBRE_TECNICO", "name": "NOMBRE_TECNICO", "autoWidth": true },
+                        { "data": "FECHA_INI_ANALISIS_STR", "name": "FECHA_INI_ANALISIS_STR", "autoWidth": true },
+                        { "data": "FECHA_FIN_ANALISIS_STR", "name": "FECHA_FIN_ANALISIS_STR", "autoWidth": true },
+                        { "data": "NOMBRE_REVISA", "name": "NOMBRE_REVISA", "autoWidth": true },
+                        { "data": "NOMBRE_STATUS", "name": "NOMBRE_STATUS", "autoWidth": true },
+                        { "data": "ASEGURAMIENTO", "name": "ASEGURAMIENTO", "autoWidth": true },
+                        { "data": "FECHA_CREACION", "name": "FECHA_CREACION", "autoWidth": true },
+                        { "data": "USUARIO", "name": "USUARIO", "autoWidth": true }
+                    ],
+                    columnDefs: [{
+                        targets: [0],
+                        "render": function (data, type, row, meta) {
+                            return "<a href='#' onclick='EditCerti(" + row['ID_LOTE_INGRESO'] + ")' class='glyphicon glyphicon-edit ' title='Editar'> </a>" +
+                                "<a href='#' id='lkResultados" + row['ID_LOTE_INGRESO'] + "'   onclick='MuestraResultadoPopup(" + row['ID_PRODUCTO'] + "," + row['ID_LOTE_INGRESO'] + ")' class='glyphicon glyphicon-search lkResultados' title='Ingreso Resultados'> </a>"+
+                                "<a href='#' id='lkCantidades" + row['ID_LOTE_INGRESO'] + "'  onclick='CreaCantidadPresentacionPopup(" + row['ID_LOTE_INGRESO'] + ")' class='glyphicon glyphicon-plus lkCantidades' title='Ingreso Cantidades'> </a>"+
+                                "<a href='#' id='lkReporte1"+  row['ID_LOTE_INGRESO'] +"'   onclick='Certificado("+  row['ID_LOTE_INGRESO']+")' class='glyphicon glyphicon-file lkReporte1' title='Certificado'> </a>"+
+                                "<a href='#' id='lkDictamen" + row['ID_LOTE_INGRESO'] + "'   onclick='CertificadoData(" +  row['ID_LOTE_INGRESO'] + ")' class='glyphicon glyphicon-list lkDictamen' title='Datos Extra'> </a>"
+                            ;
+                            
+                        }
+                    }
+                    ],
+
+
+                    "order": [[1, "desc"]]
+                });
+
+            });
+        </script>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="loader"></div>
+        <div class="row" id="divRegresa">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><label id="lb_estadtitulo"></label></h3>
+                    <div class="box-tools pull-right">
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="divNuevo">
+                        <h4>
+                            <!--<iframe src="" id="downloadIframe" width="600" height="600" scrolling="yes"></iframe>-->
+                            <a href="#" class="glyphicon glyphicon-plus" onclick="OpenCreatePopup()">NUEVO</a>
+                        </h4>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="table-responsive">
+                            <table id="tbLote">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Ingreso</th>
+                                        <th>Producto</th>
+                                        <th>Certificado</th>
+                                        <th>Fecha Analisis</th>
+                                        <th>Tomo</th>
+                                        <th>Pagina</th>
+                                        <th>Lote</th>
+                                        <th>Fabricacion</th>
+                                        <th>Vencimiento</th>
+                                        <th>Fabricante</th>
+                                        <th>Pais Fabricante</th>
+                                        <th>Observaciones</th>
+                                        <th>Tecnico</th>
+                                        <th>Inicio Analisis</th>
+                                        <th>Fin Analisis</th>
+                                        <th>Revisado Por</th>
+                                        <th>Status</th>
+                                        <th>Aseguramiento</th>
+                                        <th>FECHA</th>
+                                        <th>USUARIO</th>
+
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="modalFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="overflow-x: scroll;width:600px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <div id="divEmbed">
+                                            <iframe src="blank:" type="application/pdf" id="iFrameFile" height="100%" width="600px"></iframe>'
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <div id="divAgregaTecnicos" class="col-md-12">
+                       <label class="hidden" id="lbl_IDLOTEINGRESO"></label>
+                        <h4>
+                            <!--<iframe src="" id="downloadIframe" width="600" height="600" scrolling="yes"></iframe>-->
+                            <a href="#" id='lkTecnicos' class="glyphicon glyphicon-plus" onclick="MuestraTecnicosPopup()">Tecnicos   </a>
+                        </h4>
+                         
+                    </div>
+                    <div id="divResultados"></div>
+                    <div class="modal fade" id="modalEdita" tabindex="-1" role="dialog" aria-labelledby="myModalTitle">
+
+                        <div class="modal-dialog" role="document" style="overflow-y: scroll; max-height:80%;  margin-top: 50px; margin-bottom:80px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalTitle"><label id="labelTitleMod"></label></h4>
+                                </div>
+
+                                <div class="box box-primary">
+                                    <div class="modal-body">
+
+                                        <div id="DivToAppendPartialVoew"></div>
+                                        <div id="DivToAppendPartialViewList"></div>
+                                    </div>
+                                  
+                                </div>
+
+
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+ 
+<script type="text/javascript">
+    initialize();
+
+    function initialize() {
+        var elementsResultados = document.getElementsByClassName("lkResultados");
+        for (var i = 0; i < elementsResultados.length; i++) {
+            $('#' + elementsResultados[i].id).hide()
+
+        }
+        var elementsCantidades = document.getElementsByClassName("lkCantidades");
+        for (var i = 0; i < elementsCantidades.length; i++) {
+            $('#' + elementsCantidades[i].id).hide()
+
+        }
+        var elementsReporte = document.getElementsByClassName("lkReporte1");
+        for (var i = 0; i < elementsReporte.length; i++) {
+            //$('#' + elements[i].id).attr('disabled', 'disabled');
+            $('#' + elementsReporte[i].id).hide()
+
+        }
+
+        var elementsDictamen = document.getElementsByClassName("lkDictamen");
+        for (var i = 0; i < elementsDictamen.length; i++) {
+            //$('#' + elements[i].id).attr('disabled', 'disabled');
+            $('#' + elementsDictamen[i].id).hide()
+
+        }
+        $.ajax({
+            url: '/Usuario/jsTraeAccesosUser/',
+            type: "GET",
+            dataType: "JSON",
+            data: {},
+            async: false,
+            success: function (json) {
+                var v_cuentaEditar = 0;
+                var v_cuentaNuevo = 0;
+                var v_cuentaVer = 0;
+                var v_cuentaResultados = 0;
+                var v_cuentaCantidades = 0;
+                var v_cuentaReporte1 = 0;
+                var v_cuentaTecnico = 0;
+                var v_cuentaDictamen = 0;
+                $.each(json, function (j, item2) {
+                    //menu operativo
+                    if (item2.IDPERMISO == 32 && item2.IDACCESO == 1)
+                        v_cuentaNuevo = v_cuentaNuevo + 1;
+
+                    if (item2.IDPERMISO == 32 && item2.IDACCESO == 2)
+                        v_cuentaVer = v_cuentaVer + 1;
+
+                    if (item2.IDPERMISO == 40 && item2.IDACCESO == 2)
+                        v_cuentaResultados = v_cuentaResultados + 1;
+
+                    if (item2.IDPERMISO == 39 && item2.IDACCESO == 2)
+                        v_cuentaCantidades = v_cuentaCantidades + 1;
+
+                    if (item2.IDPERMISO == 41 && item2.IDACCESO == 2)
+                        v_cuentaReporte1 = v_cuentaReporte1 + 1;
+
+                    if (item2.IDPERMISO == 55 && item2.IDACCESO == 2)
+                        v_cuentaTecnico = v_cuentaTecnico + 1;
+
+                    if (item2.IDPERMISO == 56 && item2.IDACCESO == 2)
+                        v_cuentaDictamen = v_cuentaDictamen + 1;
+                });
+
+                if (v_cuentaNuevo <= 0) {
+                    document.getElementById("divNuevo").style.display = "none";
+                }
+
+                if (v_cuentaVer <= 0) {
+                    document.getElementById("gridContent").style.display = "none";
+                }
+                if (v_cuentaTecnico <= 0) {
+                    document.getElementById("lkTecnicos").style.display = "none";
+                }
+                $("#divAgregaTecnicos").hide();
+                if (v_cuentaResultados > 0) {
+                    var elementsResultados2 = document.getElementsByClassName("lkResultados");
+                    for (var i = 0; i < elementsResultados2.length; i++) {
+                        $('#' + elementsResultados2[i].id).show()
+
+                    }
+                }
+                if (v_cuentaCantidades > 0) {
+                    var elementsCantidades2 = document.getElementsByClassName("lkCantidades");
+                    for (var i = 0; i < elementsCantidades2.length; i++) {
+                        $('#' + elementsCantidades2[i].id).show()
+
+                    }
+                }
+                if (v_cuentaReporte1 > 0) {
+                    var elementsReporte2 = document.getElementsByClassName("lkReporte1");
+                    for (var i = 0; i < elementsReporte2.length; i++) {
+                        //$('#' + elements[i].id).attr('disabled', 'disabled');
+                        $('#' + elementsReporte2[i].id).show()
+
+                    }
+                }
+
+                if (v_cuentaDictamen > 0) {
+                    var elementsDictamen = document.getElementsByClassName("lkDictamen");
+                    for (var i = 0; i < elementsDictamen.length; i++) {
+                        //$('#' + elements[i].id).attr('disabled', 'disabled');
+                        $('#' + elementsDictamen[i].id).show()
+
+                    }
+                }
+
+
+
+            },
+            error: function (error) { console.log(error); }
+        });
+
+
+    }
+    $(function () {
+        $('#gridContent table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+
+            "searching": true,
+
+            fixedColumns: true,
+            "columnDefs": [
+            { "class": "hidden", "targets": [4,5,6,9,11,12,14,15,18] }]
+
+        });
+    });
+    function EditCerti(pid) {
+        $("#modalEdita").modal();
+        $("#divResultados").empty();
+        $("#divAgregaTecnicos").hide();
+
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        var ph = $("#DivToAppendPartialVoew");
+        ph.load("/LoteIngreso/Edit?Id=" + pid);
+    }
+
+
+    function Listado(pid,pid2) {
+        $("#modalEdita").modal();
+        $("#divResultados").empty();
+        $("#divAgregaTecnicos").hide();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+
+        var ph2 = $("#DivToAppendPartialVoew");
+        ph2.load("/ResultadoEnsayoProducto/Create?id=" + pid +"&id2="+pid2);
+
+        var ph = $("#DivToAppendPartialViewList");
+        ph.load("/ResultadoEnsayoProducto/Listado?Id=" + pid2);
+
+    }
+
+    function OpenCreatePopup() {
+        $("#modalEdita").modal();
+        $("#labelTitleMod").text("");
+
+        $("#divResultados").empty();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        $("#divAgregaTecnicos").hide();
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/LoteIngreso/Crear");
+    }
+    function MuestraResultadoPopup(pid, pid2) {
+        startSpinGen();
+        $("#divResultados").empty();
+        $("#labelTitleMod").text("");
+
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        $("#divAgregaTecnicos").show();
+        $("#lbl_IDLOTEINGRESO").text(pid2);
+
+
+        var div = $("#divResultados");
+        div.load("/ResultadoEnsayoProducto/Listado_Muestra?Id=" + pid2);
+        stopSpinGen();
+    }
+
+    function MuestraTecnicosPopup() {
+        //$("#divResultados").empty();
+        $("#labelTitleMod").text("");
+
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        $("#divAgregaTecnicos").show();
+
+
+        //alert($("#lbl_IDLOTEINGRESO").text());
+
+        var ph2 = $("#DivToAppendPartialVoew");
+        ph2.load("/LoteIngreso/CrearLote_Tecnico?id="+$("#lbl_IDLOTEINGRESO").text());
+
+        var div = $("#DivToAppendPartialViewList");
+        div.load("/LoteIngreso/ListadoTecnico?Id=" + $("#lbl_IDLOTEINGRESO").text());
+
+        $("#modalEdita").modal();
+    }
+
+    function CreaCantidadPresentacionPopup(pid) {
+        $("#labelTitleMod").text("");
+
+        $("#modalEdita").modal();
+        $("#divResultados").empty();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        $("#divAgregaTecnicos").hide();
+        var ph2 = $("#DivToAppendPartialViewList");
+        ph2.load("/IngresoCantidadPresentacion/Listado?id=" + pid);
+
+        var div = $("#DivToAppendPartialVoew");
+        div.load("/IngresoCantidadPresentacion/Create?IDLOTEINGRESO=" + pid);
+    }
+
+    function CertificadoData(pid) {
+
+        $("#modalEdita").modal();
+        $("#divResultados").empty();
+        $("#DivToAppendPartialVoew").empty();
+        $("#DivToAppendPartialViewList").empty();
+        $("#divAgregaTecnicos").hide();
+        $("#labelTitleMod").text("Datos Analisis");
+        var ph2 = $("#DivToAppendPartialViewList");
+        ph2.load("/LoteIngresoData/Create?p_idLoteIngreso=" + pid);
+
+
+    }
+function getPlatform() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Windows Phone must come first because its UA also contains "Android"
+    if (/windows phone/i.test(userAgent)) {
+        return "Windows Phone";
+    }
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+		return userAgent;
+
+}
+
+    function Certificado(pid) {
+        $('.loader').css({ 'display': 'block' });
+
+        $("#divAgregaTecnicos").hide();
+
+        $("#divResultados").empty();
+        $("#labelTitleMod").text("");
+
+        $.ajax({
+            url: '/LoteIngreso/DownloadReport2?Id=' + pid,
+            async: true,
+            success: function (data) {
+                /*
+                var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,' +
+                               'resizable,screenX=0,screenY=0,width=850,height=1050';
+
+                var htmlPop = '<head><title>Impresion de Certificado</title></head><embed width=100% height=100%'
+                             + ' type="application/pdf"'
+                              + ' src="data:application/pdf;base64,' + data
+                             + '"></embed>';
+                */
+                //var printWindow = window.open('', 'detailPDF', winparams);
+                //printWindow.document.write(htmlPop);
+                document.getElementById('iFrameFile').src = "data:application/pdf;base64," + data;
+                if ((getPlatform() != 'Android') && (getPlatform() != 'iOS')) {
+                    $("#modalFile").modal();
+                }
+                if (getPlatform() == 'iOS') {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:application/pdf;base64,' + data);
+                    element.setAttribute('download', 'certificado_' + pid);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+                $('.loader').fadeOut("slow");
+            }
+        });
+
+
+    }
+
+
+
+</script>

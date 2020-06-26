@@ -1,0 +1,49 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_SAP_ITEM_CONTAResult>
+<div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridArticuloConta");
+    }
+    <div>
+        <div id="gridArticuloConta">
+            @grid.GetHtml(
+                            htmlAttributes: new { width = "100%" },
+                                     mode: WebGridPagerModes.All,
+                                     tableStyle: "table table-bordered table-hover table-responsive",
+                                     columns: new[] {
+                                     grid.Column("numero", "No.", null, "text-center", false),
+                                     grid.Column("DocDate", "Fecha", null, "text-center", false),
+                                     grid.Column("Documento", "Documento", null, "text-center", false),
+                                   
+                                     grid.Column("Warehouse", "Almacen", null, "text-center", false),
+                                     grid.Column("Account", "Codigo Cta.", null, "text-center", false),
+                                     grid.Column("AcctName", "Nombre Cta.", null, "text-center", false),
+                                     grid.Column("Quantity", "Cantidad", null, "text-center", false),
+                                     grid.Column("InvntryUom", "UOM", null, "text-center", false),
+                                    
+                                     grid.Column("Balance", "Saldo", null, "text-center", false),
+                                     grid.Column("Comments", "Comentarios", null, "text-center", false)
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        stopSpinGen();
+        $('#gridArticuloConta table').DataTable({
+            "pageLength": 10,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true,
+            "scrollX":true
+        })
+
+    
+    });
+
+
+
+</script>

@@ -1,0 +1,98 @@
+﻿@model slnQF.Models.SearchParameterModel
+
+@{
+    ViewBag.Title = "ReportViewer";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<script type="text/javascript"></script>
+<hgroup class="modal-title"></hgroup>
+
+
+
+<div class="content-wrapper">
+    <div id="divAnexoA">
+        <section class="content-header">
+
+            <h1>
+
+                <label id="lbl_titulo"> </label>
+                <label id="lbltipo" class="hidden"> </label>
+                <small>Version 1.0</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="active"><a href="#"><i class="fa fa-dashboard"></i><label id="lbl_breadcumb">Anexos</label> </a></li>
+
+            </ol>
+
+        </section>
+
+        <section class="content col-md-12">
+
+            <section id="ReportViewer">
+             
+                    <fieldset>
+                        <legend></legend>
+                        <ol>
+                            <li>
+                                @Html.LabelFor(m => m.docnum)
+                                @Html.TextBoxFor(m => m.docnum)
+                                @Html.ValidationMessageFor(m => m.docnum)
+                            </li>
+                        </ol>
+                        <input type="submit" id="btnSubmit" value="Ver Reporte" />
+
+                    </fieldset>
+  
+            </section>
+            @Html.ActionLink("Descargar Etiquetas", "DownloadReport", new { docnum = Model.docnum, format = "PDF" })
+            @if (Model != null)
+        {
+                <section class="social" id="ReportDisplayPanel">
+                    <center>
+                        <h4>Report Viewer Section.</h4>
+                        
+                        <embed src="@Url.Action("DownloadReport", "Reporte", new { docnum = Model.docnum, format =  "PDF" })" width="600" height="500" alt="pdf" />
+                        <br />
+                        @Html.ActionLink("Descargar Etiquetas", "DownloadReport", new { docnum = Model.docnum, format = "PDF" })
+                    </center>
+                </section>
+        }
+
+        </section>
+    </div>
+
+   
+</div>
+@section Scripts {
+<script type="text/javascript">
+    $(function () {
+                var get_params = function (search_string) {
+
+                    var parse = function (params, pairs) {
+                        var pair = pairs[0];
+                        var parts = pair.split('=');
+                        var key = decodeURIComponent(parts[0]);
+                        var value = decodeURIComponent(parts.slice(1).join('='));
+
+                        // Handle multiple parameters of the same name
+                        if (typeof params[key] === "undefined") {
+                            params[key] = value;
+                        } else {
+                            params[key] = [].concat(params[key], value);
+                        }
+
+                        return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+                    }
+
+                    // Get rid of leading ?
+                    return search_string.length == 0 ? {} : parse({}, search_string.substr(1).split('&'));
+                }
+                var params = get_params(location.search);
+                 
+                    $("#lbl_titulo").text ( "ANEXO " + params['rep']);
+                 
+    });
+</script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

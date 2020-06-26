@@ -1,0 +1,41 @@
+﻿@model IEnumerable<slnQF.SP_CONSULTA_ENSAYO_PRUEBAResult>
+
+ <div class="col-md-12">
+    @{
+        WebGrid grid = new WebGrid(Model, canPage: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridPrueba");
+    }
+    <div class="table-responsive">
+        <div id="gridPrueba">
+
+            @grid.GetHtml(
+                                   htmlAttributes: new { width = "100%" },
+
+                                     mode: WebGridPagerModes.All,
+
+                                     columns: new[] {
+                                 
+                                   
+                                     grid.Column("ID_PRUEBA", "ID", null, "text-center", false),
+                                     grid.Column("NOMBRE_PRUEBA", "PRUEBA", null, "text-center", false),
+                                     grid.Column("SWSI_NO", "¿Prueba Especifica?", null, "text-center", false),
+                                     grid.Column("ESTADO", "ESTADO", null, "text-center", false)
+
+                                 })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#gridPrueba table').DataTable({
+            "pageLength": 3,
+            //"searching": true,
+            "paging": true,
+
+            "searching": true,
+
+            fixedColumns: true
+        });
+    });
+</script>

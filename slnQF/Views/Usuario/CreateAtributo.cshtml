@@ -1,0 +1,65 @@
+﻿@model slnQF.TUSUARIOATRIBUTO
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body form-horizontal">
+        <h4>TUSUARIOATRIBUTO</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID_USUARIO)
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.ID_USUARIO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ID_USUARIO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VALOR, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VALOR, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VALOR, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="SaveProduct()" />
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    function SaveProduct() {
+        var NOMBRE = $("#NOMBRE").val();
+        var VALOR = $("#VALOR").val();
+        var ID_USUARIO = $("#ID_USUARIO").val();
+
+        var product = {
+            "NOMBRE": NOMBRE, "VALOR": VALOR, "ID_USUARIO": ID_USUARIO
+        };
+
+        $.post('/USUARIO/createAtr', product,
+                            function (data) {
+                                if (data.ID == 0) {
+                                    swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true },
+                                        function (isConfirm) { if (isConfirm) { location = location.href.replace('#', ''); } });
+                                } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                            }
+       , 'json');
+
+    }
+</script>
+

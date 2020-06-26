@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@if (Session["LogedUser"] != null)
+{
+
+ 
+        @Html.AntiForgeryToken()
+        
+        <li>
+
+
+            @Html.ActionLink("Cerrar sesion", "LogOff", "Usuario", routeValues: null, htmlAttributes: new { id = "loginLink",style="color:#3c8dbc; font-weight: bold;"})
+
+
+
+        </li>
+    
+
+}
+else
+{
+
+
+                <li>@Html.ActionLink("Iniciar sesión", "Login2", "Usuario", routeValues: null, htmlAttributes: new { id = "loginLink", style = "color:#3c8dbc; font-weight: bold;" })</li>
+       
+            }
