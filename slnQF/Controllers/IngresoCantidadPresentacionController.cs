@@ -22,10 +22,10 @@ namespace slnQF.Controllers
             LOTE_INGRESO product = db.LOTE_INGRESOs.Where(x => x.ID_LOTE_INGRESO == IDLOTEINGRESO).FirstOrDefault();
 
             TPRODUCTO prod = db.TPRODUCTOs.Where(x => x.ID_PRODUCTO == product.ID_PRODUCTO).FirstOrDefault();
-            
+
             ViewBag.ID_LOTE_INGRESO = IDLOTEINGRESO;
 
-            ViewBag.TITULO ="Ingreso:"+ product.NO_INGRESO   + " Producto:"+ prod.NOMBRE;
+            ViewBag.TITULO = "Ingreso:" + product.NO_INGRESO + " Producto:" + prod.NOMBRE;
             List<MyDrop> listaPresnta = new List<MyDrop>();
             try
             {
@@ -41,22 +41,26 @@ namespace slnQF.Controllers
                     it.value = item.NOMBRE_PRESENTACION;
                     bool alreadyExists = listaPresnta.Any(x => x.id == it.id && x.value == it.value);
                     if (alreadyExists == false)
-                    listaPresnta.Add(it);
+                        listaPresnta.Add(it);
                 }
                 listaPresnta = listaPresnta.Distinct().ToList();
             }
-            catch {
+            catch
+            {
 
             }
-            ViewBag.PresentacionlDDL = new SelectList(listaPresnta, "id", "value").Distinct(); 
+            ViewBag.PresentacionlDDL = new SelectList(listaPresnta, "id", "value").Distinct();
 
             ViewBag.ID_PRODUCTO = prod.ID_PRODUCTO;
 
             int presentacion = 0;
 
-            try {
+            try
+            {
                 presentacion = db.SP_CONSULTA_PRO_PRE_NOM().Where(x => x.ID_PRODUCTO == product.ID_PRODUCTO).FirstOrDefault().ID_PRESENTACION;
-            } catch {
+            }
+            catch
+            {
                 presentacion = 0;
             }
 
@@ -64,19 +68,22 @@ namespace slnQF.Controllers
 
             SP_CONSULTA_PRO_PRE_NOMResult NOMBRE_COMERCIAL = db.SP_CONSULTA_PRO_PRE_NOM().Where(x => x.ID_PRODUCTO == product.ID_PRODUCTO).FirstOrDefault();
 
-            try {
+            try
+            {
                 if (NOMBRE_COMERCIAL != null)
                 {
                     ViewBag.Cliente = new SelectList(db.SP_CONSULTA_CLIENTE_NOMBRE_COM().Where(x => x.ID_NOMBRE_COMERCIAL == NOMBRE_COMERCIAL.ID_NOMBRE_COMERCIAL), "ID_CLIENTE", "NOMBRE_CLIENTE");
                 }
-                else {
+                else
+                {
                     List<MyDropList> lista = new List<MyDropList>();
                     ViewBag.Cliente = new SelectList(lista, "id", "value");
                 }
-                
+
             }
-            catch{  
-                
+            catch
+            {
+
             }
 
             int sel_Id_uom = 0;
@@ -84,15 +91,72 @@ namespace slnQF.Controllers
             {
                 sel_Id_uom = prod.ID_UOM;
             }
-            catch {
+            catch
+            {
                 sel_Id_uom = 0;
             }
             ViewBag.UomDDL = new SelectList(db.CAT_UOM.Where(x => x.ESTADO == 1), "ID_UOM", "DESCRIPCION", sel_Id_uom);
 
             slnQF.Models.IngresoCantidadPresentacionModels model = new slnQF.Models.IngresoCantidadPresentacionModels();
-            model.LOTE = product.NO_LOTE; 
+            model.LOTE = product.NO_LOTE;
             return PartialView(model);
         }
+
+        [HttpPost]
+        public JsonResult EditCantidad(slnQF.INGRESO_CANTIDAD_PRESENTACION product)
+        {
+            string error = "";
+            string idUsuarioLog = "-1";
+            string errorStr = "";
+            try
+            {
+                idUsuarioLog = Session["LogedUserID"].ToString();
+
+            }
+            catch (Exception Ex)
+            {
+                error = "1";
+                errorStr = "Su sesion ha caducado, ingrese nuevamente";
+            }
+            if (Convert.ToInt32(idUsuarioLog) > 0)
+            {
+                DC_CALIDADDataContext db = new DC_CALIDADDataContext();
+                try
+                {
+                    db.Connection.Open();
+                    db.Transaction = db.Connection.BeginTransaction();
+                    INGRESO_CANTIDAD_PRESENTACION tblProd = db.INGRESO_CANTIDAD_PRESENTACIONs.Where(x => x.ID_INGRESO_CANTIDAD_PRESENTACION == product.ID_INGRESO_CANTIDAD_PRESENTACION)
+                                           .FirstOrDefault();
+
+                    tblProd.CANTIDAD = product.CANTIDAD;
+
+                    db.SubmitChanges();
+                    db.Transaction.Commit();
+                    error = "0";
+                    errorStr = "Informacion guardada con exito";
+                    db.Connection.Close();
+                    db.Dispose();
+                }
+
+
+                catch (Exception e)
+                {
+                    db.Transaction.Rollback();
+                    error = "1";
+                    errorStr = "Error en el guardado de informacion, " + e.Message;
+                    db.Connection.Close();
+                    db.Dispose();
+                }
+            }
+            else
+            {
+                error = "1";
+                errorStr = "Su sesion ha caducado, ingrese nuevamente";
+            }
+            return Json(new { ID = error, MENSAJE = errorStr });
+
+        }
+
 
         [HttpPost]
         public JsonResult Crear(slnQF.INGRESO_CANTIDAD_PRESENTACION product)
@@ -107,7 +171,7 @@ namespace slnQF.Controllers
             }
             catch (Exception Ex)
             {
-                
+
             }
 
             if (Convert.ToInt32(idUsuarioLog) > 0)
@@ -117,7 +181,8 @@ namespace slnQF.Controllers
                     product.ID_CLIENTE = 0;
 
                 }
-                    if ((product.ID_PRESENTACION == 0) || (product.ID_NOMBRE_COMERCIAL == 0) || (product.ID_UOM == 0) || (product.ID_CLIENTE == 0)) {
+                if ((product.ID_PRESENTACION == 0) || (product.ID_NOMBRE_COMERCIAL == 0) || (product.ID_UOM == 0) || (product.ID_CLIENTE == 0))
+                {
                     error = "1";
                     errorStr = "Revise los datos seleccionados. ";
                     return Json(new { ID = error, MENSAJE = errorStr });
@@ -161,7 +226,7 @@ namespace slnQF.Controllers
 
             DC_CALIDADDataContext db = new DC_CALIDADDataContext();
             List<SP_CONSULTA_PRO_PRE_NOMResult> PRUEBA = db.SP_CONSULTA_PRO_PRE_NOM()
-               .OrderBy(x => x.NOMBRE_COMERCIAL).Where(x => x.ID_PRESENTACION == idPresentacion && x.ID_PRODUCTO == idProducto )
+               .OrderBy(x => x.NOMBRE_COMERCIAL).Where(x => x.ID_PRESENTACION == idPresentacion && x.ID_PRODUCTO == idProducto)
                .ToList<SP_CONSULTA_PRO_PRE_NOMResult>();
 
             foreach (SP_CONSULTA_PRO_PRE_NOMResult dr in PRUEBA)
@@ -236,7 +301,7 @@ namespace slnQF.Controllers
                 errorStr = "Su sesion ha caducado, ingrese nuevamente";
                 error = "1";
             }
-            int v_ingreso_cant_id = 0; 
+            int v_ingreso_cant_id = 0;
             try
             {
                 v_ingreso_cant_id = Convert.ToInt32(id);
@@ -260,8 +325,8 @@ namespace slnQF.Controllers
                     INGRESO_CANTIDAD_PRESENTACION tblProd = db.INGRESO_CANTIDAD_PRESENTACIONs.Where(x => x.ID_INGRESO_CANTIDAD_PRESENTACION == v_ingreso_cant_id)
                                            .FirstOrDefault();
 
-                    if(tblProd.ESTADO == 1)
-                    tblProd.ESTADO = 0;
+                    if (tblProd.ESTADO == 1)
+                        tblProd.ESTADO = 0;
                     else if (tblProd.ESTADO == 0)
                         tblProd.ESTADO = 1;
 
@@ -296,7 +361,7 @@ namespace slnQF.Controllers
             ModelState.Clear();
             DC_CALIDADDataContext db = new DC_CALIDADDataContext();
             List<SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACIONResult> PRUEBA = db.SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACION()
-               .Where(x => x.ID_LOTE_INGRESO== id)
+               .Where(x => x.ID_LOTE_INGRESO == id)
                .ToList<SP_CONSULTA_INGRESO_CANTIDAD_PRESENTACIONResult>();
             return PartialView("~/Views/IngresoCantidadPresentacion/Listado.cshtml", PRUEBA);
         }

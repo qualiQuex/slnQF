@@ -18,20 +18,27 @@
 
                                             grid.Column("", header: "", canSort:false,
                                             format: @<text>
-                                            @Html.Raw("<a href='#' onclick='cambioEstado("+ item.ID_INGRESO_CANTIDAD_PRESENTACION +","+item.ID_LOTE_INGRESO+")' text='glyphicon glyphicon-edit ' title='Editar'>"+ item.ESTADO +" </a>")
+                                                @Html.Raw("<a href='#' onclick='cambioEstado("+ item.ID_INGRESO_CANTIDAD_PRESENTACION +","+item.ID_LOTE_INGRESO+")' text='glyphicon glyphicon-edit ' title='Editar'>"+ item.ESTADO +" </a>")
 
- 
 
-                                        </text>),
 
-                                     grid.Column("PRESENTACION_STR", "PRESENTACION", null, "text-center", false),
-                                     grid.Column("NOMBRE_COMERCIAL_STR", "NOM. COMERCIAL", null, "text-center", false),
-                                     grid.Column("UOM_STR", "UOM", null, "text-center", false),
-                                     grid.Column("NOMBRE_CLIENTE", "CLIENTE", null, "text-center", false),
-                                     grid.Column("LOTE", "LOTE", null, "text-center", false),
-                                     grid.Column("CANTIDAD", "CANTIDAD", null, "text-center", false)
+                                            </text>),
 
-                                 })
+grid.Column("PRESENTACION_STR", "PRESENTACION", null, "text-center", false),
+grid.Column("NOMBRE_COMERCIAL_STR", "NOM. COMERCIAL", null, "text-center", false),
+grid.Column("UOM_STR", "UOM", null, "text-center", false),
+grid.Column("NOMBRE_CLIENTE", "CLIENTE", null, "text-center", false),
+grid.Column("LOTE", "LOTE", null, "text-center", false),
+
+grid.Column(columnName: "CANTIDAD", header: "CANTIDAD", canSort:false, format: @<text>
+                    <input type="number" class="form-control form-control-sm" name="@("txtCant" + item.ID_INGRESO_CANTIDAD_PRESENTACION)" id="@("txtCant" + item.ID_INGRESO_CANTIDAD_PRESENTACION)" value="@item.CANTIDAD" />
+</text>,style:"NameColWidth"),
+grid.Column(canSort:false,format: @<text>
+                    @Html.Raw("<a href='#' onclick='onChangeCantidad("+ item.ID_INGRESO_CANTIDAD_PRESENTACION +","+item.ID_LOTE_INGRESO+")' text=' ' title='Editar'><span class=' btn glyphicon glyphicon-floppy-disk' aria-hidden='true'></span></a>")
+
+
+
+</text>),})
             </div>
         </div>
     </div>
@@ -47,12 +54,15 @@
 
             "searching": true,
 
-            fixedColumns: true
         });
     });
+    function onChangeCantidad(pid, pid_loteing) {
+        let CantidadNueva = document.getElementById('txtCant' + pid).value;
+        SaveCantidadNueva(pid, pid_loteing, CantidadNueva)
+    }
+
     function cambioEstado(pid,pid_loteing) {
-      
-    
+
 
     $.post('/IngresoCantidadPresentacion/fnCambioEstadoCanInPre?Id=' + pid,
         function (data) {
@@ -61,6 +71,29 @@
             ph2.load("/IngresoCantidadPresentacion/Listado?id=" + pid_loteing);
           }
         , 'json');
-            }
+    }
+
+    function SaveCantidadNueva(pid, pid_loteing,cantidad) {
+        if (cantidad > 0) {
+            var product = {
+                "ID_INGRESO_CANTIDAD_PRESENTACION": pid, "ID_LOTE_INGRESO": pid_loteing, "CANTIDAD": cantidad
+            };
+
+            $.post('/IngresoCantidadPresentacion/EditCantidad', product,
+
+                function (data) {
+                    if (data.ID == 0) {
+                        swal({ title: "Informacion", text: data.MENSAJE, type: "success", showConfirmButton: true });
+                        $("#DivToAppendPartialViewList").empty();
+                        var ph2 = $("#DivToAppendPartialViewList");
+                        ph2.load("/IngresoCantidadPresentacion/Listado?id=" + pid_loteing);
+                    } else { swal({ title: "Informacion", text: data.MENSAJE, type: "error", showConfirmButton: true }); }
+                }
+                , 'json');
+        } else {
+            swal({ title: "Informacion", text: "El valor de la cantidad debe ser mayor a 0", type: "error", showConfirmButton: true });
+        }
+
+    }
 
 </script>
